@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>INFINITY SYSTEM | V2</title>
+    <title>INFINITY SYSTEM | النسخة النهائية</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
 </head>
@@ -14,12 +14,12 @@
             <div class="glow-circle"></div>
             <div class="glass-card login-box">
                 <h1 class="glow-text">INFINITY</h1>
-                <p class="tagline">نظام الوصول المركزي</p>
+                <p class="tagline">نظام الوصول المركزي الآمن</p>
                 <div class="input-field">
-                    <input type="text" id="user" placeholder="اسم المستخدم" autocomplete="off">
-                    <input type="password" id="pin" placeholder="الرمز السري">
+                    <input type="text" id="username-input" placeholder="اسم المستخدم" autocomplete="off">
+                    <input type="password" id="pin-input" placeholder="الرمز السري">
                 </div>
-                <button class="action-btn login-btn" onclick="handleLogin()">تأكيد الهوية 🛡️</button>
+                <button class="action-btn" onclick="handleLogin()">تأكيد الهوية 🛡️</button>
             </div>
         </div>
     </div>
@@ -46,9 +46,10 @@
             <section id="tab-home" class="view-content">
                 <div class="hero-banner">
                     <h2>مرحباً بك في القاعدة 🦅</h2>
-                    <p>تم تفعيل نظام التشفير. جميع العمليات المسجلة مراقبة لضمان الأمان.</p>
+                    <p>تم تفعيل نظام التشفير بنجاح. جميع العمليات الآن مراقبة ومؤمنة.</p>
                 </div>
             </section>
+
             <section id="tab-store" class="view-content" style="display: none;">
                 <h2 class="section-title">المتجر المركزي</h2>
                 <div class="items-grid" id="store-items"></div>
