@@ -57,4 +57,41 @@ input {
 .cost { display: block; font-size: 1.5rem; margin: 15px 0; color: #00ffcc; font-family: 'Orbitron'; }
 .main-btn, .item-card button { 
     background: var(--neon); color: #000; border: none; padding: 10px 25px; border-radius: 8px; font-weight: bold; cursor: pointer;
+} 
+/* --- تعديلات خاصة للهواتف (Responsive) --- */
+@media (max-width: 768px) {
+    body {
+        overflow-y: auto; /* السماح بالتمرير لأسفل في الهاتف */
+    }
+
+    .dashboard-layout {
+        flex-direction: column; /* ترتيب العناصر فوق بعضها */
+        height: auto;
+    }
+
+    .sidebar {
+        width: 100%; /* جعل القائمة الجانبية تأخذ عرض الشاشة بالكامل */
+        height: auto;
+        padding: 20px;
+        border-left: none;
+        border-bottom: 1px solid #111;
+    }
+
+    .bank-card {
+        width: 100%; /* جعل البطاقة تتناسب مع عرض الهاتف */
+        height: 180px;
+    }
+
+    .content-area {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .store-grid {
+        grid-template-columns: 1fr; /* جعل منتجات المتجر تظهر واحداً تلو الآخر */
+    }
+
+    .login-box {
+        width: 90%; /* تكبير صندوق الدخول ليناسب شاشة الهاتف */
+    }
 }
