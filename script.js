@@ -1,7 +1,8 @@
 // 1. قاعدة البيانات
 const members = {
-    "mohamed": { pin: "1234", balance: 50000, rank: "الإمبراطور" },
-    "amine": { pin: "2026", balance: 1000, rank: "مؤسس" }
+    "levi": { pin: "FFIGVPW3YZ", balance: 50000, rank: "الإمبراطور" },
+    "dororo": { pin: "2423", balance: 1000, rank: "مؤسس" }
+    "fang": { pin: "8046", balance: 1000, rank: "مستشار" }
 };
 
 let currentUser = "";
