@@ -1,5 +1,5 @@
 const members = {
-"levi": { pin: "FFIG", balance: 50000, rank: "الإمبراطور" },
+"levi": { pin: "1001", balance: 50000, rank: "الإمبراطور" },
     "dororo": { pin: "2423", balance: 1000, rank: "مؤسس" }
     "fang": { pin: "8046", balance: 1000, rank: "مستشار" }
 };
