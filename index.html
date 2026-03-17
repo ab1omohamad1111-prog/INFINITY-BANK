@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>𝑰𝑵𝑭𝑰𝑵𝑰𝑻𝒀 𝑬𝑹𝑨 | المركز الرئيسي</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="login-page" class="overlay-wrapper">
+        <div class="glass-box login-box">
+            <div class="logo-glow">𝑰𝑵𝑭𝑰𝑵𝑰𝑻𝒀</div>
+            <h3>نظام التحقق من الهوية</h3>
+            <input type="text" id="username" placeholder="اسم المستخدم">
+            <input type="password" id="userpin" placeholder="الرمز السري (PIN)" maxlength="4">
+            <button class="main-btn" onclick="login()">دخول القاعدة 🛡️</button>
+        </div>
+    </div>
+
+    <div id="dashboard" class="dashboard-layout" style="display: none;">
+        
+        <aside class="sidebar">
+            <div class="card-container">
+                <div class="bank-card">
+                    <div class="card-top">
+                        <span>𝑰𝑵𝑭𝑰𝑵𝑰𝑻𝒀</span>
+                        <img src="https://cdn-icons-png.flaticon.com/512/9334/9334627.png" class="chip">
+                    </div>
+                    <div class="card-mid">
+                        <h2 id="display-name">---</h2>
+                        <p id="display-rank">---</p>
+                    </div>
+                    <div class="card-bottom">
+                        <div class="balance-area">
+                            <small>الرصيد الملكي</small>
+                            <h1 id="display-balance">0 INF</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="side-nav">
+                <button class="nav-item active" onclick="switchSection('home')">🏠 الرئيسية</button>
+                <button class="nav-item" onclick="switchSection('store')">🛒 المتجر</button>
+                <button class="nav-item logout" onclick="location.reload()">🚪 خروج</button>
+            </nav>
+        </aside>
+
+        <main class="content-area">
+            <header class="content-header">
+                <h1 id="page-title">مرحباً بالقائد!</h1>
+                <p id="page-subtitle">ساحة العمليات الخاصة بك في 𝑰𝑵𝑭𝑰𝑵𝑰𝑻𝒀 𝑬𝑹𝑨</p>
+            </header>
+
+            <section id="section-home" class="page-content">
+                <div class="welcome-box">
+                    <h3>نظام الإدارة المركزية</h3>
+                    <p>أهلاً بك في النسخة التجريبية الأولى. هنا يمكنك مراقبة رصيدك وطلب الترقيات.</p>
+                </div>
+            </section>
+
+            <section id="section-store" class="page-content" style="display: none;">
+                <div class="store-grid">
+                    <div class="item-card">
+                        <h3>تـرقـية لـفـارس</h3>
+                        <p>صلاحيات قيادية في القروب</p>
+                        <span class="cost">5,000 INF</span>
+                        <button onclick="buy('ترقية فارس', 5000)">شراء</button>
+                    </div>
+                    <div class="item-card">
+                        <h3>بـطـاقـة عـفـو</h3>
+                        <p>إلغاء عقوبة طرد واحدة</p>
+                        <span class="cost">10,000 INF</span>
+                        <button onclick="buy('بطاقة عفو', 10000)">شراء</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

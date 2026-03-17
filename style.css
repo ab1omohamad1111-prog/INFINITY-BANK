@@ -1,0 +1,60 @@
+:root {
+    --neon: #00d2ff; --white: #ffffff; --bg: #000; --glass: rgba(255,255,255,0.03);
+}
+
+body {
+    margin: 0; background: var(--bg); color: var(--white); font-family: 'Cairo', sans-serif;
+    direction: rtl; overflow: hidden; height: 100vh;
+}
+
+/* الأشكال الزجاجية والتوهج */
+.glass-box {
+    background: var(--glass); border: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(15px); border-radius: 20px; box-shadow: 0 0 30px rgba(0,210,255,0.1);
+}
+
+/* شاشة الدخول */
+.overlay-wrapper {
+    position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 1000;
+}
+.login-box { padding: 40px; text-align: center; width: 350px; }
+.logo-glow { font-family: 'Orbitron'; font-size: 2.5rem; text-shadow: 0 0 15px var(--neon); margin-bottom: 20px; }
+input { 
+    width: 100%; padding: 12px; margin: 10px 0; background: #111; border: 1px solid #333; 
+    color: var(--white); border-radius: 8px; text-align: center;
+}
+
+/* الهيكل الرئيسي */
+.dashboard-layout { display: flex; width: 100%; height: 100%; }
+
+/* الجانب الأيمن */
+.sidebar { width: 380px; background: #050505; border-left: 1px solid #111; padding: 30px; }
+.bank-card {
+    height: 200px; background: linear-gradient(135deg, #001f3f, #000); border-radius: 15px;
+    padding: 20px; border: 1px solid var(--neon); box-shadow: 0 0 20px rgba(0,210,255,0.2);
+    display: flex; flex-direction: column; justify-content: space-between;
+}
+.card-top { display: flex; justify-content: space-between; font-family: 'Orbitron'; font-weight: bold; }
+.card-top img { width: 45px; }
+.card-mid h2 { margin: 0; font-size: 1.8rem; }
+.card-mid p { color: var(--neon); margin: 0; font-weight: bold; }
+#display-balance { color: #00ffcc; text-shadow: 0 0 10px #00ffcc; margin: 0; }
+
+/* أزرار القائمة */
+.side-nav { margin-top: 40px; }
+.nav-item {
+    width: 100%; padding: 15px; margin-bottom: 10px; background: transparent; 
+    border: 1px solid #222; color: #fff; border-radius: 10px; cursor: pointer; text-align: right;
+}
+.nav-item.active { border-color: var(--neon); color: var(--neon); box-shadow: 0 0 10px rgba(0,210,255,0.1); }
+.nav-item.logout { color: #ff4444; border-color: #311; }
+
+/* الجانب الأيسر */
+.content-area { flex: 1; padding: 50px; overflow-y: auto; }
+.store-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.item-card { background: #111; padding: 25px; border-radius: 15px; border: 1px solid #222; text-align: center; }
+.item-card h3 { color: var(--neon); }
+.cost { display: block; font-size: 1.5rem; margin: 15px 0; color: #00ffcc; font-family: 'Orbitron'; }
+.main-btn, .item-card button { 
+    background: var(--neon); color: #000; border: none; padding: 10px 25px; border-radius: 8px; font-weight: bold; cursor: pointer;
+}
