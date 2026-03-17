@@ -9,7 +9,6 @@ const products = [
     { name: "أدمن (يومين) 🛡️", price: 65000, stock: 0, rarity: "epic" },
     { name: "فترة راحة (3 أيام) 💤", price: 65000, stock: 1, rarity: "epic" },
     { name: "صندوق الحظ 🎁", price: 3500, stock: 10, rarity: "common" },
-    { name: "تغيير لون الرتبة 🎨", price: 12000, stock: 3, rarity: "rare" },
     { name: "تصفير العقوبات 🧹", price: 15000, stock: 5, rarity: "common" }
 ];
 
