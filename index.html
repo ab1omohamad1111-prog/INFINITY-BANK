@@ -10,28 +10,24 @@
         * { box-sizing: border-box; }
         body { margin: 0; background: var(--bg); color: #fff; font-family: 'Cairo', sans-serif; direction: rtl; height: 100vh; overflow: hidden; }
 
-        /* شاشة الدخول */
         .overlay-wrapper { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: #000; z-index: 1000; }
         .login-box { background: var(--glass); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); border-radius: 25px; padding: 40px; text-align: center; width: 350px; }
         .logo-glow { font-family: 'Orbitron'; font-size: 2.5rem; text-shadow: 0 0 15px var(--neon); color: var(--neon); }
         input { width: 100%; padding: 12px; margin: 10px 0; background: #111; border: 1px solid #333; color: #fff; border-radius: 10px; text-align: center; }
+        
         .main-btn { background: var(--neon); color: #000; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 15px; transition: 0.3s; }
         .main-btn:hover { background: #fff; box-shadow: 0 0 20px var(--neon); }
 
-        /* لوحة التحكم */
         .dashboard-layout { display: none; width: 100%; height: 100%; }
         .sidebar { width: 350px; background: #050505; padding: 25px; border-left: 1px solid #111; display: flex; flex-direction: column; gap: 15px; }
         .bank-card { height: 200px; background: linear-gradient(135deg, #001f3f, #000); border: 1px solid var(--neon); border-radius: 20px; padding: 25px; display: flex; flex-direction: column; justify-content: space-between; }
         .content-area { flex: 1; padding: 30px; background: radial-gradient(circle at top right, #001f3f, #000); overflow-y: auto; }
         
-        /* شريط الأخبار */
         .news-ticker { background: rgba(0, 210, 255, 0.1); border: 1px solid var(--neon); padding: 8px; border-radius: 10px; margin-bottom: 20px; }
         
-        /* التبويبات (Tabs) */
         .nav-btn { background: transparent; color: #888; border: 1px solid #222; padding: 10px; border-radius: 8px; cursor: pointer; text-align: right; font-weight: bold; }
         .nav-btn.active { border-color: var(--neon); color: var(--neon); }
 
-        /* المتجر */
         .store-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; }
         .item-card { background: var(--glass); border: 1px solid rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; text-align: center; transition: 0.3s; }
         .item-card:hover { border-color: var(--neon); transform: translateY(-5px); }
@@ -39,7 +35,7 @@
 
         @media (max-width: 768px) {
             .dashboard-layout { flex-direction: column; }
-            .sidebar { width: 100%; height: auto; }
+            .sidebar { width: 100%; height: auto; border-left: none; border-bottom: 1px solid #222; }
             body { overflow-y: auto; }
         }
     </style>
@@ -73,14 +69,15 @@
 
         <main class="content-area">
             <div class="news-ticker">
-                <marquee id="news-text">🔥 تم تحديث المتجر الملكي.. ترقبوا رتبة "الأدميرال" قريباً!</marquee>
+                <marquee>🔥 أهلاً بك في نظام INFINITY ERA المطور.. استمتع بالمتجر والخدمات الجديدة!</marquee>
             </div>
 
             <div id="tab-home">
-                <h2 style="font-family: Orbitron; border-bottom: 1px solid var(--neon); padding-bottom: 10px;">DASHBOARD</h2>
-                <div style="background: var(--glass); padding: 20px; border-radius: 20px; border: 1px solid #ffd700;">
-                    <h3>🏆 لوحة الشرف</h3>
-                    <div id="top-members-list"></div>
+                <h2 style="font-family: Orbitron; border-bottom: 1px solid var(--neon); padding-bottom: 10px;">الرئيسية</h2>
+                <div style="background: var(--glass); padding: 30px; border-radius: 20px; text-align: center;">
+                    <h3>مرحباً بك في القاعدة المركزية</h3>
+                    <p>هنا يمكنك إدارة حسابك البنكي وشراء الرتب والميزات من المتجر.</p>
+                    <div style="color: var(--neon); font-size: 1.2rem;">حالة النظام: متصل 🟢</div>
                 </div>
             </div>
 
@@ -89,13 +86,13 @@
                 <div class="store-grid">
                     <div class="item-card">
                         <h3>رتبة قائد ⚔️</h3>
-                        <p style="font-size: 0.8rem;">ترقية فورية في النقابة</p>
+                        <p style="font-size: 0.8rem;">صلاحيات إدارية كاملة</p>
                         <span class="price">10,000 INF</span>
                         <button class="main-btn" style="padding: 8px;" onclick="buy('رتبة قائد', 10000)">طلب شراء</button>
                     </div>
                     <div class="item-card">
                         <h3>بطاقة عفو 🎫</h3>
-                        <p style="font-size: 0.8rem;">إلغاء عقوبة واحدة</p>
+                        <p style="font-size: 0.8rem;">إلغاء عقوبة طرد واحدة</p>
                         <span class="price">5,000 INF</span>
                         <button class="main-btn" style="padding: 8px;" onclick="buy('بطاقة عفو', 5000)">طلب شراء</button>
                     </div>
@@ -105,14 +102,16 @@
     </div>
 
     <script>
+        // --- هنا تضيف الأعضاء وتعدل رصيدهم بسهولة ---
         const members = {
             "levi": { pin: "1001", balance: 50000, rank: "الإمبراطور" },
             "dororo": { pin: "2423", balance: 12500, rank: "المؤسس" },
-            "fang": { pin: "8046", balance: 8500, rank: "المستشار" }
+            "fang": { pin: "8046", balance: 8500, rank: "المستشار" },
+            "amine": { pin: "2026", balance: 15000, rank: "عضو نخبة" }
         };
 
         let currentUser = "";
-        const myWhatsApp = "212622201526"; // رقمك لاستقبال الطلبات
+        const myWhatsApp = "212622201526";
 
         function processLogin() {
             const user = document.getElementById("username").value.toLowerCase().trim();
@@ -123,7 +122,7 @@
                 document.getElementById("login-page").style.display = "none";
                 document.getElementById("dashboard").style.display = "flex";
                 updateUI();
-            } else { alert("🛡️ الهوية غير صحيحة!"); }
+            } else { alert("🛡️ البيانات غير صحيحة!"); }
         }
 
         function updateUI() {
@@ -131,7 +130,6 @@
             document.getElementById("display-name").innerText = currentUser.toUpperCase();
             document.getElementById("display-balance").innerText = data.balance.toLocaleString() + " INF";
             document.getElementById("display-rank").innerText = "الرتبة: " + data.rank;
-            updateLeaderboard();
         }
 
         function showTab(tab) {
@@ -139,18 +137,6 @@
             document.getElementById('tab-store').style.display = tab === 'store' ? 'block' : 'none';
             document.getElementById('btn-home').classList.toggle('active', tab === 'home');
             document.getElementById('btn-store').classList.toggle('active', tab === 'store');
-        }
-
-        function updateLeaderboard() {
-            const list = document.getElementById("top-members-list");
-            list.innerHTML = "";
-            const sorted = Object.keys(members).map(n => ({ n, b: members[n].balance })).sort((a, b) => b.b - a.b).slice(0, 3);
-            sorted.forEach((m, i) => {
-                list.innerHTML += `<div style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid rgba(255,255,255,0.05);">
-                    <span style="${i===0?'color:#ffd700;font-weight:bold':''}">#${i+1} ${m.n.toUpperCase()}</span>
-                    <span>${m.b.toLocaleString()} INF</span>
-                </div>`;
-            });
         }
 
         function buy(item, price) {
