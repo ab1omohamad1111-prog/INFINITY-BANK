@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INFINITY ERA | المركز الرئيسي</title>
+    <title>INFINITY ERA | القاعدة المركزية</title>
+    <link rel="stylesheet" href="style.css?v=1.1">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div id="login-page" class="overlay-wrapper">
         <div class="login-box">
             <div class="logo-glow">INFINITY</div>
+            <p style="font-size: 0.9rem; opacity: 0.8;">نظام الإدارة المركزية</p>
             <input type="text" id="username" placeholder="اسم المستخدم">
             <input type="password" id="userpin" placeholder="الرمز السري">
             <button class="main-btn" onclick="processLogin()">دخول القاعدة 🛡️</button>
@@ -23,37 +24,39 @@
             <div class="bank-card">
                 <div>
                     <small style="color: #00d2ff">INFINITY BANK</small>
-                    <h2 id="display-name" style="margin: 5px 0">---</h2>
+                    <h2 id="display-name">---</h2>
                     <p id="display-rank" style="font-size: 0.8rem; opacity: 0.7">---</p>
                 </div>
-                <h1 id="display-balance" style="color: #00ffcc; margin: 0;">0 INF</h1>
+                <h1 id="display-balance">0 INF</h1>
             </div>
             
-            <button class="nav-btn active" id="btn-home" onclick="showTab('home')">🏠 الرئيسية</button>
-            <button class="nav-btn" id="btn-store" onclick="showTab('store')">🛒 المتجر الملكي</button>
-            <button class="nav-btn" style="color: #ff4444; border-color: #441111;" onclick="location.reload()">🚪 تسجيل الخروج</button>
+            <nav class="nav-menu">
+                <button class="nav-btn active" id="btn-home" onclick="showTab('home')">🏠 الرئيسية</button>
+                <button class="nav-btn" id="btn-store" onclick="showTab('store')">🛒 المتجر الملكي</button>
+                <button class="nav-btn" style="color: #ff4444;" onclick="location.reload()">🚪 خروج</button>
+            </nav>
         </aside>
 
         <main class="content-area">
             <div class="news-ticker">
-                <marquee>🔥 أهلاً بك في INFINITY ERA.. نظام الإدارة المركزية جاهز للعمل!</marquee>
+                <marquee>🔥 مرحباً بك في INFINITY ERA.. النظام يعمل بكامل طاقته الآن!</marquee>
             </div>
 
             <div id="tab-home">
-                <div class="welcome-container">
+                <div class="welcome-section">
                     <h2>القاعدة المركزية</h2>
-                    <p>حسابك مؤمن وجاهز للعمليات.</p>
+                    <p>أهلاً بك يا مستشار، يمكنك البدء بإدارة شؤونك من هنا.</p>
                 </div>
             </div>
 
             <div id="tab-store" style="display: none;">
-                <h2 class="section-title">ROYAL STORE</h2>
+                <h2 style="font-family: Orbitron; color: #00ffcc; border-bottom: 1px solid #222; padding-bottom: 10px;">ROYAL STORE</h2>
                 <div class="store-grid" id="store-items">
                     </div>
             </div>
         </main>
     </div>
 
-    <script src="script.js?v=999"></script>
+    <script src="script.js?v=1.1"></script>
 </body>
 </html>
