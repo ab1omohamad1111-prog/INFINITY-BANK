@@ -3,60 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INFINITY ERA | القاعدة المركزية</title>
-    <link rel="stylesheet" href="style.css?v=1.1">
+    <title>INFINITY ERA | المركز الرئيسي</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* التنسيق (CSS) مدمج هنا لضمان عمله */
+        :root { --neon: #00d2ff; --bg: #050505; --glass: rgba(255, 255, 255, 0.05); }
+        * { box-sizing: border-box; transition: 0.3s; }
+        body { margin: 0; background: var(--bg); color: #fff; font-family: 'Cairo', sans-serif; direction: rtl; height: 100vh; overflow: hidden; }
+        .overlay-wrapper { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: #000; z-index: 1000; }
+        .login-box { background: var(--glass); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); border-radius: 25px; padding: 40px; text-align: center; width: 320px; box-shadow: 0 0 30px rgba(0,210,255,0.1); }
+        .logo-glow { font-family: 'Orbitron'; font-size: 2.2rem; text-shadow: 0 0 15px var(--neon); color: var(--neon); margin-bottom: 20px; }
+        input { width: 100%; padding: 12px; margin: 10px 0; background: #111; border: 1px solid #333; color: #fff; border-radius: 10px; text-align: center; outline: none; }
+        .main-btn { background: var(--neon); color: #000; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; }
+        .dashboard-layout { display: none; width: 100%; height: 100%; }
+        .sidebar { width: 300px; background: #080808; padding: 20px; border-left: 1px solid #111; display: flex; flex-direction: column; gap: 15px; }
+        .bank-card { background: linear-gradient(135deg, #001f3f, #000); border: 1px solid var(--neon); border-radius: 15px; padding: 20px; }
+        .content-area { flex: 1; padding: 20px; overflow-y: auto; background: radial-gradient(circle at top, #001f3f, #000); }
+        .nav-btn { background: transparent; color: #888; border: 1px solid #222; padding: 12px; border-radius: 8px; cursor: pointer; text-align: right; }
+        .nav-btn.active { border-color: var(--neon); color: var(--neon); background: rgba(0, 210, 255, 0.05); }
+        .store-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; margin-top: 20px; }
+        .item-card { background: var(--glass); border: 1px solid rgba(255,255,255,0.1); padding: 15px; border-radius: 15px; text-align: center; }
+        @media (max-width: 768px) { .dashboard-layout { flex-direction: column; } .sidebar { width: 100%; height: auto; } body { overflow-y: auto; } }
+    </style>
 </head>
 <body>
 
     <div id="login-page" class="overlay-wrapper">
         <div class="login-box">
             <div class="logo-glow">INFINITY</div>
-            <p style="font-size: 0.9rem; opacity: 0.8;">نظام الإدارة المركزية</p>
             <input type="text" id="username" placeholder="اسم المستخدم">
             <input type="password" id="userpin" placeholder="الرمز السري">
-            <button class="main-btn" onclick="processLogin()">دخول القاعدة 🛡️</button>
+            <button class="main-btn" onclick="startLogin()">دخول القاعدة 🛡️</button>
         </div>
     </div>
 
-    <div id="dashboard" class="dashboard-layout" style="display: none;">
+    <div id="dashboard" class="dashboard-layout">
         <aside class="sidebar">
             <div class="bank-card">
-                <div>
-                    <small style="color: #00d2ff">INFINITY BANK</small>
-                    <h2 id="display-name">---</h2>
-                    <p id="display-rank" style="font-size: 0.8rem; opacity: 0.7">---</p>
-                </div>
-                <h1 id="display-balance">0 INF</h1>
+                <small style="color: var(--neon)">INFINITY BANK</small>
+                <h2 id="display-name" style="margin: 5px 0">---</h2>
+                <h1 id="display-balance" style="color: #00ffcc; margin: 0;">0 INF</h1>
             </div>
-            
-            <nav class="nav-menu">
-                <button class="nav-btn active" id="btn-home" onclick="showTab('home')">🏠 الرئيسية</button>
-                <button class="nav-btn" id="btn-store" onclick="showTab('store')">🛒 المتجر الملكي</button>
-                <button class="nav-btn" style="color: #ff4444;" onclick="location.reload()">🚪 خروج</button>
-            </nav>
+            <button class="nav-btn active" id="btn-home" onclick="showTab('home')">🏠 الرئيسية</button>
+            <button class="nav-btn" id="btn-store" onclick="showTab('store')">🛒 المتجر</button>
+            <button class="nav-btn" style="color: #ff4444;" onclick="location.reload()">🚪 خروج</button>
         </aside>
-
         <main class="content-area">
-            <div class="news-ticker">
-                <marquee>🔥 مرحباً بك في INFINITY ERA.. النظام يعمل بكامل طاقته الآن!</marquee>
-            </div>
-
             <div id="tab-home">
-                <div class="welcome-section">
-                    <h2>القاعدة المركزية</h2>
-                    <p>أهلاً بك يا مستشار، يمكنك البدء بإدارة شؤونك من هنا.</p>
-                </div>
+                <h2>أهلاً بك في المركز الرئيسي</h2>
+                <p>النظام متصل وآمن 🟢</p>
             </div>
-
             <div id="tab-store" style="display: none;">
-                <h2 style="font-family: Orbitron; color: #00ffcc; border-bottom: 1px solid #222; padding-bottom: 10px;">ROYAL STORE</h2>
-                <div class="store-grid" id="store-items">
-                    </div>
+                <div class="store-grid" id="store-items"></div>
             </div>
         </main>
     </div>
 
-    <script src="script.js?v=1.1"></script>
+    <script>
+        /* البرمجة (JS) مدمجة هنا لضمان عملها */
+        const members = {
+            "levi": { pin: "1001", balance: 50000, rank: "الإمبراطور" },
+            "amine": { pin: "2026", balance: 15000, rank: "مستشار" }
+        };
+
+        function startLogin() {
+            const user = document.getElementById("username").value.toLowerCase().trim();
+            const pin = document.getElementById("userpin").value.trim();
+
+            if (members[user] && members[user].pin === pin) {
+                document.getElementById("login-page").style.display = "none";
+                document.getElementById("dashboard").style.display = "flex";
+                document.getElementById("display-name").innerText = user.toUpperCase();
+                document.getElementById("display-balance").innerText = members[user].balance.toLocaleString() + " INF";
+                loadStore(user);
+            } else {
+                alert("بيانات خاطئة!");
+            }
+        }
+
+        function showTab(tab) {
+            document.getElementById('tab-home').style.display = tab === 'home' ? 'block' : 'none';
+            document.getElementById('tab-store').style.display = tab === 'store' ? 'block' : 'none';
+            document.getElementById('btn-home').classList.toggle('active', tab === 'home');
+            document.getElementById('btn-store').classList.toggle('active', tab === 'store');
+        }
+
+        function loadStore(user) {
+            const store = document.getElementById('store-items');
+            const items = [{n: "رتبة قائد", p: 10000}, {n: "بطاقة عفو", p: 5000}];
+            store.innerHTML = items.map(i => `
+                <div class="item-card">
+                    <h3>${i.n}</h3>
+                    <p style="color:#00ffcc">${i.p} INF</p>
+                    <button class="main-btn" onclick="alert('تم إرسال طلبك للإدارة!')">شراء</button>
+                </div>
+            `).join('');
+        }
+    </script>
 </body>
 </html>
