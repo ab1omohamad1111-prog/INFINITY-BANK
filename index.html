@@ -3,243 +3,218 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INFINITY SYSTEM | V9 STABLE</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <title>INFINITY GOLD | OS V13</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Orbitron:wght@400;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #00f2ff;
             --accent: #ff007b;
-            --bg: #03080c;
-            --card-bg: #0a1118;
-            --glass: rgba(255, 255, 255, 0.05);
+            --bg: #05080a;
+            --card: rgba(10, 20, 30, 0.8);
             --border: rgba(0, 242, 255, 0.2);
+            --glow: 0 0 15px rgba(0, 242, 255, 0.4);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
-        body { background: var(--bg); color: white; min-height: 100vh; overflow-x: hidden; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; transition: 0.3s; }
+        body { background: var(--bg); color: white; overflow-x: hidden; background-image: 
+            linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), 
+            url('https://wallpaperaccess.com/full/1155127.jpg'); background-size: cover; background-attachment: fixed; }
 
-        /* الشاشات الرئيسية */
-        .page { display: none; min-height: 100vh; padding: 20px; animation: fadeIn 0.5s ease; }
-        .active-page { display: flex; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* الشاشات */
+        .screen { display: none; min-height: 100vh; padding: 20px; animation: fadeIn 0.6s ease; }
+        .active { display: flex; flex-direction: column; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* شاشة الدخول */
-        #login-page { align-items: center; justify-content: center; background: radial-gradient(circle, #002b2e 0%, #03080c 100%); }
-        .login-box { 
-            background: var(--glass); backdrop-filter: blur(15px); padding: 40px; 
-            border-radius: 30px; border: 1px solid var(--border); width: 90%; max-width: 400px; text-align: center;
-        }
-
-        /* لوحة التحكم Layout */
-        #main-dashboard { display: none; grid-template-columns: 380px 1fr; gap: 20px; max-width: 1400px; margin: 0 auto; }
-        @media (max-width: 1000px) { #main-dashboard { grid-template-columns: 1fr; } }
-
-        /* البطاقة */
-        .card-panel {
-            background: var(--card-bg); border-radius: 25px; padding: 25px; border: 1px solid var(--border);
-            height: fit-content; position: sticky; top: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-        }
-        .cc-number { font-family: 'Orbitron'; font-size: 1.4rem; color: var(--primary); margin: 20px 0; letter-spacing: 2px; }
+        #login-screen { align-items: center; justify-content: center; }
+        .login-card { background: var(--card); backdrop-filter: blur(15px); padding: 40px; border-radius: 30px; border: 1px solid var(--primary); width: 100%; max-width: 400px; text-align: center; box-shadow: var(--glow); }
         
-        /* الأزرار والمدخلات */
-        input, select { 
-            width: 100%; padding: 12px; margin: 8px 0; background: rgba(0,0,0,0.4); 
-            border: 1px solid var(--border); border-radius: 12px; color: white; outline: none; text-align: center;
-        }
-        .btn { 
-            width: 100%; padding: 12px; border-radius: 12px; border: none; cursor: pointer; 
-            font-weight: bold; transition: 0.3s; margin-top: 10px;
-        }
-        .btn-primary { background: var(--primary); color: #000; }
-        .btn-accent { background: var(--accent); color: #fff; }
+        /* العناصر المشتركة */
+        input { width: 100%; padding: 15px; margin: 10px 0; background: rgba(0,0,0,0.5); border: 1px solid var(--border); border-radius: 15px; color: #fff; text-align: center; font-size: 1rem; }
+        input:focus { border-color: var(--primary); box-shadow: var(--glow); outline: none; }
+        
+        .btn { padding: 15px 25px; border-radius: 15px; border: none; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
+        .btn-glow { background: var(--primary); color: #000; box-shadow: var(--glow); }
+        .btn-glow:hover { transform: scale(1.05); filter: brightness(1.2); }
 
-        /* التبويبات */
-        .tabs { display: flex; gap: 10px; margin-bottom: 20px; background: var(--glass); padding: 10px; border-radius: 15px; }
-        .tab-btn { flex: 1; padding: 10px; border: none; background: transparent; color: #fff; cursor: pointer; border-radius: 10px; font-weight: bold; }
-        .tab-btn.active { background: var(--primary); color: #000; }
+        /* لوحة التحكم */
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 20px; background: var(--card); border-bottom: 1px solid var(--border); border-radius: 0 0 20px 20px; margin-bottom: 25px; }
+        .main-grid { display: grid; grid-template-columns: 350px 1fr; gap: 25px; max-width: 1400px; margin: 0 auto; width: 100%; }
+        @media (max-width: 900px) { .main-grid { grid-template-columns: 1fr; } }
+
+        /* البطاقة الشخصية */
+        .user-card { background: linear-gradient(135deg, #0a141e 0%, #000 100%); padding: 30px; border-radius: 30px; border: 1px solid var(--border); position: sticky; top: 20px; }
+        .balance-chip { background: rgba(0,242,255,0.1); border: 1px solid var(--primary); padding: 20px; border-radius: 20px; margin: 20px 0; text-align: center; }
+        .balance-chip h2 { font-family: 'Orbitron'; font-size: 2rem; color: var(--primary); }
+
+        /* الأقسام */
+        .content-box { background: var(--card); border-radius: 30px; padding: 25px; border: 1px solid var(--border); }
+        .tabs { display: flex; gap: 10px; margin-bottom: 20px; overflow-x: auto; }
+        .tab { padding: 12px 25px; background: rgba(255,255,255,0.05); border-radius: 12px; cursor: pointer; white-space: nowrap; font-weight: bold; }
+        .tab.active-tab { background: var(--primary); color: #000; }
 
         /* المتجر */
-        .store-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
-        .item { background: var(--glass); padding: 20px; border-radius: 20px; border: 1px solid var(--border); text-align: center; }
-        .item h4 { margin-bottom: 10px; }
-        .price { color: var(--primary); font-family: 'Orbitron'; font-size: 1.2rem; }
+        .store-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+        .product { background: rgba(255,255,255,0.03); padding: 20px; border-radius: 25px; border: 1px solid var(--border); text-align: center; }
+        .product:hover { border-color: var(--accent); background: rgba(255,0,123,0.05); }
 
-        /* صندوق الـ PIN */
-        .pin-box { margin-top: 15px; font-size: 0.8rem; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 10px; border: 1px dashed var(--border); }
+        /* التنبيهات */
+        #toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--accent); padding: 12px 30px; border-radius: 50px; display: none; z-index: 9999; box-shadow: 0 0 20px rgba(255,0,123,0.5); }
     </style>
 </head>
 <body>
 
-    <!-- صفحة الدخول -->
-    <div id="login-page" class="page active-page">
-        <div class="login-box">
-            <h1 style="font-family:'Orbitron'; color:var(--primary); margin-bottom: 10px;">INFINITY</h1>
-            <input type="text" id="user_in" placeholder="اسم المستخدم">
-            <input type="password" id="pass_in" placeholder="كلمة المرور">
-            <button class="btn btn-primary" onclick="handleLogin()">دخول النظام 🔓</button>
+    <div id="toast">تمت العملية بنجاح!</div>
+
+    <section id="login-screen" class="screen active">
+        <div class="login-card">
+            <h1 style="font-family:'Orbitron'; color:var(--primary); margin-bottom:10px;">INFINITY <span style="color:var(--accent)">V13</span></h1>
+            <p style="font-size: 0.8rem; margin-bottom: 20px; opacity: 0.7;">نظام إدارة الرصيد الرقمي للنقابة</p>
+            <input type="text" id="u_in" placeholder="اسم المستخدم">
+            <input type="password" id="p_in" placeholder="الرمز السري">
+            <button class="btn btn-glow" style="width:100%" onclick="login()">دخول المصادقة ⚡</button>
         </div>
-    </div>
+    </section>
 
-    <!-- لوحة التحكم -->
-    <div id="main-dashboard" class="page">
-        <!-- الجانب الأيمن: معلوماتك -->
-        <div class="card-panel">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <span style="font-family: 'Orbitron'; color: var(--primary);">INF BANK</span>
-                <span id="u_rank" style="font-size: 0.7rem; background: var(--accent); padding: 2px 8px; border-radius: 5px;">---</span>
-            </div>
-            <div class="cc-number">**** **** **** <span id="u_cc">0000</span></div>
-            <div style="margin-bottom: 20px;">
-                <p style="font-size: 0.8rem; opacity: 0.6;">اسم المستخدم: <span id="u_name" style="color:white">---</span></p>
-            </div>
-            <div style="background: rgba(0,242,255,0.05); padding: 15px; border-radius: 15px;">
-                <small>رصيدك الحالي:</small>
-                <h2 style="font-family:'Orbitron'; color:var(--primary);"><span id="u_bal">0</span> INF</h2>
-            </div>
-            
-            <div class="pin-box">
-                رمز الـ PIN: <span id="pin_display">****</span>
-                <button onclick="togglePinDisplay()" style="background:none; border:none; color:var(--primary); cursor:pointer; margin-right:10px; text-decoration:underline">إظهار</button>
-            </div>
-
-            <div style="margin-top: 25px; border-top: 1px solid var(--border); padding-top: 20px;">
-                <p style="font-size: 0.8rem; margin-bottom: 10px;">تحويل سريع (كود هدية) 🎁</p>
-                <input type="number" id="gift_amt" placeholder="المبلغ">
-                <button class="btn btn-accent" onclick="createGift()">إنشاء كود إرسال</button>
-                <div id="code_output" style="margin-top:10px; font-weight:bold; color:var(--primary); text-align:center;"></div>
-            </div>
+    <section id="app-screen" class="screen">
+        <div class="header">
+            <div style="font-family:'Orbitron'; font-weight:900; font-size:1.2rem">INF<span style="color:var(--primary)">OS</span></div>
+            <button class="btn" style="background:rgba(255,0,0,0.2); color:red; padding:8px 15px" onclick="location.reload()">خروج</button>
         </div>
 
-        <!-- الجانب الأيسر: الأقسام -->
-        <div class="content-area">
-            <div class="tabs">
-                <button class="tab-btn active" onclick="switchTab('home', this)">🏠 الرئيسية</button>
-                <button class="tab-btn" onclick="switchTab('store', this)">🛒 المتجر</button>
-                <button class="tab-btn" onclick="switchTab('gifts', this)">🎁 الاستلام</button>
-            </div>
+        <div class="main-grid">
+            <div class="user-card">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <div style="width:60px; height:60px; background:var(--primary); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#000; font-weight:bold; font-size:1.5rem" id="u_avatar">?</div>
+                    <div>
+                        <h3 id="u_display_name">USERNAME</h3>
+                        <small id="u_display_rank" style="color:var(--accent)">RANK: ---</small>
+                    </div>
+                </div>
 
-            <div id="tab-home" class="tab-content">
-                <div style="background:var(--glass); padding:30px; border-radius:20px; line-height:1.8">
-                    <h3>أهلاً بك في نظام INFINITY V9 🦅</h3>
-                    <p>هذا النظام مصمم لإدارة رصيدك في النقابة. يمكنك تحويل النقاط لأي عضو آخر عبر "أكواد الهدايا" لضمان وصولها يدوياً.</p>
+                <div class="balance-chip">
+                    <small style="text-transform:uppercase; letter-spacing:2px">رصيدك التقديري</small>
+                    <h2 id="u_display_bal">0</h2>
+                    <small style="color:var(--primary)">INF COINS</small>
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <h4 style="margin-bottom: 10px;">طلب تحويل بنكي 🏦</h4>
+                    <input type="text" id="target_u" placeholder="لقب المستلم">
+                    <input type="number" id="target_a" placeholder="المبلغ المراد تحويله">
+                    <button class="btn btn-glow" style="width:100%" onclick="requestTransfer()">إرسال طلب التحويل</button>
                 </div>
             </div>
 
-            <div id="tab-store" class="tab-content" style="display:none">
-                <div class="store-grid" id="store_html"></div>
-            </div>
+            <div class="main-view">
+                <div class="tabs">
+                    <div class="tab active-tab" onclick="switchTab('store', this)">المتجر المركزي</div>
+                    <div class="tab" onclick="switchTab('tasks', this)">كسب الرصيد 💰</div>
+                    <div class="tab" onclick="switchTab('rules', this)">القوانين</div>
+                </div>
 
-            <div id="tab-gifts" class="tab-content" style="display:none">
-                <div style="background:var(--glass); padding:30px; border-radius:20px; text-align:center">
-                    <h3>استلام رصيد 🏷️</h3>
-                    <p style="margin-bottom: 20px; opacity:0.7">أدخل الكود الذي استلمته من صديقك هنا:</p>
-                    <input type="text" id="redeem_in" placeholder="INF-XXXX">
-                    <button class="btn btn-primary" onclick="redeemGift()">تفعيل الكود واستلام الرصيد</button>
+                <div id="view-store" class="content-box">
+                    <div class="store-grid" id="store_items">
+                        </div>
+                </div>
+
+                <div id="view-tasks" class="content-box" style="display:none">
+                    <h3>كيف تحصل على INF؟</h3>
+                    <ul style="margin-top: 20px; list-style: none;">
+                        <li style="background:rgba(255,255,255,0.03); padding:15px; border-radius:15px; margin-bottom:10px; border-right:4px solid var(--primary)">
+                            <b>النشاط اليومي:</b> التفاعل في المجموعة يمنحك 100 INF يومياً.
+                        </li>
+                        <li style="background:rgba(255,255,255,0.03); padding:15px; border-radius:15px; margin-bottom:10px; border-right:4px solid var(--accent)">
+                            <b>الفوز في المسابقات:</b> جوائز تصل إلى 10,000 INF.
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="view-rules" class="content-box" style="display:none">
+                    <h3>قوانين البنك 🛡️</h3>
+                    <p style="margin-top:15px; opacity:0.8; line-height:1.8">
+                        1. لا يتم التحويل إلا بعد موافقة محمد أمين.<br>
+                        2. أي محاولة تلاعب بالرصيد تؤدي للحظر من النقابة.<br>
+                        3. الرصيد لا يمكن استبداله بمال حقيقي، هو فقط لميزات النقابة.
+                    </p>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
     <script>
-        // قاعدة البيانات (محاكاة)
-        var users = {
-            "levi": { pin: "1001", bal: 5000000, rank: "الإمبراطور", cc: "8822" },
-            "dororo": { pin: "300", bal: 100000, rank: "نائب الامبراطور", cc: "1199" },
-            "fang": { pin: "8046", bal: 8500, rank: "المستشار", cc: "4455" }
+        // قاعدة البيانات التجريبية
+        const users = {
+            "levi": { pin: "1001", bal: 5000000, rank: "الإمبراطور", color: "#00f2ff" },
+            "dororo": { pin: "300", bal: 100000, rank: "نائب الامبراطور", color: "#ff007b" },
+            "fang": { pin: "8046", bal: 8500, rank: "المستشار", color: "#7000ff" }
         };
 
-        var storeItems = [
-            { n: "رتبة فارس ⚔️", p: 9500 }, { n: "إعفاء عقوبة 🛡️", p: 15000 },
-            { n: "رتبة نقيب 🎖️", p: 16000 }, { n: "رتبة نائب أدميرال 👑", p: 70000 },
-            { n: "فك حظر نهائي 🔓", p: 250000 }, { n: "تغيير اللقب 🎀", p: 20500 }
-        ];
+        let currentU = "";
 
-        var currentUser = "";
-        var activeGifts = {}; // لتخزين الأكواد المؤقتة
-        var pinVisible = false;
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.innerText = msg;
+            t.style.display = 'block';
+            setTimeout(() => t.style.display = 'none', 3000);
+        }
 
-        // الدخول
-        function handleLogin() {
-            var u = document.getElementById('user_in').value.toLowerCase().trim();
-            var p = document.getElementById('pass_in').value.trim();
-
+        function login() {
+            const u = document.getElementById('u_in').value.toLowerCase().trim();
+            const p = document.getElementById('p_in').value.trim();
             if (users[u] && users[u].pin === p) {
-                currentUser = u;
-                document.getElementById('login-page').classList.remove('active-page');
-                document.getElementById('main-dashboard').style.display = 'grid';
-                renderUI();
-                renderStore();
-            } else {
-                alert("بيانات الدخول غير صحيحة!");
-            }
+                currentU = u;
+                document.getElementById('login-screen').classList.remove('active');
+                document.getElementById('app-screen').classList.add('active');
+                loadData();
+            } else { showToast("خطأ في بيانات الدخول! ❌"); }
         }
 
-        // تحديث الواجهة
-        function renderUI() {
-            document.getElementById('u_name').innerText = currentUser;
-            document.getElementById('u_rank').innerText = users[currentUser].rank;
-            document.getElementById('u_bal').innerText = users[currentUser].bal.toLocaleString();
-            document.getElementById('u_cc').innerText = users[currentUser].cc;
-            document.getElementById('pin_display').innerText = pinVisible ? users[currentUser].pin : "****";
+        function loadData() {
+            const user = users[currentU];
+            document.getElementById('u_display_name').innerText = currentU;
+            document.getElementById('u_display_rank').innerText = "RANK: " + user.rank;
+            document.getElementById('u_display_bal').innerText = user.bal.toLocaleString();
+            document.getElementById('u_avatar').innerText = currentU.charAt(0).toUpperCase();
+            document.getElementById('u_avatar').style.background = user.color || 'var(--primary)';
+            renderStore();
         }
 
-        function togglePinDisplay() {
-            pinVisible = !pinVisible;
-            renderUI();
+        function switchTab(id, el) {
+            document.querySelectorAll('.content-box').forEach(b => b.style.display = 'none');
+            document.getElementById('view-' + id).style.display = 'block';
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active-tab'));
+            el.classList.add('active-tab');
         }
 
-        // التبديل بين الأقسام
-        function switchTab(id, btn) {
-            document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
-            document.getElementById('tab-' + id).style.display = 'block';
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-        }
-
-        // إنشاء كود هدية
-        function createGift() {
-            var amt = parseInt(document.getElementById('gift_amt').value);
-            if (amt > 0 && users[currentUser].bal >= amt) {
-                users[currentUser].bal -= amt;
-                var code = "INF-" + Math.floor(1000 + Math.random() * 9000);
-                activeGifts[code] = amt;
-                document.getElementById('code_output').innerText = "أرسل هذا الكود لصديقك: " + code;
-                renderUI();
-                alert("تم إنشاء الكود وخصم المبلغ!");
-            } else {
-                alert("الرصيد غير كافٍ أو المبلغ غير صحيح!");
-            }
-        }
-
-        // تفعيل كود
-        function redeemGift() {
-            var code = document.getElementById('redeem_in').value.toUpperCase().trim();
-            if (activeGifts[code]) {
-                var amt = activeGifts[code];
-                users[currentUser].bal += amt;
-                delete activeGifts[code]; // حذف الكود لكي لا يستخدم مرتين
-                renderUI();
-                alert("مبروك! استلمت " + amt + " INF ✅");
-                document.getElementById('redeem_in').value = "";
-            } else {
-                alert("كود غير صحيح أو منتهي!");
-            }
-        }
-
-        // المتجر
         function renderStore() {
-            var html = storeItems.map(item => `
-                <div class="item">
-                    <h4>${item.n}</h4>
-                    <p class="price">${item.p.toLocaleString()}</p>
-                    <button class="btn btn-primary" onclick="buy('${item.n}')">طلب شراء</button>
+            const items = [
+                {n: "رتبة فارس ⚔️", p: 9500}, {n: "إعفاء عقوبة 🛡️", p: 15000},
+                {n: "لقب ملون 🎀", p: 20500}, {n: "فك حظر نهائي 🔓", p: 250000},
+                {n: "رتبة أدميرال 👑", p: 500000}, {n: "صلاحية تصويت 🗳️", p: 5000}
+            ];
+            document.getElementById('store_items').innerHTML = items.map(i => `
+                <div class="product">
+                    <h4>${i.n}</h4>
+                    <p style="color:var(--primary); font-family:Orbitron; margin:10px 0">${i.p.toLocaleString()} INF</p>
+                    <button class="btn btn-glow" style="padding:5px 15px; font-size:0.7rem" onclick="buyItem('${i.n}')">طلب الشراء</button>
                 </div>
             `).join('');
-            document.getElementById('store_html').innerHTML = html;
         }
 
-        function buy(n) {
-            window.open("https://wa.me/212622201526?text=" + encodeURIComponent("طلب شراء: " + n + "\nمن العضو: " + currentUser));
+        function requestTransfer() {
+            const target = document.getElementById('target_u').value.trim();
+            const amount = document.getElementById('target_a').value;
+            if (!target || !amount || amount <= 0) { showToast("يرجى ملء البيانات! ⚠️"); return; }
+            
+            const msg = `🚀 *طلب تحويل بنكي V13*\n\n👤 من: ${currentU}\n🎯 إلى: ${target}\n💰 المبلغ: ${amount} INF\n\n_يرجى الموافقة على العملية_`;
+            window.open(`https://wa.me/212622201526?text=${encodeURIComponent(msg)}`);
+            showToast("تم إرسال الطلب للمسؤول ✅");
+        }
+
+        function buyItem(name) {
+            const msg = `🛒 *طلب خدمة من المتجر*\n\n👤 العضو: ${currentU}\n📦 الخدمة: ${name}\n\n_يرجى تأكيد الخصم وتفعيل الخدمة_`;
+            window.open(`https://wa.me/212622201526?text=${encodeURIComponent(msg)}`);
         }
     </script>
 </body>
