@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INFINITY GOLD | OS V13</title>
+    <title>INFINITY BANK | INFOS </title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Orbitron:wght@400;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -72,7 +72,7 @@
             <p style="font-size: 0.8rem; margin-bottom: 20px; opacity: 0.7;">نظام إدارة الرصيد الرقمي للنقابة</p>
             <input type="text" id="u_in" placeholder="اسم المستخدم">
             <input type="password" id="p_in" placeholder="الرمز السري">
-            <button class="btn btn-glow" style="width:100%" onclick="login()">دخول المصادقة ⚡</button>
+            <button class="btn btn-glow" style="width:100%" onclick="login()">تسجيل الدخول⚡</button>
         </div>
     </section>
 
@@ -122,7 +122,7 @@
                     <h3>كيف تحصل على INF؟</h3>
                     <ul style="margin-top: 20px; list-style: none;">
                         <li style="background:rgba(255,255,255,0.03); padding:15px; border-radius:15px; margin-bottom:10px; border-right:4px solid var(--primary)">
-                            <b>النشاط اليومي:</b> التفاعل في المجموعة يمنحك 100 INF يومياً.
+                            <b>النشاط اليومي:</b>التفاعل اليومي والمستمر.
                         </li>
                         <li style="background:rgba(255,255,255,0.03); padding:15px; border-radius:15px; margin-bottom:10px; border-right:4px solid var(--accent)">
                             <b>الفوز في المسابقات:</b> جوائز تصل إلى 10,000 INF.
@@ -133,7 +133,7 @@
                 <div id="view-rules" class="content-box" style="display:none">
                     <h3>قوانين البنك 🛡️</h3>
                     <p style="margin-top:15px; opacity:0.8; line-height:1.8">
-                        1. لا يتم التحويل إلا بعد موافقة محمد أمين.<br>
+                        1. الطلبات المزيفة تادي الى طرد مؤقت وتجميد الحساب البنكي.<br>
                         2. أي محاولة تلاعب بالرصيد تؤدي للحظر من النقابة.<br>
                         3. الرصيد لا يمكن استبداله بمال حقيقي، هو فقط لميزات النقابة.
                     </p>
@@ -190,8 +190,8 @@
         function renderStore() {
             const items = [
                 {n: "رتبة فارس ⚔️", p: 9500}, {n: "إعفاء عقوبة 🛡️", p: 15000},
-                {n: "لقب ملون 🎀", p: 20500}, {n: "فك حظر نهائي 🔓", p: 250000},
-                {n: "رتبة أدميرال 👑", p: 500000}, {n: "صلاحية تصويت 🗳️", p: 5000}
+                {n: "تغيير اللقب🎀", p: 20500}, {n: "فك حظر نهائي 🔓", p: 250000},
+                {n: "رتبة أدميرال 👑", p: 500000}, {n: "تثبيت رسالة لمدة 24 ساعة📌", p: 5000}
             ];
             document.getElementById('store_items').innerHTML = items.map(i => `
                 <div class="product">
