@@ -6,9 +6,8 @@
     <title>INFINITY SYSTEM | V4</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
     <style>
-        /* التنسيق الجمالي الشامل - Cyberpunk Mode */
         :root {
-            --primary: #00f2ff; /* اللون الأزرق السماوي المتوهج */
+            --primary: #00f2ff;
             --primary-glow: rgba(0, 242, 255, 0.4);
             --bg-dark: #020508;
             --card-bg: rgba(10, 15, 20, 0.9);
@@ -19,25 +18,23 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            transition: 0.3s ease; /* تأثيرات انتقالية ناعمة لجميع العناصر */
+            transition: 0.3s ease;
         }
 
         body {
             background: var(--bg-dark);
             color: #ffffff;
-            font-family: 'Cairo', sans-serif; /* الخط العربي الافتراضي */
+            font-family: 'Cairo', sans-serif;
             height: 100vh;
             overflow: hidden;
-            background-image: radial-gradient(circle, #001f21 0%, #020508 100%); /* خلفية متدرجة فخمة */
+            background-image: radial-gradient(circle, #001f21 0%, #020508 100%);
         }
 
-        /* تنسيق عام للعناوين بالخيال العلمي */
         h1, .inf-label, .out_bal {
             font-family: 'Orbitron', sans-serif;
             letter-spacing: 1px;
         }
 
-        /* صفحة الدخول */
         .page-entry {
             height: 100vh;
             display: flex;
@@ -45,234 +42,72 @@
             justify-content: center;
         }
 
-        /* صندوق الدخول المطور - تأثير زجاجي شفاف (Glassmorphism) */
         .entry-box {
             background: var(--card-bg);
             backdrop-filter: blur(10px);
             padding: 50px 30px;
-            border-radius: 35px; /* حواف منحنية كبيرة وأنيقة */
+            border-radius: 35px;
             border: 1px solid var(--border-col);
             width: 90%;
             max-width: 400px;
             text-align: center;
-            box-shadow: 0 0 50px rgba(0,0,0,0.7), inset 0 0 15px rgba(0, 242, 255, 0.05);
+            box-shadow: 0 0 50px rgba(0,0,0,0.7);
         }
 
         .title-glow {
             color: var(--primary);
-            text-shadow: 0 0 20px var(--primary); /* تأثير توهج قوي للعنوان */
+            text-shadow: 0 0 20px var(--primary);
             font-size: 3rem;
-            margin-bottom: 5px;
         }
 
-        .tagline {
-            opacity: 0.5;
-            font-size: 0.85rem;
-            margin-bottom: 30px;
-            letter-spacing: 1.5px;
-        }
-
-        /* مدخلات النصوص المحدثة */
         input {
             width: 100%;
             padding: 18px;
             margin: 12px 0;
-            border-radius: 18px; /* حواف منحنية للمدخلات */
+            border-radius: 18px;
             border: 1px solid #1a2a35;
             background: rgba(0,0,0,0.5);
             color: white;
             text-align: center;
-            font-size: 1rem;
             outline: none;
         }
 
-        input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 15px var(--primary-glow);
-        }
+        input:focus { border-color: var(--primary); box-shadow: 0 0 15px var(--primary-glow); }
 
-        /* الأزرار المحدثة - Cyber Button */
         .btn-cyber {
             width: 100%;
             padding: 18px;
             background: var(--primary);
             border: none;
-            border-radius: 18px; /* حواف منحنية للأزرار */
+            border-radius: 18px;
             font-weight: bold;
             cursor: pointer;
             color: #020508;
             font-size: 1.1rem;
-            margin-top: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            position: relative;
-            overflow: hidden;
             box-shadow: 0 0 25px var(--primary-glow);
         }
 
-        .btn-cyber:active {
-            transform: scale(0.98); /* تأثير ضغط بسيط */
-        }
+        #dashboard-view { display: none; padding: 20px; max-width: 900px; margin: 0 auto; overflow-y: auto; height: 100vh; }
 
-        /* لوحة التحكم */
-        #dashboard-view {
-            display: none;
-            padding: 20px;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        /* بطاقة الحساب الفخمة */
         .card-prime {
             background: linear-gradient(145deg, #011314 0%, #000000 100%);
             border: 1px solid var(--border-col);
             padding: 30px;
             border-radius: 25px;
             margin-bottom: 25px;
-            position: relative;
-            box-shadow: 0 5px 30px rgba(0,0,0,0.5);
-        }
-
-        /* تأثير زخرفي لبطاقة البنك */
-        .card-prime::before {
-            content: '';
-            position: absolute;
-            top: -5px;
-            left: 20%;
-            width: 60%;
-            height: 10px;
-            background: var(--primary);
-            border-radius: 5px;
-            filter: blur(8px);
-            opacity: 0.7;
-        }
-
-        #out_name {
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-            opacity: 0.8;
-        }
-
-        .balance-line {
-            display: flex;
-            align-items: baseline;
-            justify-content: center;
-            gap: 10px;
-            margin: 15px 0;
-        }
-
-        .inf-label {
-            color: var(--primary);
-            font-size: 1rem;
-        }
-
-        #out_bal {
-            font-size: 3.5rem;
-            font-weight: bold;
-            text-shadow: 0 0 10px var(--primary-glow);
-        }
-
-        #out_rank {
-            background: rgba(0,242,255,0.06);
-            display: inline-block;
-            padding: 8px 20px;
-            border-radius: 12px;
-            border: 1px solid rgba(0,242,255,0.1);
-            font-size: 0.9rem;
-            margin-top: 5px;
-        }
-
-        /* تنسيق أزرار التبويب */
-        .tabs-container {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .tab-btn {
-            flex: 1;
-            padding: 15px;
-            border-radius: 15px;
-            border: 1px solid var(--border-col);
-            background: rgba(10,15,20,0.5);
-            color: white;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 1rem;
-        }
-
-        .tab-btn.active {
-            background: var(--primary);
-            color: #020508;
-            border: none;
-            box-shadow: 0 0 20px var(--primary-glow);
-        }
-
-        /* تنسيق شبكة المتجر */
-        .store-view {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); /* شبكة متجاوبة */
-            gap: 20px;
-        }
-
-        /* تنسيق بطاقة المنتج */
-        .product-item {
-            background: var(--card-bg);
-            padding: 25px 15px;
-            border-radius: 20px;
-            border: 1px solid var(--border-col);
             text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
         }
 
-        .product-item:hover {
-            border-color: var(--primary);
-            transform: translateY(-5px); /* تأثير حركة للأعلى عند تمرير الماوس */
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
+        .balance-line { display: flex; align-items: baseline; justify-content: center; gap: 10px; margin: 10px 0; }
+        #out_bal { font-size: 3rem; color: #fff; }
 
-        .prod-title {
-            font-size: 1.1rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
+        .tabs-container { display: flex; gap: 10px; margin-bottom: 20px; }
+        .tab-btn { flex: 1; padding: 15px; border-radius: 15px; border: 1px solid var(--border-col); background: rgba(0,0,0,0.5); color: white; cursor: pointer; }
+        .tab-btn.active { background: var(--primary); color: #000; font-weight: bold; }
 
-        .prod-price {
-            color: var(--primary);
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.3rem;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-
-        /* الأزرار الصغيرة لطلب الشراء */
-        .request-btn {
-            width: 100%;
-            padding: 10px;
-            background: var(--primary);
-            border: none;
-            border-radius: 10px;
-            font-weight: bold;
-            cursor: pointer;
-            color: #020508;
-            font-size: 0.9rem;
-        }
-
-        /* تأثيرات للأجهزة اللوحية والموبايل */
-        @media (max-width: 600px) {
-            .entry-box {
-                padding: 40px 20px;
-            }
-            #out_bal {
-                font-size: 2.8rem;
-            }
-            .store-view {
-                grid-template-columns: 1fr 1fr; /* صفين في الموبايل */
-                gap: 15px;
-            }
-        }
+        .store-view { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .product-item { background: var(--card-bg); padding: 20px 10px; border-radius: 20px; border: 1px solid var(--border-col); text-align: center; }
+        .request-btn { width: 100%; padding: 10px; background: var(--primary); border: none; border-radius: 10px; margin-top: 10px; cursor: pointer; color: #000; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -280,12 +115,10 @@
     <div id="login-page" class="page-entry">
         <div class="entry-box">
             <h1 class="title-glow">INFINITY</h1>
-            <p class="tagline">نظام الوصول المركزي</p>
-            
-            <input type="text" id="user_input" placeholder="اسم المستخدم" autocomplete="off">
+            <p style="opacity:0.5; margin-bottom:20px;">نظام الوصول المركزي</p>
+            <input type="text" id="user_input" placeholder="اسم المستخدم">
             <input type="password" id="pin_input" placeholder="الرمز السري">
-            
-            <button class="btn-cyber" type="button" onclick="startLogin()">تأكيد الهوية 🛡️</button>
+            <button class="btn-cyber" onclick="startLogin()">تأكيد الهوية 🛡️</button>
         </div>
     </div>
 
@@ -293,33 +126,31 @@
         <div class="card-prime">
             <h2 id="out_name">---</h2>
             <div class="balance-line">
-                <span class="inf-label">INF</span> 
+                <span class="inf-label">INF</span>
                 <span id="out_bal">0</span>
             </div>
-            <p id="out_rank">---</p>
+            <p id="out_rank" style="background:rgba(0,242,255,0.1); padding:5px 15px; border-radius:10px;">---</p>
         </div>
-        
+
         <div class="tabs-container">
             <button id="tab-home" class="tab-btn active" onclick="changeSection('h')">🏠 الرئيسية</button>
             <button id="tab-store" class="tab-btn" onclick="changeSection('s')">🛒 المتجر</button>
         </div>
 
         <div id="sec-h">
-            <div style="background: rgba(255,255,255,0.02); padding: 25px; border-radius: 20px; border: 1px solid #111; line-height: 1.6; border-left: 3px solid var(--primary);">
+            <div style="background: rgba(255,255,255,0.02); padding: 20px; border-radius: 20px; border-left: 4px solid var(--primary);">
                 <h3>مرحباً بك في القاعدة 🦅</h3>
-                <p style="opacity: 0.7; margin-top: 10px;">تم تفعيل بروتوكول الحماية. يمكنك الآن تصفح المتجر وطلب الرتب والخدمات عبر لوحة التحكم الخاصة بك.</p>
+                <p style="opacity: 0.7; margin-top: 10px;">النظام يعمل بكفاءة عالية. تفقد المتجر لأحدث الرتب.</p>
             </div>
         </div>
 
         <div id="sec-s" style="display:none">
-            <h2 style="margin-bottom: 20px; font-size: 1.5rem;">المتجر الملكي</h2>
-            <div class="store-view" id="store_container">
-                </div>
+            <h2 style="margin-bottom: 15px;">المتجر الملكي</h2>
+            <div class="store-view" id="store_container"></div>
         </div>
     </div>
 
     <script>
-        // قاعدة البيانات الثابتة للأعضاء
         var members = {
             "levi": { pin: "1001", bal: 50000, rank: "الإمبراطور" },
             "dororo": { pin: "2423", bal: 12500, rank: "المؤسس" },
@@ -327,7 +158,6 @@
             "fang": { pin: "8046", bal: 8500, rank: "المستشار" }
         };
 
-        // قائمة المنتجات في المتجر
         var products = [
             { n: "رتبة فارس ⚔️", p: 9500 },
             { n: "رتبة lgh.l ⚔️", p: 9500 },
@@ -337,67 +167,44 @@
 
         var activeUser = "";
 
-        // دالة تسجيل الدخول
         function startLogin() {
-            var uInput = document.getElementById('user_input');
-            var pInput = document.getElementById('pin_input');
-            
-            // جلب القيم وتنظيفها
-            var u = uInput.value.toLowerCase().trim();
-            var p = pInput.value.trim();
+            var u = document.getElementById('user_input').value.toLowerCase().trim();
+            var p = document.getElementById('pin_input').value.trim();
 
             if (members[u] && members[u].pin === p) {
-                // النجاح
                 activeUser = u;
-                // تبديل الواجهة
                 document.getElementById('login-page').style.display = 'none';
                 document.getElementById('dashboard-view').style.display = 'block';
-                
-                // تحديث البيانات في الواجهة
                 document.getElementById('out_name').innerText = u.toUpperCase();
-                // تنسيق الرقم بـ comma (فاصلة الآلاف)
                 document.getElementById('out_bal').innerText = members[u].bal.toLocaleString();
                 document.getElementById('out_rank').innerText = members[u].rank;
-                
-                // تحميل المتجر
                 renderStore();
             } else {
-                // الفشل
-                alert("🔒 عذراً! البيانات غير صحيحة. يرجى المحاولة مرة أخرى.");
-                // مسح الرمز السري
-                pInput.value = "";
+                alert("🔒 عذراً! البيانات غير صحيحة.");
             }
         }
 
-        // دالة تبديل الأقسام (الرئيسية/المتجر)
         function changeSection(s) {
             document.getElementById('sec-h').style.display = (s === 'h') ? 'block' : 'none';
             document.getElementById('sec-s').style.display = (s === 's') ? 'block' : 'none';
-            
-            // تحديث حالة الأزرار
             document.getElementById('tab-home').className = (s === 'h') ? 'tab-btn active' : 'tab-btn';
             document.getElementById('tab-store').className = (s === 's') ? 'tab-btn active' : 'tab-btn';
         }
 
-        // دالة إنشاء وعرض المنتجات في المتجر
         function renderStore() {
-            var storeBox = document.getElementById('store_container');
             var html = "";
-            
             for (var i = 0; i < products.length; i++) {
-                var item = products[i];
                 html += '<div class="product-item">' +
-                        '<h4 class="prod-title">' + item.n + '</h4>' +
-                        '<p class="prod-price">' + item.p.toLocaleString() + ' INF</p>' +
-                        '<button class="request-btn" onclick="buy(\'' + item.n + '\')">طلب شراء</button>' +
+                        '<h4 style="font-size:0.9rem">' + products[i].n + '</h4>' +
+                        '<p style="color:var(--primary); font-weight:bold">' + products[i].p.toLocaleString() + '</p>' +
+                        '<button class="request-btn" onclick="buy(\'' + products[i].n + '\')">طلب</button>' +
                         '</div>';
             }
-            storeBox.innerHTML = html;
+            document.getElementById('store_container').innerHTML = html;
         }
 
-        // دالة طلب الشراء وفتح واتساب
         function buy(name) {
-            var msg = encodeURIComponent("طلب شراء: " + name + "\nمن المستخدم: " + activeUser);
+            var msg = encodeURIComponent("طلب شراء: " + name + "\nالمستخدم: " + activeUser);
             window.open("https://wa.me/212622201526?text=" + msg);
         }
     </script>
