@@ -3,170 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INFINITY PREMIUM | V5</title>
+    <title>INFINITY ULTIMATE | V6</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #00f2ff;
-            --accent: #7000ff;
-            --bg: #03080c;
-            --glass: rgba(255, 255, 255, 0.05);
+            --accent: #ff007b;
+            --success: #00ff88;
+            --bg: #02050a;
+            --glass: rgba(255, 255, 255, 0.03);
             --border: rgba(0, 242, 255, 0.2);
         }
 
-        /* الأساسيات والأنيميشن */
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
-        body { background: var(--bg); color: white; overflow: hidden; height: 100vh; }
+        body { background: var(--bg); color: white; overflow: hidden; height: 100vh; background-image: radial-gradient(circle at 0% 0%, #001a1d 0%, #02050a 100%); }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes scanline { 0% { top: 0; } 100% { top: 100%; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* شاشة الدخول المحدثة */
-        .login-screen {
-            height: 100vh; display: flex; align-items: center; justify-content: center;
-            background: radial-gradient(circle at center, #001a1d 0%, #03080c 100%);
-            position: relative;
-        }
-        .login-screen::after {
-            content: ""; position: absolute; width: 100%; height: 2px; background: var(--primary);
-            opacity: 0.1; animation: scanline 3s linear infinite;
-        }
-
+        /* شاشة الدخول */
+        .login-screen { height: 100vh; display: flex; align-items: center; justify-content: center; }
         .login-box {
-            background: var(--glass); backdrop-filter: blur(15px);
-            padding: 40px; border-radius: 30px; border: 1px solid var(--border);
-            text-align: center; width: 90%; max-width: 400px; animation: fadeIn 1s ease-out;
-            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            background: var(--glass); backdrop-filter: blur(20px); padding: 40px; border-radius: 40px;
+            border: 1px solid var(--border); text-align: center; width: 90%; max-width: 400px;
+            box-shadow: 0 0 100px rgba(0, 242, 255, 0.1);
         }
 
-        input {
-            width: 100%; padding: 15px; margin: 10px 0; background: rgba(0,0,0,0.3);
-            border: 1px solid var(--border); border-radius: 12px; color: white; text-align: center;
+        input, select {
+            width: 100%; padding: 15px; margin: 10px 0; background: rgba(0,0,0,0.5);
+            border: 1px solid var(--border); border-radius: 15px; color: white; text-align: center; outline: none;
         }
 
         .btn-main {
-            width: 100%; padding: 15px; background: var(--primary); border: none;
-            border-radius: 12px; font-weight: bold; cursor: pointer; margin-top: 15px;
-            box-shadow: 0 0 20px var(--primary-glow); transition: 0.3s;
+            width: 100%; padding: 15px; background: var(--primary); border: none; border-radius: 15px;
+            font-weight: bold; cursor: pointer; color: black; transition: 0.3s;
         }
-        .btn-main:hover { transform: scale(1.02); filter: brightness(1.2); }
+        .btn-main:hover { transform: scale(1.03); box-shadow: 0 0 30px var(--primary); }
 
-        /* لوحة التحكم الجديدة Layout */
-        #dashboard {
-            display: none; height: 100vh; padding: 20px;
-            display: grid; grid-template-columns: 350px 1fr; gap: 20px;
-            animation: fadeIn 0.8s ease;
+        /* الواجهة الرئيسية */
+        #dashboard { display: none; height: 100vh; padding: 20px; display: grid; grid-template-columns: 380px 1fr; gap: 25px; }
+        @media (max-width: 1000px) { #dashboard { grid-template-columns: 1fr; overflow-y: auto; } }
+
+        /* البطاقة البنكية */
+        .card-panel {
+            background: linear-gradient(160deg, #050a0f 0%, #000 100%);
+            border-radius: 30px; padding: 30px; border: 1px solid var(--border);
+            height: fit-content; position: sticky; top: 20px; box-shadow: 0 10px 50px rgba(0,0,0,0.8);
+        }
+        .cc-chip { width: 45px; height: 35px; background: linear-gradient(135deg, #d4af37, #f9d71c); border-radius: 6px; margin-bottom: 20px; }
+        .cc-number { font-family: 'Orbitron'; font-size: 1.3rem; letter-spacing: 4px; margin: 25px 0; color: var(--primary); }
+
+        /* نظام التحويل */
+        .transfer-box {
+            margin-top: 25px; background: rgba(255,255,255,0.02); padding: 20px;
+            border-radius: 20px; border: 1px solid rgba(255,255,255,0.05);
         }
 
-        @media (max-width: 900px) { #dashboard { grid-template-columns: 1fr; overflow-y: auto; } }
+        /* المحتوى الجانبي */
+        .main-view { overflow-y: auto; padding-left: 10px; }
+        .tabs { display: flex; gap: 12px; margin-bottom: 25px; background: var(--glass); padding: 10px; border-radius: 20px; }
+        .tab { flex: 1; padding: 12px; border-radius: 15px; cursor: pointer; text-align: center; font-weight: bold; transition: 0.3s; }
+        .tab.active { background: var(--primary); color: black; }
 
-        /* بطاقة Credit Card الاحترافية */
-        .card-container {
-            background: linear-gradient(135deg, rgba(20,20,20,0.8) 0%, rgba(0,0,0,0.9) 100%);
-            border-radius: 25px; padding: 25px; border: 1px solid var(--border);
-            height: fit-content; position: sticky; top: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-            background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+        /* المتجر */
+        .store-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+        .product {
+            background: var(--glass); border: 1px solid var(--border); padding: 25px;
+            border-radius: 25px; text-align: center; position: relative; animation: slideUp 0.5s ease;
         }
+        .product:hover { border-color: var(--primary); transform: translateY(-5px); }
+        .price { display: block; font-family: 'Orbitron'; font-size: 1.4rem; color: var(--primary); margin: 15px 0; }
+        .badge { position: absolute; top: 10px; right: 10px; background: var(--accent); font-size: 0.6rem; padding: 3px 10px; border-radius: 5px; }
 
-        .cc-chip { width: 50px; height: 40px; background: linear-gradient(135deg, #ffd700, #b8860b); border-radius: 8px; margin-bottom: 20px; }
-        .cc-number { font-family: 'Orbitron'; font-size: 1.4rem; letter-spacing: 3px; margin: 20px 0; color: var(--primary); }
-        .cc-info { display: flex; justify-content: space-between; font-size: 0.8rem; opacity: 0.7; }
-        .cc-holder { font-family: 'Orbitron'; text-transform: uppercase; font-size: 1.1rem; opacity: 1; }
-
-        .pin-box { margin-top: 15px; background: rgba(0,242,255,0.05); padding: 10px; border-radius: 10px; font-size: 0.9rem; }
-        .toggle-pin { cursor: pointer; color: var(--primary); text-decoration: underline; font-size: 0.7rem; }
-
-        /* محتوى اليمين (المتجر والتبويبات) */
-        .main-content { overflow-y: auto; padding-right: 10px; }
-        .tabs { display: flex; gap: 10px; margin-bottom: 20px; }
-        .tab-item {
-            padding: 12px 25px; border-radius: 12px; background: var(--glass);
-            cursor: pointer; border: 1px solid var(--border); font-weight: bold;
-        }
-        .tab-item.active { background: var(--primary); color: black; }
-
-        /* المتجر الفخم */
-        .store-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
-        .item-card {
-            background: var(--glass); border-radius: 20px; border: 1px solid var(--border);
-            padding: 20px; text-align: center; transition: 0.4s; position: relative; overflow: hidden;
-        }
-        .item-card:hover { transform: translateY(-10px); background: rgba(0, 242, 255, 0.05); border-color: var(--primary); }
-        .item-card::before {
-            content: "PREMIUM"; position: absolute; top: 10px; left: -30px;
-            background: var(--accent); font-size: 0.6rem; padding: 5px 30px; transform: rotate(-45deg);
-        }
-        .price-tag { font-family: 'Orbitron'; color: var(--primary); font-size: 1.3rem; margin: 15px 0; display: block; }
+        .success-msg { color: var(--success); font-size: 0.8rem; margin-top: 10px; display: none; }
     </style>
 </head>
 <body>
 
-    <!-- شاشة الدخول -->
     <div id="login-page" class="login-screen">
         <div class="login-box">
-            <h1 style="font-family:'Orbitron'; color:var(--primary); font-size: 2.5rem;">INFINITY</h1>
-            <p style="font-size: 0.8rem; letter-spacing: 2px; opacity: 0.5; margin-bottom: 20px;">SYSTEM PROTOCOL V5</p>
-            <input type="text" id="u_in" placeholder="اسم المستخدم">
-            <input type="password" id="p_in" placeholder="الرمز السري">
-            <button class="btn-main" onclick="login()">INITIALIZE SYSTEM ⚡</button>
+            <h1 style="font-family:'Orbitron'; color:var(--primary); font-size: 2.8rem;">INF-BANK</h1>
+            <p style="opacity: 0.4; letter-spacing: 3px; margin-bottom: 25px;">V6 SECURE PROTOCOL</p>
+            <input type="text" id="user_id" placeholder="اسم المستخدم">
+            <input type="password" id="pin_code" placeholder="الرمز السري">
+            <button class="btn-main" onclick="initSystem()">تسجيل الدخول 🔒</button>
         </div>
     </div>
 
-    <!-- لوحة التحكم -->
     <div id="dashboard" style="display: none;">
-        <!-- الجانب الأيسر: البطاقة -->
-        <div class="card-container">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <span style="font-family:'Orbitron'; font-weight: bold;">INFINITY BANK</span>
-                <span style="color: var(--primary);">VISA</span>
+        <div class="card-panel">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <span style="font-family:'Orbitron'; font-size: 0.9rem;">INFINITY ELITE</span>
+                <span style="color: var(--accent); font-weight: bold;">PREMIUM</span>
             </div>
             <div class="cc-chip"></div>
-            <div class="cc-number">**** **** **** <span id="cc-end">0000</span></div>
-            <div class="cc-info">
-                <div>
-                    <p>CARD HOLDER</p>
-                    <p id="cc-name" class="cc-holder">---</p>
-                </div>
-                <div style="text-align: left;">
-                    <p>RANK</p>
-                    <p id="cc-rank" style="font-weight: bold; color: var(--primary);">---</p>
-                </div>
+            <div class="cc-number">**** **** **** <span id="card-last">0000</span></div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                <div><small style="opacity:0.5">NAME</small><br><b id="disp-name" style="text-transform:uppercase">---</b></div>
+                <div style="text-align: left;"><small style="opacity:0.5">RANK</small><br><b id="disp-rank" style="color:var(--primary)">---</b></div>
             </div>
-            <div style="margin-top: 25px;">
-                <p style="font-size: 0.7rem; opacity: 0.6;">CURRENT BALANCE</p>
-                <h2 style="font-family: 'Orbitron'; font-size: 2rem;"><span id="cc-bal">0</span> <small style="font-size: 0.8rem;">INF</small></h2>
+            <div style="background: rgba(0,242,255,0.05); padding: 15px; border-radius: 15px;">
+                <small>TOTAL BALANCE</small>
+                <h2 style="font-family:'Orbitron'; color:var(--primary);"><span id="disp-bal">0</span> INF</h2>
             </div>
-            <div class="pin-box">
-                رمز الـ PIN الخاص بك: <span id="pin-val">****</span> 
-                <span class="toggle-pin" onclick="togglePin()">[إظهار]</span>
+
+            <div class="transfer-box">
+                <h4 style="margin-bottom: 15px; font-size: 0.9rem;">ارسال سريع (Transfer) 💸</h4>
+                <select id="send-to">
+                    <option value="">اختر العضو...</option>
+                </select>
+                <input type="number" id="send-amount" placeholder="المبلغ">
+                <button class="btn-main" style="background: white; font-size: 0.8rem; padding: 10px;" onclick="transferMoney()">تأكيد التحويل</button>
+                <p id="tx-status" class="success-msg">تم التحويل بنجاح! ✅</p>
             </div>
         </div>
 
-        <!-- الجانب الأيمن: المحتوى -->
-        <div class="main-content">
+        <div class="main-view">
             <div class="tabs">
-                <div id="t1" class="tab-item active" onclick="nav('h')">الرئيسية</div>
-                <div id="t2" class="tab-item" onclick="nav('s')">المتجر الملكي</div>
-                <div id="t3" class="tab-item" onclick="nav('e')">الفعاليات 🎁</div>
+                <div class="tab active" onclick="showSec('h', this)">🏠 الحساب</div>
+                <div class="tab" onclick="showSec('s', this)">🛒 المتجر V6</div>
+                <div class="tab" onclick="showSec('g', this)">🎁 الهدايا</div>
             </div>
 
-            <div id="sec-h" class="section">
-                <div style="background: var(--glass); padding: 30px; border-radius: 20px; border-right: 5px solid var(--primary); line-height: 1.8;">
-                    <h2 style="margin-bottom: 15px;">بروتوكول القاعدة 🦅</h2>
-                    <p>أهلاً بك في نظام البنك السيبراني. يمكنك هنا إدارة رصيدك، وتغيير هويتك، والمشاركة في بناء إمبراطورية INFINITY. تذكر أن نقاط INF هي عملة القوة هنا.</p>
+            <div id="sec-h">
+                <div style="background: var(--glass); padding: 30px; border-radius: 30px; border-right: 5px solid var(--primary);">
+                    <h2>نظام INFINITY المتكامل 🦅</h2>
+                    <p style="margin-top: 15px; opacity: 0.8; line-height: 1.8;">
+                        أهلاً بك في النسخة السادسة. تم تفعيل نظام التحويل بين الأعضاء. يمكنك الآن مقايضة النقاط، شراء الخدمات النادرة، والمشاركة في بناء أقوى نقابة.
+                    </p>
                 </div>
             </div>
 
-            <div id="sec-s" class="section" style="display: none;">
-                <div class="store-grid" id="store"></div>
+            <div id="sec-s" style="display: none;">
+                <div class="store-grid" id="store-container"></div>
             </div>
 
-            <div id="sec-e" class="section" style="display: none;">
-                <div style="text-align: center; padding: 50px; background: var(--glass); border-radius: 20px; border: 1px dashed var(--primary);">
-                    <h1 style="font-size: 3rem;">🎁</h1>
-                    <h2>قريباً: Giveaways & Events</h2>
-                    <p style="opacity: 0.6;">يتم الآن تجهيز بروتوكول الهدايا والمسابقات.</p>
+            <div id="sec-g" style="display: none;">
+                <div style="text-align: center; padding: 60px; background: var(--glass); border-radius: 30px; border: 2px dashed var(--border);">
+                    <h1 style="font-size: 4rem;">📦</h1>
+                    <h2>صندوق الهدايا</h2>
+                    <p style="opacity: 0.5; margin-top: 10px;">عندما يرسل لك شخص هدية ستظهر هنا فوراً.</p>
                 </div>
             </div>
         </div>
@@ -174,71 +149,116 @@
 
     <script>
         var members = {
-            "levi": { pin: "1001", bal: 1000000, rank: "الإمبراطور", cc: "5544" },
-            "dororo": { pin: "300", bal: 100000, rank: "نائب الامبراطور", cc: "2020" },
-            "fang": { pin: "8046", bal: 8500, rank: "المستشار", cc: "8899" }
+            "levi": { pin: "1001", bal: 5000000, rank: "الإمبراطور", cc: "8822" },
+            "dororo": { pin: "300", bal: 100000, rank: "نائب الامبراطور", cc: "1199" },
+            "fang": { pin: "8046", bal: 8500, rank: "المستشار", cc: "4455" },
+            "sico": { pin: "1111", bal: 50000, rank: "عضو ذهبي", cc: "7700" }
         };
 
         var products = [
-            { n: "رتبة فارس ⚔️", p: 9500 },
-            { n: "إعفاء عقوبة 🛡️", p: 15000 },
-            { n: "لقب مخصص 🎀", p: 20500 },
-            { n: "رتبة نقيب 🎖️", p: 16000 },
-            { n: "تخريب نقابة 🧨", p: 8000 },
-            { n: "أدمن مؤقت ⚡", p: 55000 }
+            { n: "رتبة فارس ⚔️", p: 9500, b: "شائع" },
+            { n: "إعفاء عقوبة 🛡️", p: 15000, b: "مهم" },
+            { n: "رتبة نقيب 🎖️", p: 16000, b: "مميز" },
+            { n: "رتبة نائب أدميرال 👑", p: 70000, b: "نادر جداً" },
+            { n: "فك حظر نهائي 🔓", p: 250000, b: "قانوني" },
+            { n: "تغيير صورة النقابة لمدة يومين ✨", p: 500000, b: "إداري" },
+            { n: "تغيير اللقب  🎀", p: 20500, b: "تجميلي" },
+            { n: "أدمن (4ايام ) 🛡️", p: 120000, b: "سلطة" }
         ];
 
-        var user = "";
-        var pinVisible = false;
+        var currentUser = "";
 
-        function login() {
-            var u = document.getElementById('u_in').value.toLowerCase().trim();
-            var p = document.getElementById('p_in').value.trim();
+        function initSystem() {
+            var u = document.getElementById('user_id').value.toLowerCase().trim();
+            var p = document.getElementById('pin_code').value.trim();
 
             if (members[u] && members[u].pin === p) {
-                user = u;
+                currentUser = u;
                 document.getElementById('login-page').style.display = 'none';
                 document.getElementById('dashboard').style.display = 'grid';
                 
-                // تحديث البطاقة
-                document.getElementById('cc-name').innerText = u;
-                document.getElementById('cc-rank').innerText = members[u].rank;
-                document.getElementById('cc-bal').innerText = members[u].bal.toLocaleString();
-                document.getElementById('cc-end').innerText = members[u].cc || "4490";
-                
+                updateUI();
+                loadTransferList();
                 renderStore();
             } else {
-                alert("❌ فشل التحقق من الهوية!");
+                alert("❌ خطأ في الهوية أو الرمز!");
             }
         }
 
-        function togglePin() {
-            pinVisible = !pinVisible;
-            document.getElementById('pin-val').innerText = pinVisible ? members[user].pin : "****";
-            document.querySelector('.toggle-pin').innerText = pinVisible ? "[إخفاء]" : "[إظهار]";
+        function updateUI() {
+            document.getElementById('disp-name').innerText = currentUser;
+            document.getElementById('disp-rank').innerText = members[currentUser].rank;
+            document.getElementById('disp-bal').innerText = members[currentUser].bal.toLocaleString();
+            document.getElementById('card-last').innerText = members[currentUser].cc;
         }
 
-        function nav(s) {
-            document.querySelectorAll('.section').forEach(x => x.style.display = 'none');
-            document.getElementById('sec-' + s).style.display = 'block';
-            document.querySelectorAll('.tab-item').forEach(x => x.classList.remove('active'));
-            event.target.classList.add('active');
+        function loadTransferList() {
+            var select = document.getElementById('send-to');
+            for (var m in members) {
+                if (m !== currentUser) {
+                    var opt = document.createElement('option');
+                    opt.value = m;
+                    opt.innerText = m.toUpperCase();
+                    select.appendChild(opt);
+                }
+            }
+        }
+
+        function transferMoney() {
+            var target = document.getElementById('send-to').value;
+            var amount = parseInt(document.getElementById('send-amount').value);
+
+            if (!target || isNaN(amount) || amount <= 0) {
+                alert("يرجى اختيار العضو وتحديد مبلغ صحيح!");
+                return;
+            }
+
+            if (members[currentUser].bal >= amount) {
+                // تنفيذ عملية التحويل
+                members[currentUser].bal -= amount;
+                members[target].bal += amount;
+                
+                updateUI();
+                
+                // إظهار رسالة النجاح
+                var status = document.getElementById('tx-status');
+                status.style.display = 'block';
+                setTimeout(() => status.style.display = 'none', 3000);
+                
+                // تصفير الخانات
+                document.getElementById('send-amount').value = "";
+            } else {
+                alert("رصيدك غير كافٍ لإتمام هذه العملية! ❌");
+            }
+        }
+
+        function showSec(id, el) {
+            document.getElementById('sec-h').style.display = 'none';
+            document.getElementById('sec-s').style.display = 'none';
+            document.getElementById('sec-g').style.display = 'none';
+            document.getElementById('sec-' + id).style.display = 'block';
+            
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
         }
 
         function renderStore() {
-            let h = "";
+            var cont = document.getElementById('store-container');
+            var html = "";
             products.forEach(p => {
-                h += `<div class="item-card">
+                html += `<div class="product">
+                    <span class="badge">${p.b}</span>
                     <h4>${p.n}</h4>
-                    <span class="price-tag">${p.p.toLocaleString()} INF</span>
-                    <button class="btn-main" style="margin-top:0; padding:10px" onclick="buy('${p.n}')">شراء الآن</button>
+                    <span class="price">${p.p.toLocaleString()} INF</span>
+                    <button class="btn-main" style="padding:10px" onclick="buy('${p.n}')">طلب شراء</button>
                 </div>`;
             });
-            document.getElementById('store').innerHTML = h;
+            cont.innerHTML = html;
         }
 
         function buy(n) {
-            window.open("https://wa.me/212622201526?text=" + encodeURIComponent("طلب شراء: " + n + "\nالمستخدم: " + user));
+            var msg = "طلب شراء: " + n + "\nالمستخدم: " + currentUser;
+            window.open("https://wa.me/212622201526?text=" + encodeURIComponent(msg));
         }
     </script>
 </body>
