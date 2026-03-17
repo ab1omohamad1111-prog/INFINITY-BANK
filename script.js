@@ -1,7 +1,7 @@
 const members = {
-    "levi": { pin: "1001", bal: 50000, rank: "الإمبراطور" },
+    "levi": { pin: "1001", bal: 100000000, rank: "الإمبراطور" },
     "dororo": { pin: "2423", bal: 12500, rank: "المؤسس" },
-    "fang": { pin: "8046", bal: 8500, rank: "المستشار" }
+    "fang": { pin: "8046", bal: 10500, rank: "المستشار" }
 };
 
 const products = [
