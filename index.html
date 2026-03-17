@@ -5,40 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>INFINITY ERA | المركز الرئيسي</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root { --neon: #00d2ff; --bg: #000; --glass: rgba(255, 255, 255, 0.05); }
-        * { box-sizing: border-box; }
-        body { margin: 0; background: var(--bg); color: #fff; font-family: 'Cairo', sans-serif; direction: rtl; height: 100vh; overflow: hidden; }
-
-        .overlay-wrapper { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: #000; z-index: 1000; }
-        .login-box { background: var(--glass); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); border-radius: 25px; padding: 40px; text-align: center; width: 350px; }
-        .logo-glow { font-family: 'Orbitron'; font-size: 2.5rem; text-shadow: 0 0 15px var(--neon); color: var(--neon); }
-        input { width: 100%; padding: 12px; margin: 10px 0; background: #111; border: 1px solid #333; color: #fff; border-radius: 10px; text-align: center; }
-        
-        .main-btn { background: var(--neon); color: #000; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 15px; transition: 0.3s; }
-        .main-btn:hover { background: #fff; box-shadow: 0 0 20px var(--neon); }
-
-        .dashboard-layout { display: none; width: 100%; height: 100%; }
-        .sidebar { width: 350px; background: #050505; padding: 25px; border-left: 1px solid #111; display: flex; flex-direction: column; gap: 15px; }
-        .bank-card { height: 200px; background: linear-gradient(135deg, #001f3f, #000); border: 1px solid var(--neon); border-radius: 20px; padding: 25px; display: flex; flex-direction: column; justify-content: space-between; }
-        .content-area { flex: 1; padding: 30px; background: radial-gradient(circle at top right, #001f3f, #000); overflow-y: auto; }
-        
-        .news-ticker { background: rgba(0, 210, 255, 0.1); border: 1px solid var(--neon); padding: 8px; border-radius: 10px; margin-bottom: 20px; }
-        
-        .nav-btn { background: transparent; color: #888; border: 1px solid #222; padding: 10px; border-radius: 8px; cursor: pointer; text-align: right; font-weight: bold; }
-        .nav-btn.active { border-color: var(--neon); color: var(--neon); }
-
-        .store-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; }
-        .item-card { background: var(--glass); border: 1px solid rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; text-align: center; transition: 0.3s; }
-        .item-card:hover { border-color: var(--neon); transform: translateY(-5px); }
-        .price { display: block; color: #00ffcc; font-weight: bold; margin: 10px 0; font-family: Orbitron; }
-
-        @media (max-width: 768px) {
-            .dashboard-layout { flex-direction: column; }
-            .sidebar { width: 100%; height: auto; border-left: none; border-bottom: 1px solid #222; }
-            body { overflow-y: auto; }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -51,13 +18,13 @@
         </div>
     </div>
 
-    <div id="dashboard" class="dashboard-layout">
+    <div id="dashboard" class="dashboard-layout" style="display: none;">
         <aside class="sidebar">
             <div class="bank-card">
                 <div>
-                    <small style="color: var(--neon)">INFINITY BANK</small>
-                    <h2 id="display-name" style="margin: 5px 0">USER</h2>
-                    <p id="display-rank" style="font-size: 0.8rem; opacity: 0.7">RANK</p>
+                    <small style="color: #00d2ff">INFINITY BANK</small>
+                    <h2 id="display-name" style="margin: 5px 0">---</h2>
+                    <p id="display-rank" style="font-size: 0.8rem; opacity: 0.7">---</p>
                 </div>
                 <h1 id="display-balance" style="color: #00ffcc; margin: 0;">0 INF</h1>
             </div>
@@ -69,82 +36,24 @@
 
         <main class="content-area">
             <div class="news-ticker">
-                <marquee>🔥 أهلاً بك في نظام INFINITY ERA المطور.. استمتع بالمتجر والخدمات الجديدة!</marquee>
+                <marquee>🔥 أهلاً بك في INFINITY ERA.. نظام الإدارة المركزية جاهز للعمل!</marquee>
             </div>
 
             <div id="tab-home">
-                <h2 style="font-family: Orbitron; border-bottom: 1px solid var(--neon); padding-bottom: 10px;">الرئيسية</h2>
-                <div style="background: var(--glass); padding: 30px; border-radius: 20px; text-align: center;">
-                    <h3>مرحباً بك في القاعدة المركزية</h3>
-                    <p>هنا يمكنك إدارة حسابك البنكي وشراء الرتب والميزات من المتجر.</p>
-                    <div style="color: var(--neon); font-size: 1.2rem;">حالة النظام: متصل 🟢</div>
+                <div class="welcome-container">
+                    <h2>القاعدة المركزية</h2>
+                    <p>حسابك مؤمن وجاهز للعمليات.</p>
                 </div>
             </div>
 
             <div id="tab-store" style="display: none;">
-                <h2 style="font-family: Orbitron; border-bottom: 1px solid #00ffcc; padding-bottom: 10px;">ROYAL STORE</h2>
-                <div class="store-grid">
-                    <div class="item-card">
-                        <h3>رتبة قائد ⚔️</h3>
-                        <p style="font-size: 0.8rem;">صلاحيات إدارية كاملة</p>
-                        <span class="price">10,000 INF</span>
-                        <button class="main-btn" style="padding: 8px;" onclick="buy('رتبة قائد', 10000)">طلب شراء</button>
+                <h2 class="section-title">ROYAL STORE</h2>
+                <div class="store-grid" id="store-items">
                     </div>
-                    <div class="item-card">
-                        <h3>بطاقة عفو 🎫</h3>
-                        <p style="font-size: 0.8rem;">إلغاء عقوبة طرد واحدة</p>
-                        <span class="price">5,000 INF</span>
-                        <button class="main-btn" style="padding: 8px;" onclick="buy('بطاقة عفو', 5000)">طلب شراء</button>
-                    </div>
-                </div>
             </div>
         </main>
     </div>
 
-    <script>
-        // --- هنا تضيف الأعضاء وتعدل رصيدهم بسهولة ---
-        const members = {
-            "levi": { pin: "1001", balance: 50000, rank: "الإمبراطور" },
-            "dororo": { pin: "2423", balance: 12500, rank: "المؤسس" },
-            "fang": { pin: "8046", balance: 8500, rank: "المستشار" },
-            "amine": { pin: "2026", balance: 15000, rank: "عضو نخبة" }
-            "fokk": { pin: "1111", balance: 1000000, rank: "مستشار" }
-        };
-
-        let currentUser = "";
-        const myWhatsApp = "212622201526";
-
-        function processLogin() {
-            const user = document.getElementById("username").value.toLowerCase().trim();
-            const pin = document.getElementById("userpin").value.trim();
-
-            if (members[user] && members[user].pin === pin) {
-                currentUser = user;
-                document.getElementById("login-page").style.display = "none";
-                document.getElementById("dashboard").style.display = "flex";
-                updateUI();
-            } else { alert("🛡️ البيانات غير صحيحة!"); }
-        }
-
-        function updateUI() {
-            const data = members[currentUser];
-            document.getElementById("display-name").innerText = currentUser.toUpperCase();
-            document.getElementById("display-balance").innerText = data.balance.toLocaleString() + " INF";
-            document.getElementById("display-rank").innerText = "الرتبة: " + data.rank;
-        }
-
-        function showTab(tab) {
-            document.getElementById('tab-home').style.display = tab === 'home' ? 'block' : 'none';
-            document.getElementById('tab-store').style.display = tab === 'store' ? 'block' : 'none';
-            document.getElementById('btn-home').classList.toggle('active', tab === 'home');
-            document.getElementById('btn-store').classList.toggle('active', tab === 'store');
-        }
-
-        function buy(item, price) {
-            if (members[currentUser].balance < price) { alert("رصيدك ناقص!"); return; }
-            const msg = `🛡️ طلب شراء جديد%0A👤 العضو: ${currentUser}%0A🎁 الغرض: ${item}%0A💰 السعر: ${price} INF`;
-            window.open(`https://wa.me/${myWhatsApp}?text=${msg}`);
-        }
-    </script>
+    <script src="script.js?v=2.0"></script>
 </body>
 </html>
