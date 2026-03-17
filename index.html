@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>𝑰𝑵𝑭𝑰𝑵𝑰𝑻𝒀 𝑬𝑹𝑨 | المركز الرئيسي</title>
+    <title>INFINITY ERA | المركز الرئيسي</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_H50pS870oYp2yI9C-uY9B2E3X1N_kY6zSw&s" type="image/x-icon">
 </head>
 <body>
+
     <div id="login-page" class="overlay-wrapper">
         <div class="glass-box login-box">
-            <div class="logo-glow">𝑰𝑵𝑭𝑰𝑵𝑰𝑻𝒀</div>
+            <div class="logo-glow">INFINITY</div>
             <h3>نظام التحقق من الهوية</h3>
             <input type="text" id="username" placeholder="اسم المستخدم">
             <input type="password" id="userpin" placeholder="الرمز السري (PIN)" maxlength="4">
@@ -22,41 +22,27 @@
     <div id="dashboard" class="dashboard-layout" style="display: none;">
         <aside class="sidebar">
             <div class="bank-card">
-                <div class="card-top"><span>𝑰𝑵𝑭𝑰𝑵𝑰𝑻𝒀</span><img src="https://cdn-icons-png.flaticon.com/512/9334/9334627.png" class="chip"></div>
+                <div class="card-top"><span>INFINITY</span></div>
                 <div class="card-mid"><h2 id="display-name">---</h2><p id="display-rank">---</p></div>
-                <div class="card-bottom"><small>الرصيد الملكي</small><h1 id="display-balance">0 INF</h1></div>
+                <div class="card-bottom"><h1 id="display-balance">0 INF</h1></div>
             </div>
             <nav class="side-nav">
-                <button class="nav-item active" id="nav-home" onclick="switchSection('home')">🏠 الرئيسية</button>
-                <button class="nav-item" id="nav-store" onclick="switchSection('store')">🛒 المتجر</button>
+                <button class="nav-item active" onclick="switchSection('home')">🏠 الرئيسية</button>
+                <button class="nav-item" onclick="switchSection('store')">🛒 المتجر</button>
                 <button class="nav-item logout" onclick="location.reload()">🚪 خروج</button>
             </nav>
         </aside>
 
         <main class="content-area">
-            <div class="news-ticker">
-                <span class="news-label">آخر الأخبار:</span>
-                <marquee id="news-text">مرحباً بكم في نظام INFINITY ERA.. ترقبوا تحديثات المتجر القادمة!</marquee>
-            </div>
             <section id="section-home" class="page-content">
-                <div class="home-grid">
-                    <div class="glass-box leaderboard">
-                        <h3>🏆 لوحة الشرف (TOP 3)</h3>
-                        <div id="top-members-list"></div>
-                    </div>
-                </div>
-            </section>
-            <section id="section-store" class="page-content" style="display: none;">
-                <div class="store-grid">
-                    <div class="item-card glass-box">
-                        <h3>رتبة أدميرال 🛡️</h3>
-                        <span class="cost">10,000 INF</span>
-                        <button onclick="buy('رتبة أدميرال', 10000)">شراء</button>
-                    </div>
+                <div class="glass-box leaderboard">
+                    <h3>🏆 لوحة الشرف (TOP 3)</h3>
+                    <div id="top-members-list"></div>
                 </div>
             </section>
         </main>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
