@@ -3,58 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>INFINITY SYSTEM | النسخة النهائية</title>
+    <title>INFINITY SYSTEM</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div id="login-screen" class="page-container">
-        <div class="login-wrapper">
-            <div class="glow-circle"></div>
-            <div class="glass-card login-box">
-                <h1 class="glow-text">INFINITY</h1>
-                <p class="tagline">نظام الوصول المركزي الآمن</p>
-                <div class="input-field">
-                    <input type="text" id="username-input" placeholder="اسم المستخدم" autocomplete="off">
-                    <input type="password" id="pin-input" placeholder="الرمز السري">
-                </div>
-                <button class="action-btn" onclick="handleLogin()">تأكيد الهوية 🛡️</button>
+    <div id="login-page" class="page-container">
+        <div class="glass-card login-box">
+            <h1 class="glow-text">INFINITY</h1>
+            <p class="tagline">نظام الوصول المركزي</p>
+            <div class="input-field">
+                <input type="text" id="final-user" placeholder="اسم المستخدم" autocomplete="off">
+                <input type="password" id="final-pin" placeholder="الرمز السري">
             </div>
+            <button id="login-btn" class="action-btn">تأكيد الهوية 🛡️</button>
         </div>
     </div>
 
-    <div id="dashboard" class="dashboard-layout" style="display: none;">
-        <aside class="sidebar">
-            <div class="bank-card">
-                <div class="card-chip"></div>
-                <h2 id="acc-name">USER</h2>
-                <div class="balance-display">
-                    <span class="inf-label">INF</span>
-                    <h1 id="acc-balance">0</h1>
+    <div id="main-dashboard" style="display: none;">
+        <div class="dashboard-layout">
+            <aside class="sidebar">
+                <div class="bank-card">
+                    <h2 id="display-name">---</h2>
+                    <div class="balance-display">
+                        <span style="color:#00f2ff">INF</span>
+                        <h1 id="display-balance">0</h1>
+                    </div>
+                    <div id="display-rank" class="rank-badge">---</div>
                 </div>
-                <div id="acc-rank" class="rank-badge">RANK</div>
-            </div>
-            <nav class="nav-links">
-                <button id="btn-home" class="nav-btn active" onclick="showTab('home')">🏠 الرئيسية</button>
-                <button id="btn-store" class="nav-btn" onclick="showTab('store')">🛒 المتجر الملكي</button>
-                <button class="nav-btn logout" onclick="location.reload()">🚪 تسجيل خروج</button>
-            </nav>
-        </aside>
-
-        <main class="main-view">
-            <section id="tab-home" class="view-content">
-                <div class="hero-banner">
-                    <h2>مرحباً بك في القاعدة 🦅</h2>
-                    <p>تم تفعيل نظام التشفير بنجاح. جميع العمليات الآن مراقبة ومؤمنة.</p>
+                <nav class="nav-links">
+                    <button id="home-tab-btn" class="nav-btn active">🏠 الرئيسية</button>
+                    <button id="store-tab-btn" class="nav-btn">🛒 المتجر</button>
+                    <button class="nav-btn logout" onclick="location.reload()">🚪 خروج</button>
+                </nav>
+            </aside>
+            <main class="main-view">
+                <div id="content-home">
+                    <div class="hero-banner">
+                        <h2>مرحباً بك في القاعدة 🦅</h2>
+                        <p>تم الاتصال بنجاح. البيانات الآن مستقرة ومحفوظة.</p>
+                    </div>
                 </div>
-            </section>
-
-            <section id="tab-store" class="view-content" style="display: none;">
-                <h2 class="section-title">المتجر المركزي</h2>
-                <div class="items-grid" id="store-items"></div>
-            </section>
-        </main>
+                <div id="content-store" style="display:none">
+                    <h2 class="section-title">المتجر الملكي</h2>
+                    <div class="items-grid" id="store-grid"></div>
+                </div>
+            </main>
+        </div>
     </div>
 
     <script src="script.js"></script>
