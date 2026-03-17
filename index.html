@@ -3,56 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>INFINITY SYSTEM</title>
-    <link rel="stylesheet" href="style.css">
+    <title>INFINITY SYSTEM | V3</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* التنسيق (CSS) مدمج هنا لضمان السرعة */
+        :root { --primary: #00f2ff; --dark: #020508; }
+        * { box-sizing: border-box; margin: 0; padding: 0; transition: 0.3s; }
+        body { background: var(--dark); color: #fff; font-family: 'Cairo', sans-serif; overflow-x: hidden; }
+
+        .page-container { height: 100vh; display: flex; align-items: center; justify-content: center; }
+        .glass-card { background: rgba(255,255,255,0.03); backdrop-filter: blur(20px); border: 1px solid rgba(0,242,255,0.2); border-radius: 30px; padding: 40px; text-align: center; width: 90%; max-width: 380px; box-shadow: 0 0 50px #000; }
+        
+        .glow-text { font-family: 'Orbitron'; color: var(--primary); text-shadow: 0 0 20px var(--primary); font-size: 2.5rem; }
+        input { width: 100%; padding: 15px; margin: 10px 0; background: #000; border: 1px solid #1a2a35; color: #fff; border-radius: 12px; text-align: center; }
+        .action-btn { width: 100%; padding: 15px; background: var(--primary); color: #000; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; box-shadow: 0 0 20px var(--primary); }
+
+        /* Dashboard */
+        .dashboard-layout { display: none; flex-direction: row; height: 100vh; width: 100%; }
+        .sidebar { width: 300px; background: #000; padding: 20px; border-left: 1px solid #111; display: flex; flex-direction: column; gap: 15px; }
+        .bank-card { border: 1px solid var(--primary); padding: 20px; border-radius: 15px; text-align: center; }
+        .nav-btn { width: 100%; padding: 12px; background: transparent; color: #fff; border: 1px solid #222; border-radius: 8px; cursor: pointer; }
+        .nav-btn.active { background: var(--primary); color: #000; border: none; }
+        .main-view { flex: 1; padding: 30px; overflow-y: auto; background: #050a0f; }
+        
+        .items-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-top: 20px; }
+        .store-item { background: rgba(255,255,255,0.02); border: 1px solid #222; padding: 15px; border-radius: 15px; text-align: center; }
+
+        @media (max-width: 768px) {
+            .dashboard-layout { flex-direction: column; }
+            .sidebar { width: 100%; height: auto; }
+        }
+    </style>
 </head>
 <body>
 
-    <div id="login-page" class="page-container">
-        <div class="glass-card login-box">
+    <div id="login-section" class="page-container">
+        <div class="glass-card">
             <h1 class="glow-text">INFINITY</h1>
-            <p class="tagline">نظام الوصول المركزي</p>
-            <div class="input-field">
-                <input type="text" id="final-user" placeholder="اسم المستخدم" autocomplete="off">
-                <input type="password" id="final-pin" placeholder="الرمز السري">
+            <p style="opacity:0.5; font-size:0.8rem; margin:10px 0;">نظام الوصول المركزي</p>
+            <input type="text" id="u-name" placeholder="اسم المستخدم" autocomplete="off">
+            <input type="password" id="u-pin" placeholder="الرمز السري">
+            <button class="action-btn" id="login-trigger">تأكيد الهوية 🛡️</button>
+        </div>
+    </div>
+
+    <div id="dash-section" class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="bank-card">
+                <h2 id="name-out">USER</h2>
+                <div style="margin:15px 0;">
+                    <span style="color:var(--primary); font-family:'Orbitron'">INF</span>
+                    <h1 id="bal-out" style="display:inline; font-family:'Orbitron'">0</h1>
+                </div>
+                <div id="rank-out" style="font-size:0.8rem; background:rgba(0,242,255,0.1); padding:5px; border-radius:5px;">RANK</div>
             </div>
-            <button id="login-btn" class="action-btn">تأكيد الهوية 🛡️</button>
-        </div>
+            <button class="nav-btn active" id="btn-h">🏠 الرئيسية</button>
+            <button class="nav-btn" id="btn-s">🛒 المتجر</button>
+            <button class="nav-btn" style="color:red; border-color:red" onclick="location.reload()">🚪 خروج</button>
+        </aside>
+
+        <main class="main-view">
+            <div id="view-h">
+                <div style="background:linear-gradient(to left, #001f21, transparent); padding:20px; border-radius:15px;">
+                    <h2>مرحباً بك في القاعدة 🦅</h2>
+                    <p>النظام يعمل بكفاءة. بياناتك محفوظة في السحابة المحلية.</p>
+                </div>
+            </div>
+            <div id="view-s" style="display:none">
+                <h2>المتجر الملكي</h2>
+                <div class="items-grid" id="store-grid"></div>
+            </div>
+        </main>
     </div>
 
-    <div id="main-dashboard" style="display: none;">
-        <div class="dashboard-layout">
-            <aside class="sidebar">
-                <div class="bank-card">
-                    <h2 id="display-name">---</h2>
-                    <div class="balance-display">
-                        <span style="color:#00f2ff">INF</span>
-                        <h1 id="display-balance">0</h1>
-                    </div>
-                    <div id="display-rank" class="rank-badge">---</div>
-                </div>
-                <nav class="nav-links">
-                    <button id="home-tab-btn" class="nav-btn active">🏠 الرئيسية</button>
-                    <button id="store-tab-btn" class="nav-btn">🛒 المتجر</button>
-                    <button class="nav-btn logout" onclick="location.reload()">🚪 خروج</button>
-                </nav>
-            </aside>
-            <main class="main-view">
-                <div id="content-home">
-                    <div class="hero-banner">
-                        <h2>مرحباً بك في القاعدة 🦅</h2>
-                        <p>تم الاتصال بنجاح. البيانات الآن مستقرة ومحفوظة.</p>
-                    </div>
-                </div>
-                <div id="content-store" style="display:none">
-                    <h2 class="section-title">المتجر الملكي</h2>
-                    <div class="items-grid" id="store-grid"></div>
-                </div>
-            </main>
-        </div>
-    </div>
+    <script>
+        // الجافا سكريبت (JS) مدمج هنا لضمان العمل
+        const data_members = {
+            "levi": { pin: "1001", bal: 50000, rank: "الإمبراطور" },
+            "dororo": { pin: "2423", bal: 12500, rank: "المؤسس" },
+            "fang": { pin: "8046", bal: 8500, rank: "المستشار" }
+        };
 
-    <script src="script.js"></script>
+        const data_products = [
+            { n: "رتبة فارس ⚔️", p: 9500 },
+            { n: "أدمن (يومين) 🛡️", p: 65000 },
+            { n: "فترة راحة (3 أيام) 💤", p: 65000 }
+        ];
+
+        let activeUser = "";
+
+        // تشغيل نظام الدخول
+        document.getElementById('login-trigger').onclick = function() {
+            const u = document.getElementById('u-name').value.toLowerCase().trim();
+            const p = document.getElementById('u-pin').value.trim();
+
+            if (data_members[u] && data_members[u].pin === p) {
+                activeUser = u;
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('dash-section').style.display = 'flex';
+                
+                // تحديث البيانات
+                document.getElementById('name-out').innerText = u.toUpperCase();
+                document.getElementById('bal-out').innerText = data_members[u].bal.toLocaleString();
+                document.getElementById('rank-out').innerText = data_members[u].rank;
+                
+                loadStore();
+            } else {
+                alert("❌ خطأ في البيانات! جرب levi و 1001");
+            }
+        };
+
+        // تبديل التبويبات
+        document.getElementById('btn-h').onclick = () => { toggle('h'); };
+        document.getElementById('btn-s').onclick = () => { toggle('s'); };
+
+        function toggle(t) {
+            document.getElementById('view-h').style.display = t === 'h' ? 'block' : 'none';
+            document.getElementById('view-s').style.display = t === 's' ? 'block' : 'none';
+            document.getElementById('btn-h').classList.toggle('active', t === 'h');
+            document.getElementById('btn-s').classList.toggle('active', t === 's');
+        }
+
+        function loadStore() {
+            const g = document.getElementById('store-grid');
+            g.innerHTML = data_products.map(i => `
+                <div class="store-item">
+                    <h4>${i.n}</h4>
+                    <p style="color:var(--primary)">${i.p.toLocaleString()} INF</p>
+                    <button class="action-btn" style="height:auto; padding:5px; margin-top:10px;" onclick="sendBuy('${i.n}')">شراء</button>
+                </div>
+            `).join('');
+        }
+
+        function sendBuy(name) {
+            const msg = encodeURIComponent(`💠 طلب شراء 💠\nالمستخدم: ${activeUser}\nالمنتج: ${name}`);
+            window.open(`https://wa.me/212622201526?text=${msg}`);
+        }
+    </script>
 </body>
 </html>
