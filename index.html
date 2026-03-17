@@ -2,55 +2,57 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INFINITY SYSTEM</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>INFINITY SYSTEM | 2026</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div id="login-screen" class="full-page">
-        <div class="glass-box login-card">
-            <h1 class="neon-title">INFINITY</h1>
-            <p class="subtitle">نظام الإدارة المركزي</p>
-            <div class="inputs">
-                <input type="text" id="user" placeholder="اسم المستخدم">
+    <div id="login-screen" class="page-container">
+        <div class="glass-card login-box">
+            <h1 class="glow-text">INFINITY</h1>
+            <p class="tagline">نظام الوصول المركزي</p>
+            <div class="input-field">
+                <input type="text" id="user" placeholder="اسم المستخدم" autocomplete="off">
                 <input type="password" id="pin" placeholder="الرمز السري">
             </div>
-            <button class="main-btn" onclick="handleLogin()">دخول 🛡️</button>
+            <button class="action-btn" onclick="handleLogin()">دخول آمن 🛡️</button>
         </div>
     </div>
 
-    <div id="dashboard" class="full-page" style="display: none;">
-        <div class="layout">
-            <aside class="sidebar">
-                <div class="bank-card">
-                    <small>BANK OF INFINITY</small>
-                    <h2 id="acc-name">USER</h2>
-                    <div class="balance-box">
-                        <span class="currency">INF</span>
-                        <h1 id="acc-balance">0</h1>
+    <div id="dashboard" class="dashboard-layout" style="display: none;">
+        <aside class="sidebar">
+            <div class="bank-card">
+                <div class="card-chip"></div>
+                <h2 id="acc-name">USER</h2>
+                <div class="balance-display">
+                    <span class="inf-label">INF</span>
+                    <h1 id="acc-balance">0</h1>
+                </div>
+                <div id="acc-rank" class="rank-badge">RANK</div>
+            </div>
+            <nav class="nav-links">
+                <button id="btn-home" class="nav-btn active" onclick="showTab('home')">🏠 الرئيسية</button>
+                <button id="btn-store" class="nav-btn" onclick="showTab('store')">🛒 المتجر</button>
+                <button class="nav-btn logout" onclick="location.reload()">🚪 خروج</button>
+            </nav>
+        </aside>
+
+        <main class="main-view">
+            <section id="tab-home" class="view-content">
+                <div class="hero-banner">
+                    <h2>مرحباً بك في نظام إنفينيتي 🦅</h2>
+                    <p>النظام متصل حالياً وجاهز للعمل. استكشف المميزات الجديدة.</p>
+                </div>
+            </section>
+
+            <section id="tab-store" class="view-content" style="display: none;">
+                <h2 class="section-title">المتجر الملكي</h2>
+                <div class="items-grid" id="store-items">
                     </div>
-                    <p id="acc-rank" class="rank-tag">RANK</p>
-                </div>
-                <nav class="nav-menu">
-                    <button id="btn-home" class="nav-link active" onclick="showTab('home')">🏠 الرئيسية</button>
-                    <button id="btn-store" class="nav-link" onclick="showTab('store')">🛒 المتجر</button>
-                    <button class="nav-link exit" onclick="location.reload()">🚪 خروج</button>
-                </nav>
-            </aside>
-            <main class="content">
-                <div id="tab-home" class="tab-content">
-                    <div class="hero">
-                        <h2>أهلاً بك في القاعدة 🦅</h2>
-                        <p>سوف يتم اضافة ميزات جديدة قريبًا.بقيادة السيد ليفاي ’ ترقبوا</p>
-                    </div>
-                </div>
-                <div id="tab-store" class="tab-content" style="display: none;">
-                    <div class="grid" id="store-items"></div>
-                </div>
-            </main>
-        </div>
+            </section>
+        </main>
     </div>
 
     <script src="script.js"></script>
