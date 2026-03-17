@@ -1,33 +1,30 @@
-// ==========================================
-// 1. قائمة الأعضاء والأموال (إدارة البيانات)
-// ==========================================
+// 1. قاعدة بيانات الأعضاء
 const members = {
     "levi":    { pin: "1001", balance: 50000, rank: "الإمبراطور" },
-    "dororo":  { pin: "2423", balance: 12500, rank: "المؤسس" },
-    "fang":    { pin: "8046", balance: 8500,  rank: "المستشار" },
-    "amine":   { pin: "2026", balance: 15000, rank: "عضو نخبة" }
-    "test":   { pin: "1111", balance: 10000000, rank: "عضو نخبة" }
-    // تقدر تضيف أي عضو جديد هنا بنفس الطريقة
+    "amine":   { pin: "2026", balance: 15000, rank: "مستشار" },
+    "dororo":  { pin: "2423", balance: 10000, rank: "مؤسس" },
+    "fang":    { pin: "8046", balance: 5000,  rank: "نخبة" }
 };
 
-// ==========================================
-// 2. محرك النظام (لا تغير شيء هنا إلا للضرورة)
-// ==========================================
+// 2. محرك النظام
 let currentUser = "";
 const myWhatsApp = "212622201526";
 
 function processLogin() {
-    const user = document.getElementById("username").value.toLowerCase().trim();
-    const pin = document.getElementById("userpin").value.trim();
+    const userField = document.getElementById("username");
+    const pinField = document.getElementById("userpin");
+
+    const user = userField.value.toLowerCase().trim();
+    const pin = pinField.value.trim();
 
     if (members[user] && members[user].pin === pin) {
         currentUser = user;
         document.getElementById("login-page").style.display = "none";
         document.getElementById("dashboard").style.display = "flex";
         updateUI();
-        loadStore(); // تحميل المتجر عند الدخول
+        loadStore();
     } else {
-        alert("🛡️ عذراً! الاسم أو الرمز غير صحيح.");
+        alert("🛡️ عذراً! الهوية غير مطابقة لسجلاتنا.");
     }
 }
 
@@ -56,16 +53,16 @@ function loadStore() {
     storeGrid.innerHTML = items.map(item => `
         <div class="item-card">
             <h3>${item.name}</h3>
-            <p>${item.desc}</p>
-            <span class="price">${item.price.toLocaleString()} INF</span>
-            <button class="buy-btn" onclick="buy('${item.name}', ${item.price})">طلب شراء</button>
+            <p style="font-size:0.8rem; opacity:0.7;">${item.desc}</p>
+            <span style="color:#00ffcc; display:block; margin:10px 0; font-family:Orbitron;">${item.price.toLocaleString()} INF</span>
+            <button class="main-btn" style="padding:8px; font-size:0.8rem;" onclick="buy('${item.name}', ${item.price})">طلب شراء</button>
         </div>
     `).join('');
 }
 
 function buy(item, price) {
     if (members[currentUser].balance < price) {
-        alert("⚠️ رصيدك لا يكفي لشراء " + item);
+        alert("⚠️ رصيدك لا يكفي!");
         return;
     }
     const msg = `🛡️ طلب شراء جديد%0A👤 العضو: ${currentUser}%0A🎁 الغرض: ${item}%0A💰 السعر: ${price} INF`;
