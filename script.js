@@ -11,6 +11,10 @@ const products = [
     { name: "بطاقة عفو 🎫", price: 5000, stock: 5, rarity: "rare" },
     { name: "تغيير الاسم 👤", price: 2500, stock: "∞", rarity: "common" },
     { name: "تثبيت رسالة 📌", price: 1500, stock: 15, rarity: "common" }
+    { name: "رتبة فارس ⚔️", price: 9500, stock: 2, rarity: "epic" },
+    { name: " (ادمن (مدة يومين ⚔️", price: 65000, stock: 0, rarity: "epic" },
+    { name: " فترة راحة  لمدة ثلالث ايام(لا يعاقب اذا لم ينجز مهمه وله الحرية الكاملة في عدم التفاعل)", price: 65000, stock: 1, rarity: "epic" },      
+      
 ];
 
 let currentUser = "";
