@@ -61,3 +61,183 @@
         .card-bal-display {
             text-align: center; margin: 30px 0; position: relative;
         }
+        .bal-value {
+            font-family: 'Orbitron'; font-size: 3.5rem; font-weight: 900;
+            color: var(--main-gold); text-shadow: var(--glow); line-height: 1;
+        }
+        
+        /* زر الإظهار والإخفاء (The Watcher) */
+        .toggle-eye {
+            position: absolute; top: -10px; left: -10px; background: none; border: none;
+            color: var(--main-gold); cursor: pointer; opacity: 0.5; font-size: 1.2rem;
+        }
+        .toggle-eye:hover { opacity: 1; }
+
+        .card-footer { display: flex; justify-content: space-between; margin-top: 30px; }
+        .info-label { opacity: 0.5; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; }
+        .status-text { color: var(--status-cyan); font-weight: 900; font-size: 1.1rem; }
+        .holder-text { color: white; font-weight: bold; text-transform: uppercase; font-size: 1.1rem; }
+
+        /* الأقسام الجانبية */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 25px; padding: 25px; backdrop-filter: blur(10px); margin-bottom: 20px;
+        }
+
+        /* لوحة التحكم الإدارية */
+        table { width: 100%; border-collapse: separate; border-spacing: 0 10px; }
+        th { color: var(--logo-gold); padding: 10px; font-family: 'Orbitron'; text-transform: uppercase; }
+        td { background: rgba(255,255,255,0.03); padding: 12px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        td:first-child { border-radius: 10px 0 0 10px; border-right: 3px solid var(--status-cyan); }
+        td:last-child { border-radius: 0 10px 10px 0; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <div id="gate-screen">
+        <div class="logo-text" style="font-size:3rem; text-align:center; margin-bottom:10px;">INFINITY</div>
+        <p style="letter-spacing:5px; font-size:0.7rem; opacity:0.5; margin-bottom:30px;">THE GOLDEN ARCHIVE V22</p>
+        <input type="text" id="access_id" class="input-glow" placeholder="IDENTITY">
+        <input type="password" id="access_pin" class="input-glow" placeholder="ACCESS KEY">
+        <button class="btn-gate" onclick="authenticate()">LOG IN ⚡</button>
+    </div>
+
+    <div id="main-app">
+        <div class="grid">
+            
+            <div class="side-panel">
+                <div class="royal-card">
+                    <div class="card-header">
+                        <div class="logo-text">INFINITY</div>
+                        <div class="card-chip"></div>
+                    </div>
+                    
+                    <div class="card-bal-display">
+                        <button class="toggle-eye" onclick="toggleBalance()">👁️</button>
+                        <small style="opacity:0.5; letter-spacing:1px; text-transform:uppercase; font-size:0.7rem; display:block; text-align:center; position:absolute; right:0; top:-10px;">CREDIT BALANCE</small>
+                        <div class="bal-value" id="disp_bal_visible">100,000</div>
+                        <div class="bal-value hidden" id="disp_bal_hidden" style="color:#222;">***,***</div>
+                    </div>
+                    
+                    <div class="card-footer">
+                        <div><small class="info-label">RANK</small><br><span class="status-text">الإمبراطور</span></div>
+                        <div style="text-align:left;"><small class="info-label">OPERATOR</small><br><span class="holder-text">LEVI</span></div>
+                    </div>
+                </div>
+
+                <div class="glass-panel">
+                    <h4>إرسال طارئ</h4>
+                    <input type="text" id="send_to" class="input-glow" style="margin:5px 0" placeholder="لقب المستلم">
+                    <input type="number" id="send_amt" class="input-glow" style="margin:5px 0" placeholder="المبلغ">
+                    <button class="btn-gate" onclick="reqTransfer()" style="padding:10px; font-size:0.8rem;">طلب تحويل</button>
+                </div>
+            </div>
+
+            <div class="main-view">
+                <div id="admin-view" class="glass-panel" style="display:none; border-color:var(--admin-gold);">
+                    <h3 style="color:var(--admin-gold); font-family:'Orbitron';">COMMAND CENTER (ADMIN)</h3>
+                    <table>
+                        <thead>
+                            <tr><th>IDENTIFIER</th><th>CREDITS</th><th>STATUS</th><th>OP</th></tr>
+                        </thead>
+                        <tbody id="admin_rows"></tbody>
+                    </table>
+                </div>
+
+                <div class="glass-panel">
+                    <h3>المتجر الفاخر</h3>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:15px;">
+                        <button class="btn-gate" style="background:#222; color:white;" onclick="reqShop('رتبة فارس')">فارس (9,500)</button>
+                        <button class="btn-gate" style="background:#222; color:white;" onclick="reqShop('إعفاء عقوبة')">إعفاء (15,000)</button>
+                    </div>
+                </div>
+                
+                <button onclick="location.reload()" style="background:none; border:none; color:red; cursor:pointer;">SIGN OUT</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // قاعدة البيانات الإمبراطورية المتطابقة
+        let db = JSON.parse(localStorage.getItem('novaris_v22_db')) || {
+            "levi": { pin: "1001", bal: 5000000, rank: "الإمبراطور", priv: true },
+            "dororo": { pin: "300", bal: 1, rank: "نائب الامبراطور", priv: false },
+            "fang": { pin: "8046", bal: 8500, rank: "المستشار", priv: false }
+        };
+
+        let isHidden = false; // لميزة الإظهار والإخفاء
+        let currentSession = "";
+
+        function save() { localStorage.setItem('novaris_v22_db', JSON.stringify(db)); }
+
+        function authenticate() {
+            const u = document.getElementById('access_id').value.toLowerCase().trim();
+            const p = document.getElementById('access_pin').value.trim();
+            if (db[u] && db[u].pin === p) {
+                currentSession = u;
+                document.getElementById('gate-screen').style.display = 'none';
+                document.getElementById('main-app').style.display = 'block';
+                syncUI();
+            } else {
+                alert("ACCESS DENIED");
+            }
+        }
+
+        function syncUI() {
+            const user = db[currentSession];
+            // تحديث البطاقة بالبيانات
+            document.getElementById('disp_bal_visible').innerText = user.bal.toLocaleString();
+            // document.getElementById('holder_text').innerText = currentSession; (تم ضبطها ثابتةLEVI للصورة)
+            // document.getElementById('status_text').innerText = user.rank; (تم ضبطها ثابتة الإمبراطور للصورة)
+            
+            if (user.priv) {
+                document.getElementById('admin-view').style.display = 'block';
+                refreshAdmin();
+            }
+            save();
+        }
+
+        // ميزة الإظهار والإخفاء للرصيد
+        function toggleBalance() {
+            isHidden = !isHidden;
+            if (isHidden) {
+                document.getElementById('disp_bal_visible').style.display = "none";
+                document.getElementById('disp_bal_hidden').style.display = "block";
+                document.querySelector('.toggle-eye').innerText = "🙈";
+            } else {
+                document.getElementById('disp_bal_visible').style.display = "block";
+                document.getElementById('disp_bal_hidden').style.display = "none";
+                document.querySelector('.toggle-eye').innerText = "👁️";
+            }
+        }
+
+        function refreshAdmin() {
+            let html = "";
+            for (let u in db) {
+                html += `<tr>
+                    <td>${u}</td>
+                    <td style="color:var(--main-gold)">${db[u].bal.toLocaleString()}</td>
+                    <td style="font-size:0.7rem">${db[u].rank}</td>
+                    <td><button onclick="remUser('${u}')" style="color:red; background:none; border:none; cursor:pointer">X</button></td>
+                </tr>`;
+            }
+            document.getElementById('admin_rows').innerHTML = html;
+        }
+
+        function reqTransfer() {
+            const t = document.getElementById('send_to').value;
+            const a = document.getElementById('send_amt').value;
+            window.open(`https://wa.me/212622201526?text=${encodeURIComponent(`🚀 طلب تحويل:\nمن: ${currentSession}\nإلى: ${t}\nالمبلغ: ${a}`)}`);
+        }
+
+        function reqShop(item) {
+            window.open(`https://wa.me/212622201526?text=${encodeURIComponent(`🛒 طلب شراء:\nالعضو: ${currentSession}\nالمنتج: ${item}`)}`);
+        }
+
+        function remUser(u) { if(confirm("حذف؟")) { delete db[u]; refreshAdmin(); save(); } }
+    </script>
+</body>
+</html>
