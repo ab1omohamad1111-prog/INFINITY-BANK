@@ -3,227 +3,258 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INFINITY | PHANTOM OS V20</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Orbitron:wght@400;900&display=swap" rel="stylesheet">
+    <title>INFINITY | NOVARIS V21</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --neon: #00f2ff; --gold: #d4af37; --dark: #02050a;
-            --accent: #ff007b; --glass: rgba(255, 255, 255, 0.03);
+            --primary: #00f2ff; --accent: #7000ff; --gold: #ffd700;
+            --bg: #010204; --card-bg: rgba(10, 10, 15, 0.9);
+            --glow: 0 0 20px rgba(0, 242, 255, 0.3);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; cursor: crosshair; }
         
         body {
-            background: var(--dark); color: white; min-height: 100vh; overflow-x: hidden;
+            background: var(--bg); color: #fff; min-height: 100vh; overflow-x: hidden;
             display: flex; align-items: center; justify-content: center;
+            background: radial-gradient(circle at center, #0a1128 0%, #010204 100%);
         }
 
-        /* تأثير الخلفية المتحركة */
-        #bg-canvas { position: fixed; top: 0; left: 0; z-index: -1; filter: blur(2px); }
+        /* تأثير الشبكة الكونية في الخلفية */
+        .grid-bg {
+            position: fixed; width: 200%; height: 200%; top: -50%; left: -50%;
+            background-image: 
+                linear-gradient(rgba(0, 242, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 242, 255, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px; transform: perspective(500px) rotateX(60deg);
+            animation: grid-move 20s linear infinite; z-index: -1;
+        }
+        @keyframes grid-move { from { transform: perspective(500px) rotateX(60deg) translateY(0); } to { transform: perspective(500px) rotateX(60deg) translateY(50px); } }
 
-        /* شاشة الدخول الخيالية */
-        #login-screen {
-            background: rgba(0, 0, 0, 0.8); padding: 50px; border-radius: 40px;
-            border: 2px solid var(--neon); box-shadow: 0 0 50px rgba(0, 242, 255, 0.2);
-            text-align: center; backdrop-filter: blur(20px); width: 100%; max-width: 450px;
-            animation: glow-border 3s infinite alternate;
+        /* حاوية النظام */
+        .novaris-container {
+            width: 100%; max-width: 1200px; min-height: 80vh; margin: 20px;
+            display: none; animation: fadeIn 1s ease-out;
         }
 
-        @keyframes glow-border { from { border-color: var(--neon); } to { border-color: var(--accent); } }
-
-        .input-glow {
-            width: 100%; padding: 15px; margin: 15px 0; background: rgba(255,255,255,0.05);
-            border: 1px solid #333; border-radius: 15px; color: white; text-align: center;
-            font-size: 1.1rem; outline: none; transition: 0.5s;
-        }
-        .input-glow:focus { border-color: var(--neon); box-shadow: 0 0 20px var(--neon); }
-
-        .btn-phantom {
-            width: 100%; padding: 15px; border-radius: 15px; border: none;
-            background: linear-gradient(45deg, var(--neon), var(--accent));
-            color: white; font-weight: 900; font-family: 'Orbitron'; letter-spacing: 2px;
-            cursor: pointer; position: relative; overflow: hidden;
+        /* شاشة الدخول (The Gate) */
+        #gate-screen {
+            text-align: center; background: var(--card-bg); padding: 60px;
+            border-radius: 50px; border: 1px solid rgba(0, 242, 255, 0.2);
+            backdrop-filter: blur(20px); box-shadow: var(--glow); width: 450px;
         }
 
-        /* واجهة المستخدم الرئيسية */
-        #main-app { display: none; width: 95%; max-width: 1200px; padding: 20px; }
+        .input-field {
+            width: 100%; padding: 18px; margin: 15px 0; background: rgba(0,0,0,0.6);
+            border: 1px solid #222; border-radius: 20px; color: #fff; text-align: center;
+            font-size: 1.1rem; transition: 0.4s; border-right: 4px solid var(--primary);
+        }
+        .input-field:focus { border-color: var(--primary); box-shadow: 0 0 25px rgba(0, 242, 255, 0.4); transform: scale(1.02); }
 
-        .dashboard {
-            display: grid; grid-template-columns: 400px 1fr; gap: 30px;
+        .btn-action {
+            width: 100%; padding: 18px; border-radius: 20px; border: none;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: #fff; font-weight: 900; font-family: 'Orbitron'; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 3px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .btn-action:hover { filter: brightness(1.3); letter-spacing: 5px; transform: translateY(-3px); }
+
+        /* لوحة التحكم (Dashboard) */
+        .main-grid { display: grid; grid-template-columns: 380px 1fr; gap: 30px; }
+        @media (max-width: 900px) { .main-grid { grid-template-columns: 1fr; } }
+
+        /* البطاقة الكونية */
+        .cosmic-card {
+            background: linear-gradient(135deg, #050505 0%, #1a1a1a 100%);
+            padding: 40px; border-radius: 40px; border: 1px solid var(--gold);
+            position: relative; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+        }
+        .cosmic-card::before {
+            content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+            animation: rotate 10s linear infinite;
+        }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        .bal-value {
+            font-family: 'Orbitron'; font-size: 4rem; font-weight: 900;
+            background: linear-gradient(var(--gold), #fff); -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 15px rgba(255,215,0,0.4));
         }
 
-        @media (max-width: 900px) { .dashboard { grid-template-columns: 1fr; } }
-
-        /* البطاقة الأسطورية */
-        .phantom-card {
-            background: linear-gradient(135deg, #111 0%, #000 100%);
-            padding: 30px; border-radius: 30px; border: 1px solid var(--gold);
-            position: relative; overflow: hidden; transform-style: preserve-3d;
-            transition: 0.3s; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-        }
-        .phantom-card:hover { transform: perspective(1000px) rotateY(10deg) rotateX(5deg); }
-
-        .balance-display {
-            font-family: 'Orbitron'; font-size: 3.5rem; color: var(--neon);
-            text-shadow: 0 0 20px rgba(0, 242, 255, 0.5); margin: 20px 0;
+        /* الأقسام */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 35px; padding: 30px; backdrop-filter: blur(10px); margin-bottom: 20px;
         }
 
-        .admin-panel {
-            background: rgba(255, 255, 255, 0.02); border: 1px solid var(--gold);
-            border-radius: 30px; padding: 30px; margin-top: 20px;
+        .shop-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .shop-btn {
+            background: rgba(0, 242, 255, 0.05); border: 1px solid rgba(0, 242, 255, 0.1);
+            padding: 20px; border-radius: 20px; color: #fff; cursor: pointer; text-align: center;
         }
+        .shop-btn:hover { background: var(--primary); color: #000; font-weight: bold; }
 
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th { color: var(--gold); padding: 15px; text-align: center; border-bottom: 1px solid #333; }
-        td { padding: 15px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        /* الجدول الإداري */
+        table { width: 100%; border-collapse: separate; border-spacing: 0 10px; }
+        th { color: var(--primary); font-family: 'Orbitron'; text-transform: uppercase; padding: 15px; }
+        td { background: rgba(255,255,255,0.03); padding: 15px; text-align: center; }
+        td:first-child { border-radius: 15px 0 0 15px; border-right: 3px solid var(--primary); }
+        td:last-child { border-radius: 0 15px 15px 0; }
 
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <canvas id="bg-canvas"></canvas>
+    <div class="grid-bg"></div>
 
-    <div id="login-screen">
-        <h1 style="font-family:'Orbitron'; font-size: 3rem; margin-bottom: 10px; background: linear-gradient(var(--neon), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">INF V20</h1>
-        <p style="letter-spacing: 5px; font-size: 0.7rem; opacity: 0.5; margin-bottom: 30px;">PHANTOM CORE SYSTEM</p>
+    <div id="gate-screen">
+        <h1 style="font-family:'Orbitron'; font-size: 3.5rem; letter-spacing: 10px; margin-bottom: 5px; color: var(--primary);">NOVARIS</h1>
+        <p style="font-size: 0.8rem; letter-spacing: 5px; opacity: 0.5; margin-bottom: 40px;">PRIVATE BANKING CORE V21</p>
         
-        <input type="text" id="u_id" class="input-glow" placeholder="IDENTITY">
-        <input type="password" id="u_pin" class="input-glow" placeholder="ACCESS KEY">
+        <input type="text" id="access_id" class="input-field" placeholder="USER IDENTIFIER">
+        <input type="password" id="access_pin" class="input-field" placeholder="SECURE PIN">
         
-        <button class="btn-phantom" onclick="login()">INITIALIZE SYSTEM</button>
+        <button class="btn-action" onclick="authenticate()">INITIALIZE ACCESS</button>
     </div>
 
-    <div id="main-app">
-        <div class="dashboard">
-            <div class="side-panel">
-                <div class="phantom-card">
-                    <div style="width: 50px; height: 35px; background: var(--gold); border-radius: 5px; margin-bottom: 30px; box-shadow: 0 0 15px var(--gold);"></div>
-                    <h2 id="disp_user" style="font-family:'Orbitron'; letter-spacing: 3px;">---</h2>
-                    <p id="disp_rank" style="color: var(--accent); font-weight: 900;">LEVEL: ---</p>
-                    <div class="balance-display" id="disp_bal">0</div>
-                    <p style="font-size: 0.7rem; opacity: 0.4;">INF CURRENCY | SECURE WALLET</p>
+    <div id="main-app" class="novaris-container">
+        <div class="main-grid">
+            
+            <div class="identity-section">
+                <div class="cosmic-card">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                        <div style="width:60px; height:40px; background:linear-gradient(45deg, #ffd700, #b8860b); border-radius:8px;"></div>
+                        <h4 style="font-family:'Orbitron'; color:var(--gold);">INFINITY</h4>
+                    </div>
+                    <div style="margin: 40px 0;">
+                        <small style="opacity:0.5; letter-spacing:2px;">CREDIT BALANCE</small>
+                        <div class="bal-value" id="val_bal">0</div>
+                    </div>
+                    <div style="display:flex; justify-content:space-between;">
+                        <div><small style="opacity:0.4;">OPERATOR</small><br><b id="val_user" style="text-transform:uppercase; letter-spacing:2px;">---</b></div>
+                        <div style="text-align:left;"><small style="opacity:0.4;">RANK</small><br><b id="val_rank" style="color:var(--primary);">---</b></div>
+                    </div>
                 </div>
 
-                <div class="admin-panel" style="background: var(--glass);">
-                    <h4>نظام التحويل السريع</h4>
-                    <input type="text" id="to_user" class="input-glow" placeholder="المستلم">
-                    <input type="number" id="to_amt" class="input-glow" placeholder="المبلغ">
-                    <button class="btn-phantom" onclick="sendRequest()">طلب تحويل 🚀</button>
+                <div class="glass-panel" style="margin-top: 25px;">
+                    <h3 style="margin-bottom:15px; color:var(--primary);">إجراءات التحويل 💳</h3>
+                    <input type="text" id="send_to" class="input-field" style="font-size:0.9rem" placeholder="لقب المستلم">
+                    <input type="number" id="send_amt" class="input-field" style="font-size:0.9rem" placeholder="المبلغ">
+                    <button class="btn-action" onclick="reqTransfer()" style="padding:12px; font-size:0.8rem;">إرسال طلب التحويل</button>
                 </div>
             </div>
 
-            <div class="main-view">
-                <div class="admin-panel" id="admin-view" style="display:none;">
-                    <h3 style="color:var(--gold); font-family:'Orbitron';">COMMAND CENTER (ADMIN)</h3>
+            <div class="operations-section">
+                <div id="admin-view" class="glass-panel" style="display:none; border-color:var(--gold);">
+                    <h3 style="font-family:'Orbitron'; color:var(--gold); margin-bottom:20px;">COMMAND CENTER (ADMIN)</h3>
                     <table>
                         <thead>
-                            <tr><th>العضو</th><th>الرصيد</th><th>الرتبة</th><th>إجراء</th></tr>
+                            <tr><th>IDENTIFIER</th><th>CREDITS</th><th>STATUS</th><th>OP</th></tr>
                         </thead>
-                        <tbody id="admin_list"></tbody>
+                        <tbody id="admin_rows"></tbody>
                     </table>
-                    <div style="margin-top:20px; display:flex; gap:10px;">
-                        <input type="text" id="m_u" class="input-glow" placeholder="اسم العضو">
-                        <input type="number" id="m_a" class="input-glow" placeholder="المبلغ (+/-)">
-                        <button class="btn-phantom" onclick="adminMod()" style="width:200px">تحديث</button>
+                    <div style="display:flex; gap:10px; margin-top:20px;">
+                        <input type="text" id="adm_u" class="input-field" style="margin:0" placeholder="Target User">
+                        <input type="number" id="adm_v" class="input-field" style="margin:0" placeholder="Amount">
+                        <button class="btn-action" onclick="admUpdate()" style="width:150px">UPDATE</button>
                     </div>
                 </div>
 
-                <div class="admin-panel">
-                    <h3>مركز شراء الخدمات 🛒</h3>
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-top:20px;">
-                        <button class="btn-phantom" style="background:var(--glass); border:1px solid #333;" onclick="shop('رتبة فارس')">فارس (9,500)</button>
-                        <button class="btn-phantom" style="background:var(--glass); border:1px solid #333;" onclick="shop('إعفاء عقوبة')">إعفاء (15,000)</button>
-                        <button class="btn-phantom" style="background:var(--glass); border:1px solid #333;" onclick="shop('لقب ملكي')">لقب ملكي (50,000)</button>
-                        <button class="btn-phantom" style="background:var(--glass); border:1px solid #333;" onclick="shop('فك حظر')">فك حظر (250,000)</button>
+                <div class="glass-panel">
+                    <h3 style="margin-bottom:20px;">INFINITY SHOP | متجر النقابة</h3>
+                    <div class="shop-grid">
+                        <div class="shop-btn" onclick="reqShop('رتبة فارس')"><b>رتبة فارس</b><br><small>9,500 INF</small></div>
+                        <div class="shop-btn" onclick="reqShop('إعفاء عقوبة')"><b>إعفاء عقوبة</b><br><small>15,000 INF</small></div>
+                        <div class="shop-btn" onclick="reqShop('لقب ملكي')"><b>لقب ملكي</b><br><small>50,000 INF</small></div>
+                        <div class="shop-btn" onclick="reqShop('أدمن مؤقت')"><b>أدمن (يوم)</b><br><small>100,000 INF</small></div>
                     </div>
                 </div>
+                
+                <button onclick="location.reload()" style="background:none; border:none; color:red; cursor:pointer; font-weight:bold; letter-spacing:2px;">TERMINATE SESSION [LOGOUT]</button>
             </div>
+
         </div>
     </div>
 
     <script>
-        // قاعدة البيانات الأسطورية
-        let db = JSON.parse(localStorage.getItem('inf_v20_db')) || {
-            "levi": { pin: "1001", bal: 5000000, rank: "الإمبراطور", admin: true },
-            "dororo": { pin: "300", bal: 100000, rank: "نائب الامبراطور", admin: false },
-            "fang": { pin: "8046", bal: 8500, rank: "المستشار", admin: false }
+        // قاعدة البيانات الإمبراطورية (تُحفظ في المتصفح)
+        let db = JSON.parse(localStorage.getItem('novaris_v21_db')) || {
+            "levi": { pin: "1001", bal: 5000000, rank: "الإمبراطور", priv: true },
+            "dororo": { pin: "300", bal: 100000, rank: "نائب الامبراطور", priv: false },
+            "fong": { pin: "300", bal: 6000000000000, rank: "سونغ جينوو", priv: false },
+            "fang": { pin: "8046", bal: 8500, rank: "المستشار", priv: false }
         };
 
-        let currentU = "";
+        let currentSession = "";
 
-        // محرك الجزيئات في الخلفية
-        const canvas = document.getElementById('bg-canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        let particles = [];
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2;
-                this.speedX = Math.random() * 1 - 0.5;
-                this.speedY = Math.random() * 1 - 0.5;
-            }
-            update() { this.x += this.speedX; this.y += this.speedY; }
-            draw() { ctx.fillStyle = '#00f2ff'; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); ctx.fill(); }
-        }
-        for(let i=0; i<100; i++) particles.push(new Particle());
-        function animate() {
-            ctx.clearRect(0,0,canvas.width, canvas.height);
-            particles.forEach(p => { p.update(); p.draw(); });
-            requestAnimationFrame(animate);
-        }
-        animate();
+        function save() { localStorage.setItem('novaris_v21_db', JSON.stringify(db)); }
 
-        // نظام الدخول
-        function login() {
-            let u = document.getElementById('u_id').value.toLowerCase().trim();
-            let p = document.getElementById('u_pin').value.trim();
-            if(db[u] && db[u].pin === p) {
-                currentU = u;
-                document.getElementById('login-screen').style.display = 'none';
+        function authenticate() {
+            const u = document.getElementById('access_id').value.toLowerCase().trim();
+            const p = document.getElementById('access_pin').value.trim();
+            
+            if (db[u] && db[u].pin === p) {
+                currentSession = u;
+                document.getElementById('gate-screen').style.display = 'none';
                 document.getElementById('main-app').style.display = 'block';
-                updateUI();
-            } else { alert("ACCESS DENIED: DNA MISMATCH"); }
+                syncUI();
+            } else {
+                alert("ACCESS DENIED: DNA/PIN MISMATCH");
+            }
         }
 
-        function updateUI() {
-            document.getElementById('disp_user').innerText = currentU.toUpperCase();
-            document.getElementById('disp_rank').innerText = "LEVEL: " + db[currentU].rank;
-            document.getElementById('disp_bal').innerText = db[currentU].bal.toLocaleString();
-            if(db[currentU].admin) {
+        function syncUI() {
+            const user = db[currentSession];
+            document.getElementById('val_user').innerText = currentSession;
+            document.getElementById('val_rank').innerText = user.rank;
+            document.getElementById('val_bal').innerText = user.bal.toLocaleString();
+            
+            if (user.priv) {
                 document.getElementById('admin-view').style.display = 'block';
                 refreshAdmin();
             }
-            localStorage.setItem('inf_v20_db', JSON.stringify(db));
+            save();
         }
 
         function refreshAdmin() {
-            let h = "";
-            for(let u in db) {
-                h += `<tr><td>${u}</td><td style="color:var(--neon)">${db[u].bal.toLocaleString()}</td><td>${db[u].rank}</td><td><button onclick="del('${u}')" style="color:red; background:none; border:none;">X</button></td></tr>`;
+            let html = "";
+            for (let u in db) {
+                html += `<tr>
+                    <td>${u}</td>
+                    <td style="color:var(--gold)">${db[u].bal.toLocaleString()}</td>
+                    <td style="font-size:0.7rem">${db[u].rank}</td>
+                    <td><button onclick="remUser('${u}')" style="color:red; background:none; border:none; cursor:pointer">X</button></td>
+                </tr>`;
             }
-            document.getElementById('admin_list').innerHTML = h;
+            document.getElementById('admin_rows').innerHTML = html;
         }
 
-        function adminMod() {
-            let u = document.getElementById('m_u').value.toLowerCase();
-            let v = parseInt(document.getElementById('m_a').value);
-            if(db[u]) { db[u].bal += v; updateUI(); alert("DATABASE UPDATED"); }
+        function admUpdate() {
+            const u = document.getElementById('adm_u').value.toLowerCase();
+            const v = parseInt(document.getElementById('adm_v').value);
+            if (db[u] && !isNaN(v)) {
+                db[u].bal += v;
+                syncUI();
+                alert("DATABASE RECORD MODIFIED");
+            }
         }
 
-        function sendRequest() {
-            let t = document.getElementById('to_user').value;
-            let a = document.getElementById('to_amt').value;
-            window.open(`https://wa.me/212622201526?text=${encodeURIComponent("⚠️ طلب تحويل طارئ\nمن: " + currentU + "\nإلى: " + t + "\nالمبلغ: " + a)}`);
+        function reqTransfer() {
+            const t = document.getElementById('send_to').value;
+            const a = document.getElementById('send_amt').value;
+            if(!t || !a) return alert("MISSING DATA");
+            const msg = `⚡ *NOVARIS TRANSFER REQ*\nFROM: ${currentSession}\nTO: ${t}\nAMT: ${a} INF`;
+            window.open(`https://wa.me/212622201526?text=${encodeURIComponent(msg)}`);
         }
 
-        function shop(item) {
-            window.open(`https://wa.me/212622201526?text=${encodeURIComponent("🛒 طلب شراء من المتجر الإمبراطوري\nالعضو: " + currentU + "\nالمنتج: " + item)}`);
+        function reqShop(item) {
+            const msg = `🛒 *NOVARIS SHOP REQ*\nUSER: ${currentSession}\nITEM: ${item}`;
+            window.open(`https://wa.me/212622201526?text=${encodeURIComponent(msg)}`);
         }
 
-        function del(u) { if(confirm("حذف العضو؟")) { delete db[u]; updateUI(); } }
+        function remUser(u) { if(confirm("حذف العضو؟")) { delete db[u]; refreshAdmin(); save(); } }
     </script>
 </body>
 </html>
