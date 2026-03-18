@@ -3,59 +3,282 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEBULA-X | THE ABSOLUTE</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Cairo:wght@300;900&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <title>INFINITY | OMNIVERSE V40</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Cairo:wght@300;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --neon: #00f2ff; --gold: #ffd700; --royal: #7000ff;
-            --glass: rgba(255, 255, 255, 0.03);
+            --neon-blue: #00f2ff; --royal-gold: #ffd700; --deep-black: #050505;
+            --glass-white: rgba(255, 255, 255, 0.03); --card-shadow: 0 0 50px rgba(0, 242, 255, 0.1);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; cursor: none; }
+        * { box-sizing: border-box; margin: 0; padding: 0; cursor: crosshair; }
         body { 
-            background: #000; color: #fff; height: 100vh; overflow: hidden;
+            background: var(--deep-black); color: #fff; min-height: 100vh; overflow-x: hidden;
             font-family: 'Cairo', sans-serif; display: flex; align-items: center; justify-content: center;
         }
 
-        /* محرك الجزيئات في الخلفية */
-        #particles-js { position: fixed; width: 100%; height: 100%; z-index: 1; }
+        /* تأثير الخلفية الفضائية */
+        .star-field {
+            position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1;
+            background: radial-gradient(circle at center, #0a1128 0%, #000 100%);
+            overflow: hidden;
+        }
+        .star { position: absolute; background: white; border-radius: 50%; opacity: 0.5; animation: twinkle 3s infinite; }
+        @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
 
-        /* المؤشر المخصص (Custom Cursor) */
-        #cursor {
-            width: 20px; height: 20px; border: 2px solid var(--neon); border-radius: 50%;
-            position: fixed; pointer-events: none; z-index: 9999; transition: 0.1s;
-            box-shadow: 0 0 15px var(--neon);
+        /* حاوية النظام */
+        .omni-container {
+            width: 95%; max-width: 1400px; min-height: 90vh;
+            background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(50px);
+            border: 1px solid rgba(0, 242, 255, 0.15); border-radius: 50px;
+            display: none; padding: 40px; animation: scaleIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* حاوية النظام الفضائي */
-        .system-core {
-            position: relative; z-index: 10; width: 90%; max-width: 1200px; height: 85vh;
-            background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(30px);
-            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 40px;
-            display: flex; flex-direction: column; overflow: hidden;
-            box-shadow: 0 0 100px rgba(0, 242, 255, 0.1);
+        /* شاشة الدخول (The Core) */
+        #core-gate {
+            text-align: center; background: var(--glass-white); padding: 80px;
+            border-radius: 60px; border: 2px solid var(--neon-blue); width: 500px;
+            box-shadow: var(--card-shadow);
         }
 
-        /* شاشة تسجيل الدخول الهولوغرافية */
-        #login-overlay {
-            position: absolute; inset: 0; background: #000; z-index: 100;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        .cyber-input {
+            width: 100%; padding: 20px; margin: 15px 0; background: rgba(0,0,0,0.7);
+            border: 1px solid #333; border-radius: 20px; color: var(--neon-blue);
+            text-align: center; font-size: 1.3rem; font-family: 'Orbitron'; transition: 0.4s;
+        }
+        .cyber-input:focus { border-color: var(--royal-gold); box-shadow: 0 0 20px var(--royal-gold); outline: none; }
+
+        .btn-ignite {
+            width: 100%; padding: 20px; border-radius: 20px; border: none;
+            background: linear-gradient(45deg, var(--neon-blue), #7000ff);
+            color: white; font-weight: 900; font-family: 'Orbitron'; letter-spacing: 5px;
+            cursor: pointer; transition: 0.5s; box-shadow: 0 10px 30px rgba(0, 242, 255, 0.3);
+        }
+        .btn-ignite:hover { letter-spacing: 10px; filter: brightness(1.2); }
+
+        /* تخطيط الصفحة الرئيسية */
+        .layout { display: grid; grid-template-columns: 420px 1fr; gap: 40px; }
+
+        /* البطاقة الإمبراطورية (The Artifact) */
+        .artifact {
+            background: linear-gradient(135deg, #0f0f0f 0%, #000 100%);
+            padding: 40px; border-radius: 40px; border: 1px solid var(--royal-gold);
+            position: relative; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,1);
+            transition: 0.5s; transform-style: preserve-3d;
+        }
+        .artifact:hover { transform: translateY(-10px) rotateY(5deg); }
+        .artifact::after {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
+            animation: rotate 10s linear infinite;
         }
 
-        .hologram-input {
-            background: transparent; border: none; border-bottom: 2px solid var(--neon);
-            color: var(--neon); font-size: 1.5rem; text-align: center; margin: 20px;
-            width: 300px; font-family: 'Orbitron'; outline: none; transition: 0.5s;
+        .bal-display {
+            font-family: 'Orbitron'; font-size: 4.5rem; font-weight: 900;
+            background: linear-gradient(to bottom, #fff, var(--royal-gold));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.4)); margin: 20px 0;
         }
-        .hologram-input:focus { border-bottom: 2px solid var(--gold); letter-spacing: 5px; }
 
-        /* البطاقة الأسطورية (The Artifact) */
-        .artifact-card {
-            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.5) 100%);
-            padding: 50px; border-radius: 50px; border: 1px solid var(--gold);
-            position: relative; overflow: hidden; transition: 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transform-style: preserve-3d; box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+        /* المتجر المطور (The Grand Bazaar) */
+        .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; margin-top: 30px; }
+        .shop-item {
+            background: var(--glass-white); border: 1px solid rgba(255,255,255,0.05);
+            padding: 25px; border-radius: 30px; text-align: center; transition: 0.4s;
+            position: relative; overflow: hidden;
+        }
+        .shop-item:hover { background: rgba(0, 242, 255, 0.05); border-color: var(--neon-blue); transform: scale(1.05); }
+        .shop-item h4 { color: var(--royal-gold); margin-bottom: 10px; font-size: 1.2rem; }
+        .price-tag { display: block; font-family: 'Orbitron'; color: var(--neon-blue); font-size: 0.9rem; margin-bottom: 15px; }
+
+        .btn-buy {
+            background: transparent; border: 1px solid var(--neon-blue); color: var(--neon-blue);
+            padding: 8px 20px; border-radius: 50px; font-size: 0.8rem; font-weight: bold;
+            cursor: pointer; transition: 0.3s;
+        }
+        .btn-buy:hover { background: var(--neon-blue); color: #000; }
+
+        /* لوحة التحكم */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.02); border-radius: 40px; padding: 35px;
+            border: 1px solid rgba(255, 255, 255, 0.05); margin-bottom: 30px;
+        }
+
+        table { width: 100%; border-collapse: separate; border-spacing: 0 10px; }
+        th { color: var(--neon-blue); font-family: 'Orbitron'; padding: 15px; text-align: center; }
+        td { background: rgba(255,255,255,0.02); padding: 15px; text-align: center; border-radius: 15px; }
+
+        @keyframes scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <div class="star-field" id="starField"></div>
+
+    <div id="gate-screen">
+        <div id="core-gate">
+            <h1 style="font-family:'Orbitron'; font-size: 4rem; letter-spacing: 15px; color: var(--neon-blue); text-shadow: 0 0 20px var(--neon-blue);">INFINITY</h1>
+            <p style="letter-spacing: 10px; font-size: 0.8rem; opacity: 0.5; margin-bottom: 40px;">OMNIVERSE CORE V40</p>
+            <input type="text" id="acc_id" class="cyber-input" placeholder="USERNAME">
+            <input type="password" id="acc_pin" class="cyber-input" placeholder="PASSCODE">
+            <button class="btn-ignite" onclick="ignite()">LOG IN</button>
+        </div>
+    </div>
+
+    <div id="main-app" class="omni-container">
+        <div class="layout">
+            
+            <div class="side-panel">
+                <div class="artifact">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div style="width:70px; height:45px; background:linear-gradient(45deg, #ffd700, #aa8800); border-radius:10px;"></div>
+                        <h3 style="font-family:'Orbitron'; color:rgba(255,255,255,0.2);">V40.X</h3>
+                    </div>
+                    <div style="margin: 40px 0;">
+                        <small style="color:var(--neon-blue); letter-spacing:3px;">TOTAL ASSETS</small>
+                        <div class="bal-display" id="val_bal">0</div>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:flex-end;">
+                        <div><small style="opacity:0.4;">OPERATOR</small><br><b id="val_user" style="font-family:'Orbitron'; font-size:1.5rem; letter-spacing:2px;">---</b></div>
+                        <div style="padding:5px 15px; background:rgba(0, 242, 255, 0.1); border:1px solid var(--neon-blue); border-radius:50px; color:var(--neon-blue); font-size:0.8rem; font-weight:900;" id="val_rank">RANK</div>
+                    </div>
+                </div>
+
+                <div class="glass-panel" style="margin-top: 30px;">
+                    <h3 style="color:var(--neon-blue); margin-bottom:20px;">التحويل الفوري ⚡</h3>
+                    <input type="text" id="t_to" class="cyber-input" style="font-size:1rem; padding:12px;" placeholder="اسم المستلم">
+                    <input type="number" id="t_amt" class="cyber-input" style="font-size:1rem; padding:12px;" placeholder="المبلغ">
+                    <button class="btn-ignite" onclick="sendX()" style="padding:12px; font-size:0.8rem;">تأكيد العملية</button>
+                </div>
+            </div>
+
+            <div class="content-panel">
+                <div class="glass-panel">
+                    <h2 style="font-family:'Orbitron'; color:var(--royal-gold); letter-spacing:3px;">INFINITY BAZAAR | المتجر</h2>
+                    <div class="shop-grid">
+                        <div class="shop-item">
+                            <h4>رتبة فارس</h4>
+                            <span class="price-tag">9,500 INF</span>
+                            <button class="btn-buy" onclick="buy('فارس')">شراء الآن</button>
+                        </div>
+                        <div class="shop-item">
+                            <h4>عفو ملكي</h4>
+                            <span class="price-tag">15,000 INF</span>
+                            <button class="btn-buy" onclick="buy('عفو')">شراء الآن</button>
+                        </div>
+                        <div class="shop-item">
+                            <h4>لقب ملكي</h4>
+                            <span class="price-tag">50,000 INF</span>
+                            <button class="btn-buy" onclick="buy('لقب')">شراء الآن</button>
+                        </div>
+                        <div class="shop-item">
+                            <h4>أدمن مؤقت</h4>
+                            <span class="price-tag">100,000 INF</span>
+                            <button class="btn-buy" onclick="buy('أدمن')">شراء الآن</button>
+                        </div>
+                        <div class="shop-item">
+                            <h4>درع الحماية</h4>
+                            <span class="price-tag">25,000 INF</span>
+                            <button class="btn-buy" onclick="buy('درع')">شراء الآن</button>
+                        </div>
+                        <div class="shop-item">
+                            <h4>تغيير لقب</h4>
+                            <span class="price-tag">5,000 INF</span>
+                            <button class="btn-buy" onclick="buy('تغيير')">شراء الآن</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="admin_p" class="glass-panel" style="display:none; border-color:var(--royal-gold);">
+                    <h2 style="font-family:'Orbitron'; color:var(--royal-gold);">COMMAND CENTER</h2>
+                    <table>
+                        <thead><tr><th>USER</th><th>BALANCE</th><th>RANK</th><th>OP</th></tr></thead>
+                        <tbody id="rows"></tbody>
+                    </table>
+                    <div style="display:flex; gap:10px; margin-top:20px;">
+                        <input type="text" id="m_u" class="cyber-input" style="margin:0; font-size:0.9rem;" placeholder="Target User">
+                        <input type="number" id="m_a" class="cyber-input" style="margin:0; font-size:0.9rem;" placeholder="Amount">
+                        <button class="btn-ignite" onclick="mod()" style="width:150px; font-size:0.8rem;">UPDATE</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <button onclick="location.reload()" style="background:none; border:none; color:red; cursor:pointer; font-weight:bold; margin-top:20px;">TERMINATE SESSION</button>
+    </div>
+
+    <script>
+        // إنشاء النجوم في الخلفية
+        const sf = document.getElementById('starField');
+        for(let i=0; i<150; i++) {
+            let s = document.createElement('div');
+            s.className = 'star';
+            s.style.width = Math.random()*3 + 'px';
+            s.style.height = s.style.width;
+            s.style.left = Math.random()*100 + '%';
+            s.style.top = Math.random()*100 + '%';
+            s.style.animationDelay = Math.random()*3 + 's';
+            sf.appendChild(s);
+        }
+
+        // نظام البيانات
+        let db = JSON.parse(localStorage.getItem('omni_v40_db')) || {
+            "levi": { pin: "1001", bal: 5000000, rank: "الإمبراطور", adm: true },
+            "dororo": { pin: "300", bal: 100000, rank: "نائب الامبراطور", adm: false },
+            "fang": { pin: "8046", bal: 8500, rank: "المستشار", adm: false }
+        };
+
+        let currentU = "";
+
+        function ignite() {
+            const u = document.getElementById('acc_id').value.toLowerCase().trim();
+            const p = document.getElementById('acc_pin').value.trim();
+            if(db[u] && db[u].pin === p) {
+                currentU = u;
+                document.getElementById('gate-screen').style.display = 'none';
+                document.getElementById('main-app').style.display = 'block';
+                sync();
+            } else { alert("ACCESS DENIED: IDENTITY UNKNOWN"); }
+        }
+
+        function sync() {
+            const u = db[currentU];
+            document.getElementById('val_bal').innerText = u.bal.toLocaleString();
+            document.getElementById('val_user').innerText = currentU.toUpperCase();
+            document.getElementById('val_rank').innerText = u.rank;
+            
+            if(u.adm) {
+                document.getElementById('admin_p').style.display = 'block';
+                let h = "";
+                for(let k in db) {
+                    h += `<tr><td>${k}</td><td style="color:var(--royal-gold)">${db[k].bal.toLocaleString()}</td><td>${db[k].rank}</td><td><button onclick="del('${k}')" style="color:red; background:none; border:none;">X</button></td></tr>`;
+                }
+                document.getElementById('rows').innerHTML = h;
+            }
+            localStorage.setItem('omni_v40_db', JSON.stringify(db));
+        }
+
+        function mod() {
+            const u = document.getElementById('m_u').value.toLowerCase();
+            const v = parseInt(document.getElementById('m_a').value);
+            if(db[u]) { db[u].bal += v; sync(); alert("DATA MODIFIED"); }
+        }
+
+        function buy(item) {
+            window.open(`https://wa.me/212622201526?text=${encodeURIComponent(`🛒 شراء من المتجر الإمبراطوري:\nالمستخدم: ${currentU}\nالمنتج: ${item}`)}`);
+        }
+
+        function sendX() {
+            const t = document.getElementById('t_to').value;
+            const a = document.getElementById('t_amt').value;
+            window.open(`https://wa.me/212622201526?text=${encodeURIComponent(`⚡ تحويل طاقة:\nمن: ${currentU}\nإلى: ${t}\nالمبلغ: ${a}`)}`);
+        }
+
+        function del(u) { if(confirm("حذف العضو؟")) { delete db[u]; sync(); } }
+    </script>
+</body>
+</html>            transform-style: preserve-3d; box-shadow: 0 30px 60px rgba(0,0,0,0.5);
         }
         .artifact-card:hover { transform: scale(1.02) rotateY(10deg); border-color: var(--neon); }
 
