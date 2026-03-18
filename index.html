@@ -3,262 +3,233 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INFINITY | AETERNA V30</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+Arabic:wght@300;600;900&display=swap" rel="stylesheet">
+    <title>NEBULA-X | THE ABSOLUTE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Cairo:wght@300;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <style>
         :root {
-            --p-gold: #ffcc00; --s-cyan: #00f2ff; --depth: #030303;
-            --glass: rgba(255, 255, 255, 0.03); --glow: 0 0 30px rgba(0, 242, 255, 0.2);
+            --neon: #00f2ff; --gold: #ffd700; --royal: #7000ff;
+            --glass: rgba(255, 255, 255, 0.03);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; cursor: crosshair; }
+        * { box-sizing: border-box; margin: 0; padding: 0; cursor: none; }
         body { 
-            background: var(--depth); color: #fff; min-height: 100vh; overflow: hidden;
-            font-family: 'Noto Sans Arabic', sans-serif; display: flex; align-items: center; justify-content: center;
+            background: #000; color: #fff; height: 100vh; overflow: hidden;
+            font-family: 'Cairo', sans-serif; display: flex; align-items: center; justify-content: center;
         }
 
-        /* خلفية الـ Deep Space */
-        .space-bg {
-            position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1;
-            background: radial-gradient(circle at 50% 50%, #0a0a0a 0%, #000 100%);
-        }
-        .aura {
-            position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(0, 242, 255, 0.05) 0%, transparent 70%);
-            border-radius: 50%; filter: blur(50px); animation: pulse 10s infinite alternate;
-        }
+        /* محرك الجزيئات في الخلفية */
+        #particles-js { position: fixed; width: 100%; height: 100%; z-index: 1; }
 
-        @keyframes pulse { from { transform: scale(1); opacity: 0.5; } to { transform: scale(1.5); opacity: 0.8; } }
-
-        /* شاشة الدخول الأسطورية */
-        #gate {
-            background: var(--glass); padding: 60px; border-radius: 60px;
-            border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(40px);
-            text-align: center; width: 450px; box-shadow: 0 40px 100px rgba(0,0,0,0.8);
-            animation: slideUp 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+        /* المؤشر المخصص (Custom Cursor) */
+        #cursor {
+            width: 20px; height: 20px; border: 2px solid var(--neon); border-radius: 50%;
+            position: fixed; pointer-events: none; z-index: 9999; transition: 0.1s;
+            box-shadow: 0 0 15px var(--neon);
         }
 
-        .neo-input {
-            width: 100%; padding: 20px; margin: 15px 0; background: rgba(0,0,0,0.5);
-            border: 1px solid #222; border-radius: 25px; color: #fff; text-align: center;
-            font-size: 1.2rem; transition: 0.4s; letter-spacing: 2px;
+        /* حاوية النظام الفضائي */
+        .system-core {
+            position: relative; z-index: 10; width: 90%; max-width: 1200px; height: 85vh;
+            background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 40px;
+            display: flex; flex-direction: column; overflow: hidden;
+            box-shadow: 0 0 100px rgba(0, 242, 255, 0.1);
         }
-        .neo-input:focus { border-color: var(--s-cyan); box-shadow: 0 0 20px rgba(0, 242, 255, 0.3); outline: none; }
 
-        .btn-v30 {
-            width: 100%; padding: 20px; border-radius: 25px; border: none;
-            background: linear-gradient(45deg, #00f2ff, #7000ff); color: white;
-            font-weight: 900; font-family: 'Orbitron'; letter-spacing: 5px;
-            cursor: pointer; transition: 0.5s; box-shadow: 0 10px 30px rgba(0, 242, 255, 0.2);
+        /* شاشة تسجيل الدخول الهولوغرافية */
+        #login-overlay {
+            position: absolute; inset: 0; background: #000; z-index: 100;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
-        .btn-v30:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 20px 40px rgba(0, 242, 255, 0.4); }
 
-        /* واجهة المستخدم (AETERNA Dashboard) */
-        #app { display: none; width: 95%; max-width: 1300px; animation: fadeIn 1.5s ease; }
-        .main-layout { display: grid; grid-template-columns: 450px 1fr; gap: 40px; }
-
-        /* البطاقة المطلقة (Absolute Card) */
-        .abs-card {
-            background: linear-gradient(165deg, #111 0%, #000 100%);
-            padding: 40px; border-radius: 50px; border: 1px solid rgba(255, 204, 0, 0.3);
-            position: relative; transition: 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
-            transform-style: preserve-3d;
+        .hologram-input {
+            background: transparent; border: none; border-bottom: 2px solid var(--neon);
+            color: var(--neon); font-size: 1.5rem; text-align: center; margin: 20px;
+            width: 300px; font-family: 'Orbitron'; outline: none; transition: 0.5s;
         }
-        .abs-card:hover { transform: perspective(2000px) rotateX(5deg) rotateY(-10deg); border-color: var(--p-gold); }
+        .hologram-input:focus { border-bottom: 2px solid var(--gold); letter-spacing: 5px; }
 
-        .chip { width: 70px; height: 50px; background: linear-gradient(45deg, #ffd700, #b8860b); border-radius: 12px; margin-bottom: 40px; }
+        /* البطاقة الأسطورية (The Artifact) */
+        .artifact-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.5) 100%);
+            padding: 50px; border-radius: 50px; border: 1px solid var(--gold);
+            position: relative; overflow: hidden; transition: 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d; box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+        }
+        .artifact-card:hover { transform: scale(1.02) rotateY(10deg); border-color: var(--neon); }
 
-        .bal-container { position: relative; margin: 40px 0; height: 100px; }
-        .bal-text {
-            font-family: 'Orbitron'; font-size: 4.5rem; font-weight: 900;
-            background: linear-gradient(to bottom, #fff, var(--p-gold));
+        .balance-glow {
+            font-family: 'Orbitron'; font-size: 5rem; font-weight: 900;
+            background: linear-gradient(to right, #fff, var(--gold), var(--neon));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 15px rgba(255, 204, 0, 0.3));
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.3));
         }
 
-        .eye-toggle {
-            position: absolute; right: 0; top: -20px; background: none; border: none;
-            color: var(--p-gold); font-size: 1.5rem; opacity: 0.4; transition: 0.3s;
+        /* ميزة الإخفاء السينمائي */
+        .blur-mode { filter: blur(25px); pointer-events: none; transition: 0.5s; }
+
+        /* الأزرار البلورية */
+        .crystal-btn {
+            padding: 15px 40px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.2);
+            background: var(--glass); color: #fff; font-weight: 900; letter-spacing: 2px;
+            text-transform: uppercase; transition: 0.4s; position: relative; overflow: hidden;
         }
-        .eye-toggle:hover { opacity: 1; transform: scale(1.2); }
-
-        .rank-badge {
-            display: inline-block; padding: 8px 20px; border-radius: 50px;
-            background: rgba(0, 242, 255, 0.1); border: 1px solid var(--s-cyan);
-            color: var(--s-cyan); font-weight: 900; font-size: 0.9rem; letter-spacing: 2px;
+        .crystal-btn::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg); transition: 0.5s;
         }
+        .crystal-btn:hover::before { left: 100%; }
+        .crystal-btn:hover { background: var(--neon); color: #000; box-shadow: 0 0 30px var(--neon); }
 
-        /* الأقسام الزجاجية */
-        .glass-box {
-            background: var(--glass); border-radius: 40px; padding: 35px;
-            border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(20px);
-            margin-bottom: 30px; transition: 0.4s;
+        /* الجدول الإمبراطوري */
+        .data-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .data-table th { color: var(--neon); text-transform: uppercase; font-family: 'Orbitron'; padding: 15px; border-bottom: 1px solid rgba(0, 242, 255, 0.2); }
+        .data-table td { padding: 15px; text-align: center; background: rgba(255,255,255,0.01); border-bottom: 1px solid rgba(255,255,255,0.05); }
+
+        @keyframes scan { 0% { top: -100%; } 100% { top: 100%; } }
+        .scanner-line {
+            position: absolute; width: 100%; height: 2px; background: var(--neon);
+            box-shadow: 0 0 15px var(--neon); z-index: 50; animation: scan 3s linear infinite;
         }
-        .glass-box:hover { background: rgba(255,255,255,0.05); }
-
-        /* الجداول والقوائم */
-        table { width: 100%; border-collapse: separate; border-spacing: 0 15px; }
-        th { color: var(--p-gold); text-align: right; padding: 10px; font-size: 0.8rem; letter-spacing: 2px; }
-        td { background: rgba(255,255,255,0.02); padding: 20px; text-align: right; font-weight: 600; }
-        td:first-child { border-radius: 0 20px 20px 0; border-right: 4px solid var(--s-cyan); }
-        td:last-child { border-radius: 20px 0 0 20px; }
-
-        @keyframes slideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
     </style>
 </head>
 <body>
 
-    <div class="space-bg">
-        <div class="aura" style="top: 10%; left: 10%;"></div>
-        <div class="aura" style="bottom: 10%; right: 10%; background: radial-gradient(circle, rgba(112, 0, 255, 0.05) 0%, transparent 70%);"></div>
-    </div>
+    <div id="cursor"></div>
+    <div id="particles-js"></div>
 
-    <div id="gate">
-        <h1 style="font-family:'Orbitron'; font-size: 4rem; font-weight: 900; background: linear-gradient(var(--s-cyan), #7000ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">V30</h1>
-        <p style="letter-spacing: 8px; font-size: 0.7rem; opacity: 0.4; margin-bottom: 40px; font-family:'Orbitron';">AETERNA CORE SYSTEM</p>
-        
-        <input type="text" id="acc_id" class="neo-input" placeholder="IDENTITY">
-        <input type="password" id="acc_pin" class="neo-input" placeholder="SECURE PIN">
-        
-        <button class="btn-v30" onclick="login()">INITIALIZE ⚡</button>
-    </div>
+    <div class="system-core">
+        <div class="scanner-line"></div>
 
-    <div id="app">
-        <div class="main-layout">
-            
-            <!-- لوحة الهوية -->
-            <div class="side">
-                <div class="abs-card">
-                    <div style="display:flex; justify-content:space-between;">
-                        <div class="chip"></div>
-                        <h2 style="font-family:'Orbitron'; letter-spacing:3px; color:rgba(255,255,255,0.2);">INFINITY</h2>
-                    </div>
-                    
-                    <div class="bal-container">
-                        <button class="eye-toggle" onclick="toggleSecret()">👁️‍🗨️</button>
-                        <small style="opacity:0.4; letter-spacing:2px;">CREDIT ASSETS</small>
-                        <div id="bal_v" class="bal-text">0</div>
-                        <div id="bal_h" class="bal-text" style="display:none; font-size:3rem; opacity:0.1;">••••••••</div>
-                    </div>
+        <!-- شاشة الدخول -->
+        <div id="login-overlay">
+            <h1 style="font-family:'Orbitron'; font-size: 4rem; letter-spacing: 15px; color: var(--neon); text-shadow: 0 0 20px var(--neon);">INFINITY</h1>
+            <p style="opacity: 0.5; letter-spacing: 10px;">NEBULA-X INTERFACE</p>
+            <input type="text" id="user_id" class="hologram-input" placeholder="IDENTIFIER">
+            <input type="password" id="user_pin" class="hologram-input" placeholder="ENCRYPTED PIN">
+            <button class="crystal-btn" onclick="initializeSystem()">INITIALIZE CORE</button>
+        </div>
 
-                    <div style="display:flex; justify-content:space-between; align-items:flex-end;">
-                        <div>
-                            <small style="opacity:0.4; display:block; margin-bottom:5px;">OPERATOR</small>
-                            <span id="user_n" style="font-size:1.5rem; font-weight:900; letter-spacing:2px; font-family:'Orbitron';">LEVI</span>
-                        </div>
-                        <div class="rank-badge" id="user_r">LEVEL: ---</div>
-                    </div>
-                </div>
-
-                <div class="glass-box" style="margin-top:30px;">
-                    <h3 style="color:var(--s-cyan); margin-bottom:20px;">التحويل السريع 🛡️</h3>
-                    <input type="text" id="t_u" class="neo-input" style="padding:12px; font-size:0.9rem;" placeholder="المستلم">
-                    <input type="number" id="t_a" class="neo-input" style="padding:12px; font-size:0.9rem;" placeholder="المبلغ">
-                    <button class="btn-v30" onclick="sendReq()" style="padding:12px; font-size:0.8rem; letter-spacing:2px;">إتمام العملية</button>
-                </div>
-            </div>
-
-            <!-- لوحة العمليات -->
-            <div class="content">
-                <div id="admin_p" class="glass-box" style="display:none; border-color: var(--p-gold);">
-                    <h2 style="font-family:'Orbitron'; color:var(--p-gold); margin-bottom:20px;">COMMAND CENTER [ADMIN]</h2>
-                    <table>
-                        <thead>
-                            <tr><th>المستخدم</th><th>الرصيد الكلي</th><th>الرتبة</th><th>الإجراء</th></tr>
-                        </thead>
-                        <tbody id="rows"></tbody>
-                    </table>
-                    <div style="display:flex; gap:10px; margin-top:20px;">
-                        <input type="text" id="m_u" class="neo-input" style="margin:0" placeholder="اسم المستخدم">
-                        <input type="number" id="m_a" class="neo-input" style="margin:0" placeholder="المبلغ">
-                        <button class="btn-v30" onclick="modDB()" style="width:200px">تحديث القيمة</button>
-                    </div>
-                </div>
-
-                <div class="glass-box">
-                    <h2 style="margin-bottom:25px;">SERVICES | الخدمات الإمبراطورية</h2>
-                    <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:15px;">
-                        <div class="glass-box" style="margin:0; padding:20px; text-align:center; cursor:pointer;" onclick="shop('حماية')">🛡️ حماية</div>
-                        <div class="glass-box" style="margin:0; padding:20px; text-align:center; cursor:pointer;" onclick="shop('رتبة')">💎 رتبة</div>
-                        <div class="glass-box" style="margin:0; padding:20px; text-align:center; cursor:pointer;" onclick="shop('فك حظر')">🔓 فك حظر</div>
-                    </div>
-                </div>
+        <!-- واجهة المستخدم الرئيسية -->
+        <div id="main-ui" style="display:none; padding: 40px; flex: 1; display: flex; flex-direction: column;">
+            <div style="display: flex; gap: 40px; flex: 1;">
                 
-                <p style="text-align:center; opacity:0.3; font-size:0.7rem;">SYSTEM V30.0.1 ALPHA | SECURED BY INFINITY ENCRYPTION</p>
-            </div>
+                <!-- الجانب الأيسر: البطاقة والتحكم -->
+                <div style="flex: 1;">
+                    <div class="artifact-card">
+                        <div style="display:flex; justify-content:space-between; margin-bottom: 50px;">
+                            <div style="width: 80px; height: 50px; background: linear-gradient(45deg, #ffd700, #aa8800); border-radius: 10px; box-shadow: 0 0 20px var(--gold);"></div>
+                            <h2 style="font-family:'Orbitron'; opacity:0.3;">V.FINAL</h2>
+                        </div>
+                        <div style="position:relative;">
+                            <small style="color:var(--neon); letter-spacing:3px;">UNIVERSAL ASSETS</small>
+                            <div id="bal_display" class="balance-glow">0</div>
+                            <button onclick="toggleGhostMode()" style="background:none; border:none; color:var(--gold); cursor:pointer; font-size:1.5rem;">👁️‍🗨️ GHOST MODE</button>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; margin-top: 60px;">
+                            <div><small style="opacity:0.4;">OPERATOR</small><br><b id="op_name" style="font-family:'Orbitron'; font-size:1.5rem;">---</b></div>
+                            <div style="text-align:left;"><small style="opacity:0.4;">RANK</small><br><b id="op_rank" style="color:var(--neon); font-size:1.2rem;">---</b></div>
+                        </div>
+                    </div>
 
+                    <div style="margin-top: 30px; background: var(--glass); padding: 30px; border-radius: 30px;">
+                        <h3 style="margin-bottom:20px; color:var(--neon);">QUICK TRANSFER | تحويل طاقي</h3>
+                        <div style="display:flex; gap:10px;">
+                            <input type="text" id="t_to" class="hologram-input" style="width:100%; font-size:1rem; margin:0;" placeholder="المستلم">
+                            <input type="number" id="t_amt" class="hologram-input" style="width:100%; font-size:1rem; margin:0;" placeholder="المبلغ">
+                        </div>
+                        <button class="crystal-btn" onclick="sendEnergy()" style="width:100%; margin-top:20px;">إرسال البيانات</button>
+                    </div>
+                </div>
+
+                <!-- الجانب الأيمن: لوحة التحكم الإدارية -->
+                <div style="flex: 1.2; display:none;" id="admin_zone">
+                    <div style="background: rgba(112, 0, 255, 0.05); padding: 30px; border-radius: 40px; border: 1px solid var(--royal); height: 100%;">
+                        <h2 style="font-family:'Orbitron'; color:var(--royal); margin-bottom:20px;">CENTRAL COMMAND</h2>
+                        <table class="data-table">
+                            <thead><tr><th>IDENTITY</th><th>CREDITS</th><th>RANK</th></tr></thead>
+                            <tbody id="db_rows"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            
+            <button onclick="location.reload()" style="background:none; border:none; color:red; margin-top:20px; font-weight:bold;">DISCONNECT SESSION</button>
         </div>
     </div>
 
     <script>
-        // نظام إدارة البيانات الأكثر تطوراً
-        let _DATA = JSON.parse(localStorage.getItem('inf_v30_core')) || {
-            "levi": { pin: "1001", bal: 5000000, rank: "الإمبراطور", adm: true },
-            "dororo": { pin: "300", bal: 1, rank: "نائب الامبراطور", adm: false },
-            "fang": { pin: "8046", bal: 8500, rank: "المستشار", adm: false }
+        // محرك الجزيئات
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 100 },
+                "color": { "value": "#00f2ff" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.5 },
+                "size": { "value": 3 },
+                "line_linked": { "enable": true, "distance": 150, "color": "#00f2ff", "opacity": 0.2, "width": 1 },
+                "move": { "enable": true, "speed": 2 }
+            },
+            "interactivity": {
+                "events": { "onhover": { "enable": true, "mode": "grab" } }
+            }
+        });
+
+        // المؤشر المخصص
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', e => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // قاعدة البيانات
+        let core = JSON.parse(localStorage.getItem('nebula_db')) || {
+            "levi": { pin: "1001", bal: 9999999, rank: "الكيان الأعظم", admin: true },
+            "dororo": { pin: "300", bal: 500000, rank: "نائب أول", admin: false }
         };
 
-        let activeUser = "";
-        let isSecret = false;
+        let sessionUser = "";
 
-        function login() {
-            const u = document.getElementById('acc_id').value.toLowerCase().trim();
-            const p = document.getElementById('acc_pin').value.trim();
-            if(_DATA[u] && _DATA[u].pin === p) {
-                activeUser = u;
-                document.getElementById('gate').style.display = 'none';
-                document.getElementById('app').style.display = 'block';
-                sync();
-            } else {
-                alert("ERR: UNAUTHORIZED ACCESS");
-            }
+        function initializeSystem() {
+            const u = document.getElementById('user_id').value.toLowerCase().trim();
+            const p = document.getElementById('user_pin').value.trim();
+            if(core[u] && core[u].pin === p) {
+                sessionUser = u;
+                document.getElementById('login-overlay').style.transform = 'translateY(-100%)';
+                document.getElementById('main-ui').style.display = 'flex';
+                updateUI();
+            } else { alert("CRITICAL ERROR: IDENTITY NOT RECOGNIZED"); }
         }
 
-        function sync() {
-            const user = _DATA[activeUser];
-            document.getElementById('bal_v').innerText = user.bal.toLocaleString();
-            document.getElementById('user_n').innerText = activeUser.toUpperCase();
-            document.getElementById('user_r').innerText = user.rank;
+        function updateUI() {
+            const user = core[sessionUser];
+            document.getElementById('bal_display').innerText = user.bal.toLocaleString();
+            document.getElementById('op_name').innerText = sessionUser.toUpperCase();
+            document.getElementById('op_rank').innerText = user.rank;
             
-            if(user.adm) {
-                document.getElementById('admin_p').style.display = 'block';
-                renderAdmin();
+            if(user.admin) {
+                document.getElementById('admin_zone').style.display = 'block';
+                let h = "";
+                for(let key in core) {
+                    h += `<tr><td>${key}</td><td style="color:var(--gold)">${core[key].bal}</td><td>${core[key].rank}</td></tr>`;
+                }
+                document.getElementById('db_rows').innerHTML = h;
             }
-            localStorage.setItem('inf_v30_core', JSON.stringify(_DATA));
+            localStorage.setItem('nebula_db', JSON.stringify(core));
         }
 
-        function toggleSecret() {
-            isSecret = !isSecret;
-            document.getElementById('bal_v').style.display = isSecret ? "none" : "block";
-            document.getElementById('bal_h').style.display = isSecret ? "block" : "none";
+        function toggleGhostMode() {
+            document.getElementById('bal_display').classList.toggle('blur-mode');
         }
 
-        function renderAdmin() {
-            let h = "";
-            for(let u in _DATA) {
-                h += `<tr><td>${u}</td><td style="color:var(--p-gold)">${_DATA[u].bal.toLocaleString()} INF</td><td>${_DATA[u].rank}</td><td><button onclick="del('${u}')" style="color:red; background:none; border:none;">حذف</button></td></tr>`;
-            }
-            document.getElementById('rows').innerHTML = h;
+        function sendEnergy() {
+            const to = document.getElementById('t_to').value;
+            const amt = document.getElementById('t_amt').value;
+            window.open(`https://wa.me/212622201526?text=${encodeURIComponent(`⚡ NEBULA TRANSFER\nSENDER: ${sessionUser}\nTARGET: ${to}\nAMOUNT: ${amt}`)}`);
         }
-
-        function modDB() {
-            const u = document.getElementById('m_u').value.toLowerCase();
-            const v = parseInt(document.getElementById('m_a').value);
-            if(_DATA[u]) { _DATA[u].bal += v; sync(); alert("DATA SYNCED"); }
-        }
-
-        function sendReq() {
-            const t = document.getElementById('t_u').value;
-            const a = document.getElementById('t_a').value;
-            window.open(`https://wa.me/212622201526?text=${encodeURIComponent(`[V30 TRANS] FROM: ${activeUser} TO: ${t} AMT: ${a}`)}`);
-        }
-
-        function shop(i) {
-            window.open(`https://wa.me/212622201526?text=${encodeURIComponent(`[V30 SHOP] USER: ${activeUser} ITEM: ${i}`)}`);
-        }
-
-        function del(u) { if(confirm("تأكيد الحذف؟")) { delete _DATA[u]; sync(); } }
     </script>
 </body>
 </html>
