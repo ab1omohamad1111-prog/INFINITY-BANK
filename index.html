@@ -3,212 +3,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INFINITY BANK | by levi </title>
+    <title>INFINITY | THE GOLDEN BANK</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Orbitron:wght@400;900&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #00f2ff; --accent: #ff007b; --admin-gold: #ffcc00; --bg: #02050a; --glass: rgba(255, 255, 255, 0.05); }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; transition: 0.3s; }
-        body { background: var(--bg); color: white; min-height: 100vh; overflow-x: hidden; }
-        
-        .screen { display: none; padding: 20px; animation: slideUp 0.5s ease; }
-        .active { display: block; }
-        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-
-        /* البطاقة البنكية الفاخرة */
-        .credit-card {
-            width: 100%; max-width: 350px; height: 200px; margin: 0 auto 30px;
-            background: linear-gradient(135deg, #0d1a26 0%, #000 100%);
-            border-radius: 20px; padding: 25px; border: 1px solid rgba(0,242,255,0.3);
-            position: relative; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+        :root {
+            --gold: #d4af37; --gold-glow: #ffcc00; --bg-black: #000000;
+            --card-bg: rgba(20, 20, 20, 0.95); --primary-blue: #00d9ff;
         }
-        .credit-card::before { content: ""; position: absolute; top: -50%; right: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(0,242,255,0.05) 0%, transparent 70%); }
-        .card-chip { width: 45px; height: 35px; background: #e0ac1c; border-radius: 5px; margin-bottom: 20px; }
 
-        /* المدخلات والأزرار */
-        .input-group { margin-bottom: 15px; }
-        input { width: 100%; padding: 12px; background: rgba(0,0,0,0.5); border: 1px solid var(--primary); border-radius: 12px; color: #fff; text-align: center; }
-        .btn { width: 100%; padding: 14px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer; display: block; margin-top: 10px; }
-        .btn-primary { background: var(--primary); color: #000; box-shadow: 0 0 15px rgba(0,242,255,0.3); }
-        .btn-admin { background: var(--admin-gold); color: #000; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
+        body { 
+            background: var(--bg-black); color: white; min-height: 100vh;
+            background-image: radial-gradient(circle at center, #0a1118 0%, #000 100%);
+        }
 
-        /* لوحة التحكم */
-        .grid-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        @media (max-width: 700px) { .grid-layout { grid-template-columns: 1fr; } }
-        .section-box { background: var(--glass); padding: 20px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); }
-        
-        table { width: 100%; margin-top: 20px; border-collapse: collapse; font-size: 0.8rem; }
-        th, td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center; }
+        /* شاشة الدخول الفخمة */
+        #login-screen {
+            height: 100vh; display: flex; align-items: center; justify-content: center;
+        }
+        .glass-box {
+            background: var(--card-bg); padding: 50px; border-radius: 40px;
+            border: 1px solid rgba(212, 175, 55, 0.3); text-align: center;
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.1); width: 100%; max-width: 400px;
+        }
+
+        /* البطاقة البنكية العالمية */
+        .premium-card {
+            width: 100%; max-width: 380px; height: 220px; margin: 20px auto;
+            background: linear-gradient(135deg, #1a1a1a 0%, #000 100%);
+            border-radius: 25px; border: 1px solid var(--gold); padding: 30px;
+            position: relative; box-shadow: 0 15px 35px rgba(0,0,0,1);
+            overflow: hidden; transition: 0.5s;
+        }
+        .premium-card:hover { transform: translateY(-10px) rotateX(5deg); box-shadow: 0 20px 50px rgba(212,175,55,0.2); }
+        .premium-card::after {
+            content: "INFINITY"; position: absolute; top: -20px; right: -20px;
+            font-family: 'Orbitron'; font-size: 5rem; opacity: 0.03; color: white;
+        }
+
+        .balance-view {
+            background: rgba(255,255,255,0.03); border-radius: 20px; padding: 25px;
+            margin: 20px 0; border: 1px dashed rgba(212,175,55,0.4); text-align: center;
+        }
+
+        input {
+            width: 100%; padding: 15px; margin: 10px 0; background: #0a0a0a;
+            border: 1px solid #333; border-radius: 15px; color: #fff; text-align: center;
+            font-size: 1.1rem; outline: none; transition: 0.3s;
+        }
+        input:focus { border-color: var(--gold); box-shadow: 0 0 10px rgba(212,175,55,0.3); }
+
+        .btn-gold {
+            background: linear-gradient(90deg, #d4af37, #f2d06b); color: #000;
+            padding: 15px; border: none; border-radius: 15px; font-weight: 900;
+            cursor: pointer; width: 100%; font-size: 1rem; text-transform: uppercase;
+        }
+        .btn-gold:hover { letter-spacing: 2px; filter: brightness(1.2); }
+
+        /* لوحة التحكم (Admin) */
+        .admin-panel {
+            background: #080808; border-top: 2px solid var(--gold);
+            padding: 30px; margin-top: 50px; border-radius: 30px 30px 0 0;
+        }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th { color: var(--gold); padding: 15px; border-bottom: 2px solid #222; }
+        td { padding: 15px; border-bottom: 1px solid #111; text-align: center; }
+
+        .tag { padding: 4px 10px; border-radius: 8px; font-size: 0.7rem; font-weight: bold; }
+        .tag-admin { background: rgba(212,175,55,0.2); color: var(--gold); }
+        .tag-member { background: rgba(0,217,255,0.1); color: var(--primary-blue); }
+
+        .hidden { display: none; }
     </style>
 </head>
 <body>
 
-    <div id="auth-screen" class="screen active">
-        <div style="max-width:400px; margin: 50px auto; text-align:center;">
-            <h1 style="font-family:'Orbitron'; color:var(--primary); font-size:2.5rem;">INF-BANK</h1>
-            <p style="opacity:0.6; margin-bottom:30px;">نظام الائتمان الرقمي الموحد</p>
-            
-            <div id="login-box" class="section-box">
-                <input type="text" id="user_in" placeholder="اسم المستخدم">
-                <input type="password" id="pass_in" placeholder="الرمز السري">
-                <button class="btn btn-primary" onclick="handleLogin()">دخول 🔓</button>
-                <p style="margin-top:15px; font-size:0.8rem">ليس لديك حساب؟ <a href="#" onclick="toggleAuth()" style="color:var(--primary)">سجل الآن</a></p>
-            </div>
-
-            <div id="signup-box" class="section-box" style="display:none">
-                <input type="text" id="new_user" placeholder="اختر لقب (User)">
-                <input type="password" id="new_pass" placeholder="اختر رمز (PIN)">
-                <button class="btn btn-primary" onclick="handleSignup()">إنشاء حساب جديد ✨</button>
-                <p style="margin-top:15px; font-size:0.8rem">لديك حساب؟ <a href="#" onclick="toggleAuth()" style="color:var(--primary)">دخول</a></p>
-            </div>
+    <!-- شاشة الدخول -->
+    <div id="login-screen">
+        <div class="glass-box">
+            <h1 style="font-family:'Orbitron'; color:var(--gold); letter-spacing:5px;">INFINITY</h1>
+            <p style="font-size: 0.7rem; opacity: 0.5; margin-bottom: 30px;">THE PRIVATE BANKING SYSTEM</p>
+            <input type="text" id="u_name" placeholder="IDENTIFIER">
+            <input type="password" id="u_pass" placeholder="SECRET PIN">
+            <button class="btn-gold" onclick="auth()">ACCESS SYSTEM</button>
         </div>
     </div>
 
-    <div id="user-screen" class="screen">
-        <div style="max-width:800px; margin:0 auto;">
-            <div class="credit-card">
-                <div class="card-chip"></div>
-                <div style="font-family:'Orbitron'; font-size:1.2rem; letter-spacing:4px;" id="card_num">**** **** **** 0000</div>
+    <!-- الواجهة الرئيسية -->
+    <div id="main-app" class="hidden" style="padding: 20px;">
+        <div style="max-width: 1000px; margin: 0 auto;">
+            
+            <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                <h2 style="font-family:'Orbitron'; color:var(--gold)">INF-V16</h2>
+                <button onclick="location.reload()" style="background:none; border:none; color:red; cursor:pointer;">SIGN OUT</button>
+            </header>
+
+            <div class="premium-card">
+                <div style="width:50px; height:35px; background:linear-gradient(45deg, #e0ac1c, #9c7c13); border-radius:5px; margin-bottom:40px;"></div>
+                <h3 id="card_holder" style="text-transform:uppercase; letter-spacing:3px;">---</h3>
                 <div style="display:flex; justify-content:space-between; margin-top:30px;">
-                    <div><small style="opacity:0.5">HOLDER</small><br><b id="holder_name">NAME</b></div>
-                    <div><small style="opacity:0.5">RANK</small><br><b id="holder_rank" style="color:var(--primary)">MEMBER</b></div>
+                    <div><small style="opacity:0.4">STATUS</small><br><span id="card_rank" style="color:var(--gold); font-weight:bold;">---</span></div>
+                    <div style="text-align:left"><small style="opacity:0.4">EXPIRE</small><br><b>PERPETUAL</b></div>
                 </div>
             </div>
 
-            <div class="section-box" style="text-align:center; margin-bottom:20px;">
-                <p>رصيدك المتوفر</p>
-                <h1 style="font-family:'Orbitron'; color:var(--primary); font-size:3rem;"><span id="user_bal">0</span> <small style="font-size:1rem">INF</small></h1>
+            <div class="balance-view">
+                <small style="color:var(--gold); text-transform:uppercase; letter-spacing:3px">Current Balance</small>
+                <h1 style="font-family:'Orbitron'; font-size:3.5rem; margin:10px 0;">
+                    <span id="bal_val">0</span> <small style="font-size:1.2rem; color:var(--gold)">INF</small>
+                </h1>
             </div>
 
-            <div class="grid-layout">
-                <div class="section-box">
-                    <h4>إرسال رصيد 💸</h4>
-                    <input type="text" id="send_to" placeholder="اسم المستلم">
-                    <input type="number" id="send_val" placeholder="المبلغ">
-                    <button class="btn btn-primary" onclick="sendReq()">إرسال طلب تحويل</button>
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:20px;">
+                <div class="glass-box" style="padding:25px; text-align:right;">
+                    <h4 style="border-right: 3px solid var(--gold); padding-right:10px; margin-bottom:15px;">التحويل السريع</h4>
+                    <input type="text" id="target_u" placeholder="لقب المستلم">
+                    <input type="number" id="target_a" placeholder="المبلغ">
+                    <button class="btn-gold" onclick="action('TRANSFER')">تأكيد العملية</button>
                 </div>
-                <div class="section-box">
-                    <h4>المتجر السريع 🛒</h4>
-                    <button class="btn" style="background:var(--glass)" onclick="buyReq('رتبة فارس')">فارس (9,500 INF)</button>
-                    <button class="btn" style="background:var(--glass)" onclick="buyReq('إعفاء عقوبة')">إعفاء (15,000 INF)</button>
+                <div class="glass-box" style="padding:25px; text-align:right;">
+                    <h4 style="border-right: 3px solid var(--primary-blue); padding-right:10px; margin-bottom:15px;">متجر الخدمات</h4>
+                    <select id="shop_item" style="width:100%; padding:12px; background:#111; color:white; border-radius:10px; margin-bottom:10px; border:1px solid #333">
+                        <option value="رتبة فارس">رتبة فارس (9,500 INF)</option>
+                        <option value="إعفاء عقوبة">إعفاء (15,000 INF)</option>
+                        <option value="تغيير اللقب">تغيير لقب (20,500 INF)</option>
+                    </select>
+                    <button class="btn-gold" style="background:var(--primary-blue); color:black" onclick="action('PURCHASE')">شراء الآن</button>
                 </div>
             </div>
-            
-            <button id="admin-access" class="btn btn-admin" style="display:none; margin-top:20px;" onclick="showAdmin()">لوحة الإدارة المركزية 👑</button>
-        </div>
-    </div>
 
-    <div id="admin-screen" class="screen">
-        <div style="max-width:1000px; margin:0 auto;">
-            <button class="btn" style="background:#333; width:auto;" onclick="showUser()">🔙 العودة للحساب</button>
-            <h2 style="margin:20px 0; color:var(--admin-gold)">التحكم الإمبراطوري</h2>
-            
-            <div class="section-box">
-                <h4>إدارة المستخدمين</h4>
-                <table id="admin-table">
-                    <thead><tr><th>الاسم</th><th>الرصيد</th><th>الرتبة</th><th>إجراء</th></tr></thead>
-                    <tbody id="db-body"></tbody>
+            <!-- لوحة الإدارة (تظهر للإمبراطور فقط) -->
+            <div id="admin-view" class="admin-panel hidden">
+                <h3 style="color:var(--gold); text-align:center; font-family:'Orbitron';">MASTER COMMAND CENTER</h3>
+                <table>
+                    <thead>
+                        <tr><th>العضو</th><th>الرصيد</th><th>الرتبة</th><th>إجراء</th></tr>
+                    </thead>
+                    <tbody id="admin_rows"></tbody>
                 </table>
+                <div style="margin-top:20px; padding:20px; border:1px solid #222; border-radius:15px;">
+                    <h4>تعديل يدوي (تغيير الأرصدة)</h4>
+                    <div style="display:flex; gap:10px; margin-top:10px;">
+                        <input type="text" id="m_target" placeholder="اسم العضو">
+                        <input type="number" id="m_val" placeholder="المبلغ">
+                        <button class="btn-gold" onclick="updateBal()" style="width:200px">تحديث</button>
+                    </div>
+                </div>
             </div>
 
-            <div class="section-box" style="margin-top:20px;">
-                <h4>تعديل يدوي سريع</h4>
-                <div class="grid-layout">
-                    <input type="text" id="target_u" placeholder="اسم العضو">
-                    <input type="number" id="target_b" placeholder="المبلغ (+ أو -)">
-                </div>
-                <button class="btn btn-admin" onclick="adminUpdate()">تحديث البيانات فوراً</button>
-            </div>
         </div>
     </div>
 
     <script>
-        // قاعدة البيانات المحفوظة
-        let db = JSON.parse(localStorage.getItem('inf_global_db')) || {
-            "levi": { pin: "1001", bal: 5000000, rank: "الإمبراطور", isAdmin: true, cc: "8822" },
-            "dororo": { pin: "300", bal: 100000, rank: "نائب الامبراطور", isAdmin: false, cc: "1199" }
+        // قاعدة البيانات المركزية (الأعضاء مضافين مسبقاً)
+        let db = JSON.parse(localStorage.getItem('inf_pro_db')) || {
+            "levi": { pin: "1001", bal: 5000000, rank: "الإمبراطور", isAdmin: true },
+            "dororo": { pin: "300", bal: 100000, rank: "نائب الامبراطور", isAdmin: false },
+            "fang": { pin: "8046", bal: 8500, rank: "المستشار", isAdmin: false }
         };
 
         let current = "";
 
-        function save() { localStorage.setItem('inf_global_db', JSON.stringify(db)); }
+        function save() { localStorage.setItem('inf_pro_db', JSON.stringify(db)); }
 
-        function toggleAuth() {
-            document.getElementById('login-box').style.display = document.getElementById('login-box').style.display === 'none' ? 'block' : 'none';
-            document.getElementById('signup-box').style.display = document.getElementById('signup-box').style.display === 'none' ? 'block' : 'none';
-        }
-
-        function handleSignup() {
-            let u = document.getElementById('new_user').value.toLowerCase().trim();
-            let p = document.getElementById('new_pass').value.trim();
-            if(u && p) {
-                if(db[u]) return alert("الاسم موجود مسبقاً!");
-                db[u] = { pin: p, bal: 500, rank: "عضو جديد", isAdmin: false, cc: Math.floor(1000 + Math.random() * 9000) };
-                save();
-                alert("تم إنشاء حسابك بنجاح! رصيد ترحيبي 500 INF");
-                toggleAuth();
-            }
-        }
-
-        function handleLogin() {
-            let u = document.getElementById('user_in').value.toLowerCase().trim();
-            let p = document.getElementById('pass_in').value.trim();
-            if(db[u] && db[u].pin === p) {
+        function auth() {
+            let u = document.getElementById('u_name').value.toLowerCase().trim();
+            let p = document.getElementById('u_pass').value.trim();
+            if (db[u] && db[u].pin === p) {
                 current = u;
-                showUser();
-            } else { alert("بيانات خاطئة!"); }
+                launch();
+            } else { alert("ACCESS DENIED: INVALID CREDENTIALS"); }
         }
 
-        function showUser() {
-            hideAll();
-            document.getElementById('user-screen').classList.add('active');
-            document.getElementById('holder_name').innerText = current.toUpperCase();
-            document.getElementById('holder_rank').innerText = db[current].rank;
-            document.getElementById('user_bal').innerText = db[current].bal.toLocaleString();
-            document.getElementById('card_num').innerText = "**** **** **** " + db[current].cc;
-            if(db[current].isAdmin) document.getElementById('admin-access').style.display = "block";
-        }
-
-        function showAdmin() {
-            hideAll();
-            document.getElementById('admin-screen').classList.add('active');
-            refreshAdmin();
+        function launch() {
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('main-app').classList.remove('hidden');
+            
+            document.getElementById('card_holder').innerText = current;
+            document.getElementById('card_rank').innerText = db[current].rank;
+            document.getElementById('bal_val').innerText = db[current].bal.toLocaleString();
+            
+            if (db[current].isAdmin) {
+                document.getElementById('admin-view').classList.remove('hidden');
+                refreshAdmin();
+            }
         }
 
         function refreshAdmin() {
-            let html = "";
-            for(let u in db) {
-                html += `<tr>
+            let h = "";
+            for (let u in db) {
+                h += `<tr>
                     <td>${u}</td>
-                    <td style="color:var(--primary)">${db[u].bal}</td>
-                    <td>${db[u].rank}</td>
-                    <td><button onclick="del('${u}')" style="background:red; border:none; color:white; padding:5px; border-radius:5px">حذف</button></td>
+                    <td style="color:var(--gold)">${db[u].bal.toLocaleString()}</td>
+                    <td><span class="tag ${db[u].isAdmin ? 'tag-admin':'tag-member'}">${db[u].rank}</span></td>
+                    <td><button onclick="rem('${u}')" style="background:none; border:none; color:red; cursor:pointer">حذف</button></td>
                 </tr>`;
             }
-            document.getElementById('db-body').innerHTML = html;
+            document.getElementById('admin_rows').innerHTML = h;
         }
 
-        function adminUpdate() {
-            let u = document.getElementById('target_u').value.toLowerCase();
-            let b = parseInt(document.getElementById('target_b').value);
-            if(db[u]) {
-                db[u].bal += b;
+        function updateBal() {
+            let t = document.getElementById('m_target').value.toLowerCase();
+            let v = parseInt(document.getElementById('m_val').value);
+            if (db[t]) {
+                db[t].bal += v;
                 save(); refreshAdmin();
-                alert("تم التحديث!");
+                alert("DATABASE UPDATED SUCCESSFULLY");
+                if (t === current) launch();
             }
         }
 
-        function sendReq() {
-            let t = document.getElementById('send_to').value;
-            let v = document.getElementById('send_val').value;
-            window.open(`https://wa.me/212622201526?text=${encodeURIComponent("طلب تحويل:\nمن: "+current+"\nإلى: "+t+"\nالمبلغ: "+v)}`);
+        function action(type) {
+            let msg = "";
+            if(type === 'TRANSFER') {
+                let t = document.getElementById('target_u').value;
+                let a = document.getElementById('target_a').value;
+                msg = `🚀 *طلب تحويل رصيد*\nمن: ${current}\nإلى: ${t}\nالمبلغ: ${a} INF`;
+            } else {
+                let i = document.getElementById('shop_item').value;
+                msg = `🛒 *طلب شراء خدمة*\nالعضو: ${current}\nالخدمة: ${i}`;
+            }
+            window.open(`https://wa.me/212622201526?text=${encodeURIComponent(msg)}`);
         }
 
-        function buyReq(n) {
-            window.open(`https://wa.me/212622201526?text=${encodeURIComponent("طلب شراء: "+n+"\nالعضو: "+current)}`);
-        }
-
-        function del(u) { if(confirm("حذف؟")) { delete db[u]; save(); refreshAdmin(); } }
-        function hideAll() { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); }
+        function rem(u) { if(confirm("حذف العضو نهائياً؟")) { delete db[u]; save(); refreshAdmin(); } }
     </script>
 </body>
 </html>
