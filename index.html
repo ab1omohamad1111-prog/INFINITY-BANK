@@ -3,177 +3,191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE SYSTEM | MONARCH EDITION</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Cairo:wght@200;700;900&display=swap" rel="stylesheet">
+    <title>INFINITY NEXUS | PREMIER</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Cairo:wght@300;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --monarch-blue: #00d2ff;
-            --shadow-black: #02050a;
-            --glass-bg: rgba(0, 20, 40, 0.7);
-            --neon-border: rgba(0, 210, 255, 0.4);
+            --primary: #00ffcc; /* لون طاقة المستقبل */
+            --bg-dark: #05070a;
+            --glass: rgba(255, 255, 255, 0.02);
+            --neon-shadow: 0 0 25px rgba(0, 255, 204, 0.3);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; cursor: crosshair; }
         body { 
-            background: var(--shadow-black); color: #fff; font-family: 'Cairo', sans-serif;
-            height: 100vh; overflow: hidden; perspective: 1000px;
+            background: var(--bg-dark); color: #fff; font-family: 'Cairo', sans-serif;
+            height: 100vh; overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
         }
 
-        /* خلفية الطاقة المتحركة */
-        #bg-canvas { position: fixed; top: 0; left: 0; z-index: -1; filter: blur(2px); }
-
-        /* واجهة الـ STATUS الأيقونية */
-        .status-panel {
-            position: fixed; top: 40px; right: 40px; width: 380px;
-            background: var(--glass-bg); border: 2px solid var(--monarch-blue);
-            backdrop-filter: blur(20px); padding: 30px; border-radius: 4px;
-            clip-path: polygon(0 0, 100% 0, 100% 90%, 90% 100%, 0 100%);
-            box-shadow: 0 0 40px rgba(0, 210, 255, 0.2); animation: emerge 0.8s ease-out;
+        /* خلفية الشبكة الديناميكية */
+        .nexus-grid {
+            position: fixed; inset: 0; z-index: -1;
+            background-image: linear-gradient(rgba(0, 255, 204, 0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(0, 255, 204, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            perspective: 1000px;
         }
 
-        .status-header { border-bottom: 2px solid var(--monarch-blue); margin-bottom: 20px; }
-        .stat-item { display: flex; justify-content: space-between; margin: 12px 0; font-family: 'Orbitron'; }
-        .gold-amount { font-size: 1.8rem; color: var(--monarch-blue); text-shadow: 0 0 10px var(--monarch-blue); }
-
-        /* ذكاء اصطناعي حقيقي (The Shadow Guide) */
-        .ai-core {
-            position: fixed; bottom: 40px; left: 40px; width: 450px;
-            background: rgba(0, 5, 10, 0.9); border-left: 5px solid var(--monarch-blue);
-            padding: 20px; border-radius: 0 20px 20px 0; box-shadow: 20px 0 50px rgba(0,0,0,1);
-        }
-        #ai-output { height: 150px; overflow-y: auto; font-size: 0.9rem; margin-bottom: 15px; color: #a0d8ff; line-height: 1.6; }
-        .ai-input { 
-            width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--neon-border);
-            padding: 12px; color: #fff; border-radius: 8px; outline: none; font-family: 'Cairo';
+        /* الحاوية الرئيسية */
+        .nexus-wrapper {
+            width: 95%; max-width: 1300px; height: 85vh;
+            display: grid; grid-template-columns: 380px 1fr 300px; gap: 20px;
         }
 
-        /* مركز النقابة والمتجر */
-        .hub-center {
-            position: absolute; top: 50%; left: 55%; transform: translate(-50%, -50%);
-            display: flex; gap: 40px;
-        }
-        .system-node {
-            width: 220px; height: 280px; background: var(--glass-bg);
-            border: 1px solid var(--neon-border); display: flex; flex-direction: column;
-            align-items: center; justify-content: center; transition: 0.5s;
-            text-decoration: none; color: #fff; transform-style: preserve-3d;
-        }
-        .system-node:hover { 
-            background: rgba(0, 210, 255, 0.15); border-color: var(--monarch-blue);
-            transform: translateZ(50px) scale(1.1); box-shadow: 0 0 50px rgba(0, 210, 255, 0.3);
+        /* لوحة البيانات (The Vault) */
+        .vault-card {
+            background: var(--glass); border: 1px solid rgba(0, 255, 204, 0.2);
+            backdrop-filter: blur(20px); border-radius: 30px; padding: 40px;
+            display: flex; flex-direction: column; justify-content: space-between;
+            box-shadow: var(--neon-shadow);
         }
 
-        /* واجهة الإدارة (The Hidden Vault) */
-        #monarch-vault {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.98);
-            z-index: 10000; display: none; padding: 100px; backdrop-filter: blur(100px);
+        .balance-box h2 { font-family: 'Syncopate'; font-size: 0.8rem; letter-spacing: 5px; opacity: 0.5; }
+        .balance-val { font-family: 'Syncopate'; font-size: 3.5rem; color: var(--primary); margin: 20px 0; transition: 0.5s; }
+        .encrypted { filter: blur(15px); letter-spacing: 10px; }
+
+        /* ذكاء نكسوس الاصطناعي (AI Central) */
+        .ai-hub {
+            background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 30px; display: flex; flex-direction: column; overflow: hidden;
+        }
+        #ai-display { flex: 1; padding: 30px; overflow-y: auto; font-size: 0.9rem; color: #a0f0ff; line-height: 1.8; }
+        .ai-input-wrapper { padding: 20px; background: rgba(0,0,0,0.3); }
+        .nexus-input { 
+            width: 100%; background: none; border: 1px solid var(--primary); padding: 15px;
+            color: #fff; border-radius: 50px; outline: none; text-align: center;
         }
 
-        @keyframes emerge { from { opacity: 0; transform: translateX(100px) skewX(-10deg); } to { opacity: 1; transform: translateX(0); } }
+        /* المتجر والخدمات */
+        .service-grid { display: grid; grid-template-rows: repeat(3, 1fr); gap: 15px; }
+        .cell {
+            background: var(--glass); border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px; display: flex; flex-direction: column; align-items: center;
+            justify-content: center; transition: 0.3s; cursor: pointer; text-decoration: none; color: #fff;
+        }
+        .cell:hover { background: rgba(0, 255, 204, 0.1); border-color: var(--primary); transform: scale(1.05); }
+        .cell i { font-size: 1.5rem; margin-bottom: 10px; color: var(--primary); }
+
+        /* لوحة الإدارة (Monarch Mode) */
+        #admin-overlay {
+            position: fixed; inset: 0; background: rgba(5, 7, 10, 0.98);
+            z-index: 100; display: none; padding: 60px; animation: fadeIn 0.5s;
+        }
+
+        .btn-action {
+            background: var(--primary); color: #000; border: none; padding: 12px 25px;
+            border-radius: 10px; font-weight: 900; cursor: pointer; transition: 0.3s;
+        }
+        .btn-action:hover { box-shadow: 0 0 20px var(--primary); }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <canvas id="bg-canvas"></canvas>
+    <div class="nexus-grid"></div>
 
-    <div class="status-panel">
-        <div class="status-header">
-            <h1 style="font-family:'Orbitron'; font-size: 2.2rem; color: var(--monarch-blue);">STATUS</h1>
-            <p style="letter-spacing: 5px; opacity: 0.6;">SUNG JIN-WOO [LEVI]</p>
-        </div>
-        <div class="stat-item"><span>TITLE:</span> <span id="title-val" style="color:#fff;">Nil</span></div>
-        <div class="stat-item"><span>LEVEL:</span> <span style="color:var(--monarch-blue);">99 (MAX)</span></div>
-        <div class="stat-item"><span>GOLD:</span> <span class="gold-amount" id="gold-val">14,950,000</span></div>
-        <div style="margin-top:20px; text-align:center;">
-            <button onclick="hideAssets()" style="background:none; border:1px solid var(--monarch-blue); color:var(--monarch-blue); padding:5px 20px; border-radius:50px; cursor:pointer; font-size:0.7rem;">[ TOGGLE STEALTH ]</button>
-        </div>
-    </div>
-
-    <div class="hub-center">
-        <a href="#" class="system-node" onclick="openStore()">
-            <div style="font-size: 3rem; margin-bottom:15px;">🛒</div>
-            <h3 style="font-family:'Orbitron';">STORE</h3>
-            <p style="font-size:0.7rem; opacity:0.5;">GUILD ITEMS</p>
-        </a>
-        <a href="#" class="system-node" onclick="accessVault()">
-            <div style="font-size: 3rem; margin-bottom:15px;">🛡️</div>
-            <h3 style="font-family:'Orbitron';">VAULT</h3>
-            <p style="font-size:0.7rem; opacity:0.5;">ADMIN CONSOLE</p>
-        </a>
-    </div>
-
-    <div class="ai-core">
-        <div id="ai-output">
-            [System]: مرحباً بك يا ليفي. لقد قمت بالدخول إلى نظام السيادة. أنا مساعدك الشخصي المدعوم بالذكاء الاصطناعي، كيف يمكنني خدمتك اليوم؟
-        </div>
-        <input type="text" class="ai-input" id="ai-in" placeholder="أعطِ أمراً للنظام..." onkeypress="chatAI(event)">
-    </div>
-
-    <div id="monarch-vault">
-        <h1 style="color:var(--monarch-blue); font-family:'Orbitron'; border-bottom:1px solid #333; padding-bottom:20px;">GUILD MANAGEMENT TERMINAL</h1>
-        <div style="margin-top:50px; display:grid; grid-template-columns: repeat(3, 1fr); gap:30px;">
-            <div style="background:rgba(255,255,255,0.05); padding:20px; border-radius:15px;">
-                <h4>الأعضاء النشطون</h4><p style="font-size:2rem; color:var(--monarch-blue);">1,204</p>
+    <div class="nexus-wrapper">
+        <div class="vault-card">
+            <div class="balance-box">
+                <h2>CORE ASSETS</h2>
+                <div class="balance-val" id="main-bal">14,950,000</div>
+                <button onclick="toggleSecurity()" class="btn-action" style="background:none; border:1px solid var(--primary); color:var(--primary); font-size:0.7rem;">تفعيل وضع التشفير</button>
             </div>
-            <div style="background:rgba(255,255,255,0.05); padding:20px; border-radius:15px;">
-                <h4>إجمالي الأرصدة</h4><p style="font-size:2rem; color:var(--monarch-blue);">99.4M</p>
+            <div class="user-info">
+                <p style="opacity:0.4; font-size:0.7rem; letter-spacing:3px;">IDENTITY</p>
+                <h3 style="font-family:'Syncopate'; font-size:1.5rem;">LEVI / MONARCH</h3>
+                <div style="margin-top:15px; display:flex; gap:10px;">
+                    <span style="background:rgba(0,255,204,0.1); padding:5px 15px; border-radius:50px; font-size:0.6rem; color:var(--primary);">S-RANK</span>
+                    <span style="background:rgba(255,255,255,0.05); padding:5px 15px; border-radius:50px; font-size:0.6rem;">VERIFIED</span>
+                </div>
             </div>
         </div>
-        <button onclick="document.getElementById('monarch-vault').style.display='none'" style="margin-top:100px; color:red; cursor:pointer; background:none; border:none;">[ EXIT DIMENSION ]</button>
+
+        <div class="ai-hub">
+            <div style="padding:15px; border-bottom:1px solid rgba(255,255,255,0.05); text-align:center; font-family:'Syncopate'; font-size:0.7rem; letter-spacing:2px;">NEXUS AI CORE</div>
+            <div id="ai-display">
+                <div style="margin-bottom:15px;">[SYSTEM]: جاري تهيئة النظام... تم الاتصال بـ INFINITY NEXUS. مرحباً بك يا ليفي، كل شيء جاهز لأوامرك.</div>
+            </div>
+            <div class="ai-input-wrapper">
+                <input type="text" class="nexus-input" id="cmd-in" placeholder="أعطِ أمراً لنظام نكسوس..." onkeypress="processCmd(event)">
+            </div>
+        </div>
+
+        <div class="service-grid">
+            <div class="cell" onclick="openShop()">
+                <span>المتجر المركزي</span>
+                <small style="font-size:0.6rem; opacity:0.4; margin-top:5px;">BAZAAR</small>
+            </div>
+            <div class="cell" onclick="showAdmin()">
+                <span style="color: #ffcc00;">إدارة النقابة</span>
+                <small style="font-size:0.6rem; opacity:0.4; margin-top:5px;">COMMAND</small>
+            </div>
+            <div class="cell" style="border:none; background:none; cursor:default;">
+                <p style="font-size:0.6rem; text-align:center; opacity:0.3;">v2.0.26 - SECURE SESSION</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="admin-overlay">
+        <h1 style="font-family:'Syncopate'; border-bottom:1px solid var(--primary); padding-bottom:20px;">GUILD OVERVIEW</h1>
+        <div style="margin-top:40px; display:grid; grid-template-columns: repeat(3, 1fr); gap:20px;">
+            <div style="background:rgba(255,255,255,0.03); padding:30px; border-radius:20px;">
+                <p style="opacity:0.5;">إجمالي أرصدة الأعضاء</p>
+                <h2 style="color:var(--primary);">945,000,000</h2>
+            </div>
+            <div style="background:rgba(255,255,255,0.03); padding:30px; border-radius:20px;">
+                <p style="opacity:0.5;">الأعضاء المتصلون</p>
+                <h2 style="color:var(--primary);">42</h2>
+            </div>
+        </div>
+        <button onclick="document.getElementById('admin-overlay').style.display='none'" class="btn-action" style="margin-top:50px;">إغلاق لوحة التحكم</button>
     </div>
 
     <script>
-        // أنيميشن الخلفية (الشبكة الكونية)
-        const canvas = document.getElementById('bg-canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        let isEncrypted = false;
+        const originalBal = "14,950,000";
 
-        function drawGrid() {
-            ctx.strokeStyle = 'rgba(0, 210, 255, 0.05)';
-            ctx.lineWidth = 1;
-            for(let i=0; i<canvas.width; i+=50) {
-                ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, canvas.height); ctx.stroke();
-            }
-            for(let i=0; i<canvas.height; i+=50) {
-                ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(canvas.width, i); ctx.stroke();
+        function toggleSecurity() {
+            isEncrypted = !isEncrypted;
+            const balElement = document.getElementById('main-bal');
+            if(isEncrypted) {
+                balElement.innerText = "XXXXXXXX";
+                balElement.classList.add('encrypted');
+            } else {
+                balElement.innerText = originalBal;
+                balElement.classList.remove('encrypted');
             }
         }
-        drawGrid();
 
-        // منطق النظام
-        let gold = 14950000;
-        let hidden = false;
-
-        function hideAssets() {
-            hidden = !hidden;
-            document.getElementById('gold-val').innerText = hidden ? "Nil" : gold.toLocaleString();
-            document.getElementById('title-val').innerText = hidden ? "Nil" : "The Shadow Sovereign";
-        }
-
-        function chatAI(e) {
+        function processCmd(e) {
             if(e.key === 'Enter') {
-                let msg = document.getElementById('ai-in').value;
-                let out = document.getElementById('ai-output');
-                out.innerHTML += `<div style="color:#fff; margin-top:5px;">> ${msg}</div>`;
+                let input = document.getElementById('cmd-in');
+                let display = document.getElementById('ai-display');
+                
+                display.innerHTML += `<div style="color:#fff; margin-top:10px;">> ${input.value}</div>`;
                 
                 setTimeout(() => {
-                    out.innerHTML += `<div style="color:var(--monarch-blue);">[System]: جاري تحليل الطلب... تم تحديث سجلات النقابة بناءً على رغبتك يا ملك الظلال.</div>`;
-                    out.scrollTop = out.scrollHeight;
-                }, 800);
-                document.getElementById('ai-in').value = "";
+                    display.innerHTML += `<div style="color:var(--primary);">[NEXUS]: تم استلام الأمر. جاري مزامنة البيانات مع خوادم النقابة... اكتملت العملية.</div>`;
+                    display.scrollTop = display.scrollHeight;
+                }, 600);
+                
+                input.value = "";
             }
         }
 
-        function accessVault() {
-            let code = prompt("INPUT ACCESS CODE:");
-            if(code === "1001") {
-                document.getElementById('monarch-vault').style.display = 'block';
-            } else { alert("ACCESS DENIED. SYSTEM LOCKDOWN INITIATED."); }
+        function showAdmin() {
+            let pass = prompt("أدخل كود الوصول للمنطقة السيادية:");
+            if(pass === "1001") {
+                document.getElementById('admin-overlay').style.display = 'block';
+            } else {
+                alert("وصول غير مصرح به. تم تسجيل المحاولة.");
+            }
         }
 
-        function openStore() {
-            window.open('https://wa.me/212622201526?text=أرغب في الوصول إلى متجر النظام');
+        function openShop() {
+            window.open('https://wa.me/212622201526?text=أرغب في الدخول لمتجر نكسوس');
         }
     </script>
 </body>
