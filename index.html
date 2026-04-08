@@ -3,143 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>bank of infinity | THE SYSTEM</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Cairo:wght@200;600;900&display=swap" rel="stylesheet">
+    <title>THE SYSTEM | MONARCH EDITION</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Cairo:wght@200;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --system-blue: #00d2ff;
-            --system-bg: rgba(0, 15, 30, 0.85);
-            --neon-glow: 0 0 15px rgba(0, 210, 255, 0.5);
+            --monarch-blue: #00d2ff;
+            --shadow-black: #02050a;
+            --glass-bg: rgba(0, 20, 40, 0.7);
+            --neon-border: rgba(0, 210, 255, 0.4);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; cursor: crosshair; }
         body { 
-            background: #000; color: #fff; font-family: 'Orbitron', 'Cairo', sans-serif;
-            height: 100vh; overflow: hidden;
-            background-image: radial-gradient(circle at center, #001a33 0%, #000 100%);
+            background: var(--shadow-black); color: #fff; font-family: 'Cairo', sans-serif;
+            height: 100vh; overflow: hidden; perspective: 1000px;
         }
 
-        /* واجهة الحالة - المستوحاة من سونغ جين وو */
-        .status-window {
-            position: fixed; top: 5%; left: 5%; width: 350px;
-            background: var(--system-bg); border: 2px solid var(--system-blue);
-            padding: 20px; box-shadow: var(--neon-glow); border-radius: 5px;
-            animation: fadeIn 0.5s ease-out;
+        /* خلفية الطاقة المتحركة */
+        #bg-canvas { position: fixed; top: 0; left: 0; z-index: -1; filter: blur(2px); }
+
+        /* واجهة الـ STATUS الأيقونية */
+        .status-panel {
+            position: fixed; top: 40px; right: 40px; width: 380px;
+            background: var(--glass-bg); border: 2px solid var(--monarch-blue);
+            backdrop-filter: blur(20px); padding: 30px; border-radius: 4px;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 90% 100%, 0 100%);
+            box-shadow: 0 0 40px rgba(0, 210, 255, 0.2); animation: emerge 0.8s ease-out;
         }
 
-        .status-header { border-bottom: 1px solid var(--system-blue); padding-bottom: 10px; margin-bottom: 15px; }
-        .stat-row { display: flex; justify-content: space-between; margin: 10px 0; font-size: 0.9rem; }
-        .gold-val { color: var(--system-blue); font-weight: 900; letter-spacing: 2px; }
+        .status-header { border-bottom: 2px solid var(--monarch-blue); margin-bottom: 20px; }
+        .stat-item { display: flex; justify-content: space-between; margin: 12px 0; font-family: 'Orbitron'; }
+        .gold-amount { font-size: 1.8rem; color: var(--monarch-blue); text-shadow: 0 0 10px var(--monarch-blue); }
 
-        /* مساعد الذكاء الاصطناعي (Shadow AI) */
-        .ai-terminal {
-            position: fixed; bottom: 5%; right: 5%; width: 400px; height: 300px;
-            background: rgba(0, 0, 0, 0.9); border: 1px solid var(--system-blue);
-            border-radius: 15px; display: flex; flex-direction: column; box-shadow: var(--neon-glow);
+        /* ذكاء اصطناعي حقيقي (The Shadow Guide) */
+        .ai-core {
+            position: fixed; bottom: 40px; left: 40px; width: 450px;
+            background: rgba(0, 5, 10, 0.9); border-left: 5px solid var(--monarch-blue);
+            padding: 20px; border-radius: 0 20px 20px 0; box-shadow: 20px 0 50px rgba(0,0,0,1);
         }
-        .ai-messages { flex: 1; padding: 15px; overflow-y: auto; font-size: 0.8rem; color: var(--system-blue); }
-        .ai-input-area { border-top: 1px solid rgba(0, 210, 255, 0.3); padding: 10px; display: flex; }
-        .ai-input { background: none; border: none; color: #fff; width: 100%; outline: none; font-family: 'Cairo'; }
-
-        /* المتجر والمنطقة الإدارية */
-        .main-hub {
-            display: flex; justify-content: center; align-items: center; height: 100vh; gap: 30px;
-        }
-        .hex-card {
-            width: 250px; height: 300px; background: var(--system-bg);
-            border: 1px solid var(--system-blue); display: flex; flex-direction: column;
-            align-items: center; justify-content: center; transition: 0.3s;
-            clip-path: polygon(10% 0, 90% 0, 100% 10%, 100% 90%, 90% 100%, 10% 100%, 0 90%, 0 10%);
-        }
-        .hex-card:hover { transform: translateY(-10px); background: rgba(0, 210, 255, 0.1); box-shadow: var(--neon-glow); }
-
-        /* واجهة الأدمن السرية */
-        #admin-panel {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); z-index: 9999; display: none; padding: 50px;
+        #ai-output { height: 150px; overflow-y: auto; font-size: 0.9rem; margin-bottom: 15px; color: #a0d8ff; line-height: 1.6; }
+        .ai-input { 
+            width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--neon-border);
+            padding: 12px; color: #fff; border-radius: 8px; outline: none; font-family: 'Cairo';
         }
 
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        /* مركز النقابة والمتجر */
+        .hub-center {
+            position: absolute; top: 50%; left: 55%; transform: translate(-50%, -50%);
+            display: flex; gap: 40px;
+        }
+        .system-node {
+            width: 220px; height: 280px; background: var(--glass-bg);
+            border: 1px solid var(--neon-border); display: flex; flex-direction: column;
+            align-items: center; justify-content: center; transition: 0.5s;
+            text-decoration: none; color: #fff; transform-style: preserve-3d;
+        }
+        .system-node:hover { 
+            background: rgba(0, 210, 255, 0.15); border-color: var(--monarch-blue);
+            transform: translateZ(50px) scale(1.1); box-shadow: 0 0 50px rgba(0, 210, 255, 0.3);
+        }
+
+        /* واجهة الإدارة (The Hidden Vault) */
+        #monarch-vault {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.98);
+            z-index: 10000; display: none; padding: 100px; backdrop-filter: blur(100px);
+        }
+
+        @keyframes emerge { from { opacity: 0; transform: translateX(100px) skewX(-10deg); } to { opacity: 1; transform: translateX(0); } }
     </style>
 </head>
 <body>
 
-    <div class="status-window">
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="status-panel">
         <div class="status-header">
-            <h2 style="color: var(--system-blue);">STATUS WINDOW</h2>
-            <small>Player: SUNG JIN-WOO (LEVI)</small>
+            <h1 style="font-family:'Orbitron'; font-size: 2.2rem; color: var(--monarch-blue);">STATUS</h1>
+            <p style="letter-spacing: 5px; opacity: 0.6;">SUNG JIN-WOO [LEVI]</p>
         </div>
-        <div class="stat-row"><span>TITLE:</span> <span style="color:#fff;">Nil</span></div>
-        <div class="stat-row"><span>LEVEL:</span> <span style="color:var(--system-blue);">99 (MAX)</span></div>
-        <div class="stat-row"><span>GOLD:</span> <span class="gold-val" id="gold-amt">1,000,000</span></div>
-        <button onclick="toggleGold()" style="background:none; border:none; color:var(--system-blue); font-size:0.7rem; cursor:pointer;">[ HIDE ASSETS ]</button>
-    </div>
-
-    <div class="main-hub">
-        <div class="hex-card" onclick="openStore()">
-            <h3 style="color:var(--system-blue);">SYSTEM STORE</h3>
-            <p style="font-size:0.6rem; opacity:0.5;">GUILD ITEMS & SCROLLS</p>
-        </div>
-        <div class="hex-card" onclick="showAdmin()">
-            <h3 style="color:#ffcc00;">MONARCH ZONE</h3>
-            <p style="font-size:0.6rem; opacity:0.5;">ADMINS ONLY</p>
+        <div class="stat-item"><span>TITLE:</span> <span id="title-val" style="color:#fff;">Nil</span></div>
+        <div class="stat-item"><span>LEVEL:</span> <span style="color:var(--monarch-blue);">99 (MAX)</span></div>
+        <div class="stat-item"><span>GOLD:</span> <span class="gold-amount" id="gold-val">14,950,000</span></div>
+        <div style="margin-top:20px; text-align:center;">
+            <button onclick="hideAssets()" style="background:none; border:1px solid var(--monarch-blue); color:var(--monarch-blue); padding:5px 20px; border-radius:50px; cursor:pointer; font-size:0.7rem;">[ TOGGLE STEALTH ]</button>
         </div>
     </div>
 
-    <div class="ai-terminal">
-        <div style="padding:10px; font-size:0.7rem; background:rgba(0,210,255,0.1);">SYSTEM ASSISTANT [ACTIVE]</div>
-        <div class="ai-messages" id="ai-logs">
-            <div>[System]: مرحباً بك يا ملك الظلال. النظام جاهز لتنفيذ أوامرك.</div>
-        </div>
-        <div class="ai-input-area">
-            <input type="text" class="ai-input" id="ai-cmd" placeholder="أدخل أمراً للنظام..." onkeypress="handleAI(event)">
-        </div>
+    <div class="hub-center">
+        <a href="#" class="system-node" onclick="openStore()">
+            <div style="font-size: 3rem; margin-bottom:15px;">🛒</div>
+            <h3 style="font-family:'Orbitron';">STORE</h3>
+            <p style="font-size:0.7rem; opacity:0.5;">GUILD ITEMS</p>
+        </a>
+        <a href="#" class="system-node" onclick="accessVault()">
+            <div style="font-size: 3rem; margin-bottom:15px;">🛡️</div>
+            <h3 style="font-family:'Orbitron';">VAULT</h3>
+            <p style="font-size:0.7rem; opacity:0.5;">ADMIN CONSOLE</p>
+        </a>
     </div>
 
-    <div id="admin-panel">
-        <h1 style="color:var(--system-blue); border-bottom: 2px solid var(--system-blue);">CONCEALED GUILD DATA</h1>
-        <div style="margin-top: 30px;">
-            <p>مرحباً بك في المنطقة الخاصة. هنا يمكنك تنظيم النقابة والاطلاع على سجلات الأعضاء.</p>
-            <table style="width:100%; margin-top:30px; border-collapse: collapse;">
-                <tr style="color:var(--system-blue);"><th>Member</th><th>Access</th><th>Status</th></tr>
-                <tr><td>Levi (Monarch)</td><td>Root</td><td>Online</td></tr>
-                <tr><td>Admin_01</td><td>High</td><td>Active</td></tr>
-            </table>
+    <div class="ai-core">
+        <div id="ai-output">
+            [System]: مرحباً بك يا ليفي. لقد قمت بالدخول إلى نظام السيادة. أنا مساعدك الشخصي المدعوم بالذكاء الاصطناعي، كيف يمكنني خدمتك اليوم؟
         </div>
-        <button onclick="document.getElementById('admin-panel').style.display='none'" style="margin-top:50px; color:red; background:none; border:1px solid red; padding:10px;">CLOSE DIMENSION</button>
+        <input type="text" class="ai-input" id="ai-in" placeholder="أعطِ أمراً للنظام..." onkeypress="chatAI(event)">
+    </div>
+
+    <div id="monarch-vault">
+        <h1 style="color:var(--monarch-blue); font-family:'Orbitron'; border-bottom:1px solid #333; padding-bottom:20px;">GUILD MANAGEMENT TERMINAL</h1>
+        <div style="margin-top:50px; display:grid; grid-template-columns: repeat(3, 1fr); gap:30px;">
+            <div style="background:rgba(255,255,255,0.05); padding:20px; border-radius:15px;">
+                <h4>الأعضاء النشطون</h4><p style="font-size:2rem; color:var(--monarch-blue);">1,204</p>
+            </div>
+            <div style="background:rgba(255,255,255,0.05); padding:20px; border-radius:15px;">
+                <h4>إجمالي الأرصدة</h4><p style="font-size:2rem; color:var(--monarch-blue);">99.4M</p>
+            </div>
+        </div>
+        <button onclick="document.getElementById('monarch-vault').style.display='none'" style="margin-top:100px; color:red; cursor:pointer; background:none; border:none;">[ EXIT DIMENSION ]</button>
     </div>
 
     <script>
-        let isHidden = false;
-        function toggleGold() {
-            isHidden = !isHidden;
-            document.getElementById('gold-amt').innerText = isHidden ? "Nil" : "1,000,000";
+        // أنيميشن الخلفية (الشبكة الكونية)
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        function drawGrid() {
+            ctx.strokeStyle = 'rgba(0, 210, 255, 0.05)';
+            ctx.lineWidth = 1;
+            for(let i=0; i<canvas.width; i+=50) {
+                ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, canvas.height); ctx.stroke();
+            }
+            for(let i=0; i<canvas.height; i+=50) {
+                ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(canvas.width, i); ctx.stroke();
+            }
+        }
+        drawGrid();
+
+        // منطق النظام
+        let gold = 14950000;
+        let hidden = false;
+
+        function hideAssets() {
+            hidden = !hidden;
+            document.getElementById('gold-val').innerText = hidden ? "Nil" : gold.toLocaleString();
+            document.getElementById('title-val').innerText = hidden ? "Nil" : "The Shadow Sovereign";
         }
 
-        function handleAI(e) {
+        function chatAI(e) {
             if(e.key === 'Enter') {
-                let val = document.getElementById('ai-cmd').value;
-                let logs = document.getElementById('ai-logs');
-                logs.innerHTML += `<div>[You]: ${val}</div>`;
+                let msg = document.getElementById('ai-in').value;
+                let out = document.getElementById('ai-output');
+                out.innerHTML += `<div style="color:#fff; margin-top:5px;">> ${msg}</div>`;
+                
                 setTimeout(() => {
-                    logs.innerHTML += `<div>[System]: جارِ معالجة البيانات... تم تنفيذ الأمر بنجاح يا ليفي.</div>`;
-                    logs.scrollTop = logs.scrollHeight;
-                }, 1000);
-                document.getElementById('ai-cmd').value = "";
+                    out.innerHTML += `<div style="color:var(--monarch-blue);">[System]: جاري تحليل الطلب... تم تحديث سجلات النقابة بناءً على رغبتك يا ملك الظلال.</div>`;
+                    out.scrollTop = out.scrollHeight;
+                }, 800);
+                document.getElementById('ai-in').value = "";
             }
         }
 
-        function showAdmin() {
-            let pass = prompt("IDENTIFY YOURSELF (PASSCODE):");
-            if(pass === "1001") {
-                document.getElementById('admin-panel').style.display = 'block';
-            } else {
-                alert("ACCESS DENIED. SHADOWS ARE WATCHING.");
-            }
+        function accessVault() {
+            let code = prompt("INPUT ACCESS CODE:");
+            if(code === "1001") {
+                document.getElementById('monarch-vault').style.display = 'block';
+            } else { alert("ACCESS DENIED. SYSTEM LOCKDOWN INITIATED."); }
         }
 
         function openStore() {
-            window.open('https://wa.me/212622201526?text=أرغب في فتح متجر النقابة');
+            window.open('https://wa.me/212622201526?text=أرغب في الوصول إلى متجر النظام');
         }
     </script>
 </body>
