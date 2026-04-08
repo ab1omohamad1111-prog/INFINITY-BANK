@@ -3,111 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INFINITY | THE ORIGIN</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Noto+Sans+Arabic:wght@400;900&display=swap" rel="stylesheet">
+    <title>INFINITY | THE PREMIER</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --accent: #00f2ff; --bg: #05070a; --glass: rgba(255, 255, 255, 0.03); }
+        :root { --main: #00f2ff; --bg: #05070a; --glass: rgba(255, 255, 255, 0.03); }
+        
+        /* أساسيات الصفحة وإصلاح التمرير */
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: var(--bg); color: #fff; font-family: 'Noto Sans Arabic', sans-serif; min-height: 100vh; overflow-y: auto; }
+        body { 
+            background: var(--bg); color: #fff; font-family: 'Cairo', sans-serif; 
+            min-height: 100vh; overflow-y: auto; padding-bottom: 50px;
+        }
 
-        /* شاشة الدخول */
-        #login-screen { position: fixed; inset: 0; background: #000; display: flex; align-items: center; justify-content: center; z-index: 1000; }
-        .login-card { background: var(--glass); border: 1px solid rgba(0, 242, 255, 0.2); padding: 40px; border-radius: 20px; width: 350px; text-align: center; }
-        .input-cyber { width: 100%; padding: 12px; margin: 10px 0; background: #000; border: 1px solid #333; color: #fff; border-radius: 8px; text-align: center; }
-        .btn-main { width: 100%; padding: 12px; background: var(--accent); border: none; border-radius: 8px; font-weight: 900; cursor: pointer; color: #000; }
+        /* شاشة تسجيل الدخول */
+        #login-screen {
+            position: fixed; inset: 0; background: #000; z-index: 1000;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .login-box {
+            background: var(--glass); border: 1px solid var(--main);
+            padding: 40px; border-radius: 20px; width: 320px; text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        input {
+            width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px;
+            border: 1px solid #333; background: #000; color: #fff; text-align: center;
+        }
 
         /* الواجهة الرئيسية */
-        #app { display: none; padding: 20px; max-width: 1000px; margin: 0 auto; }
+        #main-app { display: none; width: 90%; max-width: 600px; margin: 40px auto; }
         
-        /* البطاقة الإمبراطورية (مثل الصورة تماماً) */
-        .main-card {
+        /* البطاقة الرئيسية (مثل الصورة) */
+        .balance-card {
             background: linear-gradient(135deg, #0a1018 0%, #02050a 100%);
             padding: 40px; border-radius: 30px; border: 1px solid rgba(0, 242, 255, 0.3);
-            text-align: center; position: relative; margin-bottom: 30px;
+            text-align: center; margin-bottom: 30px; box-shadow: 0 0 30px rgba(0, 242, 255, 0.1);
         }
-        .bal-val { font-family: 'Orbitron'; font-size: 3.5rem; color: var(--accent); margin: 15px 0; text-shadow: 0 0 20px rgba(0, 242, 255, 0.3); }
+        .bal-val { font-family: 'Orbitron'; font-size: 3rem; color: var(--main); margin: 15px 0; }
         .bal-val.nil { filter: blur(15px); }
 
-        /* المتجر والخدمات */
-        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; margin-top: 20px; }
-        .item-card { background: var(--glass); border: 1px solid rgba(255,255,255,0.05); padding: 20px; border-radius: 15px; text-align: center; transition: 0.3s; cursor: pointer; }
-        .item-card:hover { border-color: var(--accent); background: rgba(0, 242, 255, 0.05); }
+        /* المتجر والشبكة */
+        .section-title { color: var(--main); margin: 25px 0 15px; font-weight: 900; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .card-item {
+            background: var(--glass); padding: 20px; border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.05); text-align: center;
+            transition: 0.3s; cursor: pointer;
+        }
+        .card-item:hover { border-color: var(--main); background: rgba(0, 242, 255, 0.05); }
 
-        /* لوحة الإدارة (شفافة وبسيطة) */
-        .admin-zone { margin-top: 30px; padding: 20px; border-top: 1px solid rgba(255,255,255,0.1); }
-        .admin-table { width: 100%; margin-top: 15px; border-collapse: collapse; }
+        /* لوحة الإدارة (مخفية للأدمن فقط) */
+        .admin-panel {
+            background: rgba(255, 0, 0, 0.02); border: 1px solid rgba(255, 0, 0, 0.1);
+            padding: 20px; border-radius: 15px; margin-top: 30px;
+        }
+        .admin-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.8rem; }
         .admin-table td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); }
 
+        /* الأزرار */
+        .btn-prime {
+            width: 100%; padding: 12px; background: var(--main); border: none;
+            color: #000; font-weight: 900; border-radius: 8px; cursor: pointer;
+        }
     </style>
 </head>
 <body>
 
     <div id="login-screen">
-        <div class="login-card">
-            <h1 style="font-family:'Orbitron'; color:var(--accent); margin-bottom:20px;">INFINITY</h1>
-            <input type="text" id="u_in" placeholder="المعرف" class="input-cyber">
-            <input type="password" id="p_in" placeholder="كلمة السر" class="input-cyber">
-            <button class="btn-main" onclick="login()">دخول</button>
+        <div class="login-box">
+            <h1 style="font-family:'Orbitron'; color:var(--main); margin-bottom:20px;">INFINITY</h1>
+            <input type="text" id="user_in" placeholder="المعرف">
+            <input type="password" id="pass_in" placeholder="كلمة السر">
+            <button class="btn-prime" onclick="login()">دخول</button>
         </div>
     </div>
 
-    <div id="app">
+    <div id="main-app">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-            <h2 id="user_name">LEVI</h2>
+            <h2 id="name_tag">LEVI</h2>
             <button onclick="location.reload()" style="background:none; border:none; color:red; cursor:pointer;">خروج</button>
         </div>
 
-        <div class="main-card">
-            <p style="opacity:0.5; letter-spacing:2px;">AVAILABLE ASSETS</p>
-            <div id="balance" class="bal-val">14,950,000</div>
+        <div class="balance-card">
+            <p style="opacity:0.5; font-size:0.8rem; letter-spacing:2px;">TOTAL ASSETS</p>
+            <div id="balance_val" class="bal-val">14,950,000</div>
             <button onclick="toggleNil()" style="background:none; border:1px solid #333; color:#555; padding:5px 15px; border-radius:20px; cursor:pointer;">وضع التخفي (Nil)</button>
         </div>
 
-        <h3 style="color:var(--accent); margin:20px 0;">المتجر المركزي 🛒</h3>
-        <div class="grid-container">
-            <div class="item-card" onclick="req('شراء رتبة فارس')"><h4>رتبة فارس</h4><p>5,000</p></div>
-            <div class="item-card" onclick="req('شراء لقب ملكي')"><h4>لقب ملكي</h4><p>50,000</p></div>
-            <div class="item-card" onclick="req('تغيير لون الحساب')"><h4>تغيير لون</h4><p>1,000</p></div>
-            <div class="item-card" onclick="req('طلب تغيير كلمة السر أو اليوزر')" style="border-color: #ffcc00;">
-                <h4 style="color: #ffcc00;">الأمان 🛡️</h4>
-                <p style="font-size:0.7rem;">تغيير السر/اليوزر</p>
+        <h3 class="section-title">المتجر والخدمات 📦</h3>
+        <div class="grid">
+            <div class="card-item" onclick="sendReq('شراء رتبة فارس')"><h4>رتبة فارس</h4><p>5,000</p></div>
+            <div class="card-item" onclick="sendReq('شراء لقب ملكي')"><h4>لقب ملكي</h4><p>50,000</p></div>
+            <div class="card-item" onclick="sendReq('تغيير يوزر الحساب')"><h4>تغيير اليوزر</h4><p>واتساب</p></div>
+            <div class="card-item" onclick="sendReq('طلب تغيير كلمة السر')" style="border-color: #ffcc00;">
+                <h4 style="color:#ffcc00;">الأمان 🛡️</h4><p>تغيير السر</p>
             </div>
         </div>
 
-        <div id="admin-panel" class="admin-zone" style="display:none;">
-            <h3 style="color:red;">سجل النقابة [إدارة]</h3>
+        <div id="admin-area" class="admin-panel" style="display:none;">
+            <h3 style="color:red; font-size:0.9rem;">لوحة إدارة النقابة [ADMIN]</h3>
             <table class="admin-table">
-                <tr style="color:var(--accent); font-weight:bold;"><td>العضو</td><td>الرصيد</td><td>الرتبة</td></tr>
+                <tr style="color:var(--main)"><td>العضو</td><td>الرصيد</td><td>الحالة</td></tr>
                 <tr><td>Mohamed Amine</td><td>14.95M</td><td>Emperor</td></tr>
-                <tr><td>Guest_01</td><td>50,000</td><td>Knight</td></tr>
+                <tr><td>Guest_User</td><td>50,000</td><td>Active</td></tr>
             </table>
         </div>
+
+        <p style="text-align:center; opacity:0.2; font-size:0.6rem; margin-top:40px;">INFINITY PREMIER v3.0 | SECURE SESSION</p>
     </div>
 
     <script>
+        // بياناتك (ليفي)
         const myData = { user: "levi", pass: "1001", bal: 14950000 };
 
         function login() {
-            let u = document.getElementById('u_in').value.toLowerCase();
-            let p = document.getElementById('p_in').value;
+            let u = document.getElementById('user_in').value.toLowerCase();
+            let p = document.getElementById('pass_in').value;
             if(u === myData.user && p === myData.pass) {
                 document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('app').style.display = 'block';
-                document.getElementById('admin-panel').style.display = 'block';
-                document.getElementById('user_name').innerText = u.toUpperCase();
-            } else { alert("البيانات خاطئة!"); }
+                document.getElementById('main-app').style.display = 'block';
+                document.getElementById('admin-area').style.display = 'block';
+                document.getElementById('name_tag').innerText = u.toUpperCase();
+            } else { alert("بيانات الدخول خاطئة!"); }
         }
 
         let isNil = false;
         function toggleNil() {
             isNil = !isNil;
-            let b = document.getElementById('balance');
+            let b = document.getElementById('balance_val');
             b.innerText = isNil ? "Nil" : myData.bal.toLocaleString();
             isNil ? b.classList.add('nil') : b.classList.remove('nil');
         }
 
-        function req(action) {
-            window.open(`https://wa.me/212622201526?text=${encodeURIComponent(`مرحباً، أنا ${myData.user.toUpperCase()}، أريد: ${action}`)}`);
+        // إرسال الطلبات للواتساب مباشرة (أمان وسهولة)
+        function sendReq(msg) {
+            window.open(`https://wa.me/212622201526?text=${encodeURIComponent(`مرحباً إمبراطور ليفي، أريد: ${msg}`)}`);
         }
     </script>
 </body>
